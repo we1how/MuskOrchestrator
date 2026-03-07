@@ -4,7 +4,7 @@
 > **自动更新**：定时任务执行后自动更新
 > **手动更新**：其他变更需用户确认后更新
 > **最后更新**：2026-03-08
-> **版本**：v1.0
+> **版本**：v2.0 (迁移完成)
 
 ---
 
@@ -89,6 +89,11 @@
 | `scripts/launchd/` | macOS launchd定时任务配置 | 2026-03-08 |
 | `scripts/launchd/*.plist` | 定时任务plist文件 | 2026-03-08 |
 | `scripts/launchd/*.sh` | 定时任务执行脚本 | 2026-03-08 |
+| `scripts/cron/jobs.json` | 定时任务配置（Claude Code格式） | 2026-03-08 |
+| `scripts/daily_learning.py` | 每日微学习执行脚本 | 2026-03-08 |
+| `scripts/weekly_review.py` | 每周回顾执行脚本 | 2026-03-08 |
+| `scripts/git_auto_commit.sh` | Git自动提交脚本 | 2026-03-08 |
+| `scripts/archive_agent_outputs.py` | Agent输出归档脚本（路径已适配） | 2026-03-08 |
 
 ---
 
@@ -98,9 +103,14 @@
 
 | 路径 | 描述 | 修改时间 |
 |------|------|----------|
-| `skills/daily-learning/` | 每日微学习Skill | 2026-03-08 |
-| `skills/project-tracker/` | 项目跟踪Skill | 2026-03-08 |
-| `skills/knowledge-archive/` | 知识归档Skill | 2026-03-08 |
+| `skills/daily-learning/SKILL.md` | 每日微学习Skill（Claude Code格式） | 2026-03-08 |
+| `skills/weekly-review/SKILL.md` | 每周深度回顾Skill | 2026-03-08 |
+| `skills/knowledge-archive/SKILL.md` | 知识归档Skill | 2026-03-08 |
+| `skills/everything-claude-code/` | 完整技能库（673个文件，从OpenClaw迁移） | 2026-03-08 |
+| `skills/social-media-crawler/` | 社交媒体爬虫技能 | 2026-03-08 |
+| `skills/stock-local-db-init/` | 股票数据库初始化技能 | 2026-03-08 |
+| `skills/stock-local-db-daily-update/` | 股票数据库日更技能 | 2026-03-08 |
+| `skills/tavily-search/` | Tavily搜索技能 | 2026-03-08 |
 
 ---
 
@@ -155,6 +165,10 @@
 | Agent定义 | 12 (6个Agent × 2文件) |
 | 一级目录 | 9 |
 | 已迁移项目 | 1 (stock-platform) |
+| Skills | 20+ (673个文件) |
+| 定时任务 | 7 (6启用, 1禁用) |
+| 脚本工具 | 8 |
+| 知识文档 | 40+ |
 
 ---
 
@@ -167,15 +181,14 @@
 
 | 优先级 | 项目 | 任务 | 预计完成 | 状态 |
 |--------|------|------|----------|------|
-| **P0** | **Migration** | 完成OpenClaw到Claude Code迁移 | 2026-03-08 | 🔄 进行中 |
+| 无 | - | - | - | - |
 
 ### ⏸️ 待启动 (Backlog)
 
 | 优先级 | 项目 | 任务 | 预计完成 | 阻塞原因 |
 |--------|------|------|----------|----------|
-| **P1** | **Launchd** | 配置并启动launchd定时任务 | 2026-03-08 | 需用户确认 |
-| **P1** | **Testing** | 测试Agent调用和工作流 | 2026-03-08 | 等待迁移完成 |
-| **P2** | **Skills** | 创建/daily-learning等Skill | 2026-03-09 | 前置依赖 |
+| **P1** | **Launchd** | 配置并启动launchd定时任务 | 2026-03-09 | 需用户确认 |
+| **P2** | **Testing** | 测试Agent调用和工作流 | 2026-03-09 | - |
 
 ### ✅ 已完成 (Completed)
 
@@ -183,33 +196,37 @@
 |------|------|------|------|
 | 2026-03-08 | **Infrastructure** | 创建完整目录结构 | 9个一级目录 |
 | 2026-03-08 | **Agents** | 创建6个Agent人格定义 | 12个定义文件 |
-| 2026-03-08 | **Migration** | 迁移学习记录和知识库 | books/ research/ |
-| 2026-03-08 | **Migration** | 迁移stock-platform项目 | projects/ |
+| 2026-03-08 | **Migration** | P0: 迁移定时任务+技能库+量化平台 | cron/, skills/, stock-platform/ |
+| 2026-03-08 | **Migration** | P1: 迁移知识库+学习记录+报告 | knowledge/, memory/, reports/ |
+| 2026-03-08 | **Migration** | P2: 迁移脚本+配置+Agent工作区 | scripts/, FUSION-WORKFLOW/ |
+| 2026-03-08 | **Adaptation** | 格式适配: OpenClaw → Claude Code | SKILL.md, jobs.json, Python脚本 |
 | 2026-03-08 | **Automation** | 创建launchd定时任务配置 | 3个plist + 3个sh |
 
 ---
 
 ## 🚀 下一步行动
 
-1. **配置launchd定时任务**
+1. **配置launchd定时任务**（高优先级）
    ```bash
    cd /Users/linweihao/project/MuskOrchestrator/scripts/launchd
    ./install.sh
    ```
 
-2. **测试Agent调用**
-   - 打开Claude Code
-   - 测试每个Agent的调用
+2. **测试定时任务脚本**（高优先级）
+   ```bash
+   python scripts/daily_learning.py
+   python scripts/weekly_review.py
+   ./scripts/git_auto_commit.sh
+   ```
 
-3. **创建Skills**
-   - /daily-learning
-   - /project-tracker
-   - /knowledge-archive
+3. **测试Agent调用**（中优先级）
+   - 在Claude Code中测试 `@planner`, `@engineer` 等Agent
 
-4. **首次Git提交**
+4. **Git提交迁移成果**
    ```bash
    git add -A
-   git commit -m "Migration complete: OpenClaw → Claude Code v1.0"
+   git commit -m "Migration complete v2.0: OpenClaw → Claude Code with adaptations"
+   git push origin main
    ```
 
 ---

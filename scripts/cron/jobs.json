@@ -1,0 +1,119 @@
+{
+  "version": "claude-code-v1",
+  "description": "MuskOrchestrator 定时任务配置 - 从OpenClaw迁移",
+  "jobs": [
+    {
+      "id": "daily-micro-learning",
+      "name": "Daily Micro Learning",
+      "enabled": true,
+      "schedule": {
+        "cron": "0 7 * * 1-5",
+        "timezone": "Asia/Shanghai"
+      },
+      "action": {
+        "type": "skill",
+        "skill": "/daily-learning"
+      },
+      "autoUpdate": {
+        "target": "PROJECT_INVENTORY.md",
+        "entry": {
+          "type": "学习记录",
+          "trigger": "Daily-Learning"
+        }
+      }
+    },
+    {
+      "id": "daily-micro-learning-weekend",
+      "name": "Daily Micro Learning (Weekend)",
+      "enabled": true,
+      "schedule": {
+        "cron": "0 7 * * 0,6",
+        "timezone": "Asia/Shanghai"
+      },
+      "action": {
+        "type": "skill",
+        "skill": "/daily-learning"
+      },
+      "autoUpdate": {
+        "target": "PROJECT_INVENTORY.md",
+        "entry": {
+          "type": "学习记录",
+          "trigger": "Daily-Learning-Weekend"
+        }
+      }
+    },
+    {
+      "id": "weekly-deep-review",
+      "name": "Weekly Deep Review",
+      "enabled": true,
+      "schedule": {
+        "cron": "0 22 * * 0",
+        "timezone": "Asia/Shanghai"
+      },
+      "action": {
+        "type": "script",
+        "command": "python scripts/weekly_review.py"
+      },
+      "autoUpdate": {
+        "target": "PROJECT_INVENTORY.md",
+        "entry": {
+          "type": "报告",
+          "trigger": "Weekly-Review"
+        }
+      }
+    },
+    {
+      "id": "agent-archive-daily",
+      "name": "Agent Output Archive",
+      "enabled": true,
+      "schedule": {
+        "cron": "0 23 * * *",
+        "timezone": "Asia/Shanghai"
+      },
+      "action": {
+        "type": "script",
+        "command": "python scripts/archive_agent_outputs.py"
+      }
+    },
+    {
+      "id": "git-auto-commit",
+      "name": "Git Auto Commit",
+      "enabled": true,
+      "schedule": {
+        "cron": "30 23 * * *",
+        "timezone": "Asia/Shanghai"
+      },
+      "action": {
+        "type": "script",
+        "command": "scripts/git_auto_commit.sh"
+      }
+    },
+    {
+      "id": "agent-cleanup-weekly",
+      "name": "Weekly Cleanup",
+      "enabled": true,
+      "schedule": {
+        "cron": "0 2 * * 0",
+        "timezone": "Asia/Shanghai"
+      },
+      "action": {
+        "type": "script",
+        "command": "python scripts/archive_agent_outputs.py --cleanup"
+      }
+    },
+    {
+      "id": "social-media-daily-crawl",
+      "name": "Social Media Daily Crawl",
+      "enabled": false,
+      "schedule": {
+        "cron": "30 8 * * *",
+        "timezone": "Asia/Shanghai"
+      },
+      "action": {
+        "type": "script",
+        "command": "cd skills/social-media-crawler && python scripts/daily_crawl.py && python scripts/western_tech_crawler.py"
+      },
+      "note": "需要MediaCrawler登录态，暂时禁用"
+    }
+  ]
+}
