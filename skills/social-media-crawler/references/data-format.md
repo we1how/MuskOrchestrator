@@ -51,7 +51,7 @@
 
 所有数据保存在:
 ```
-~/.openclaw/workspace/data/social-media/
+/Users/linweihao/project/MuskOrchestrator/data/social-media/
 ├── xiaohongshu/
 │   └── hot_notes_YYYYMMDD.json
 ├── twitter/
@@ -67,7 +67,7 @@ import json
 from pathlib import Path
 
 # 获取小红书今日数据
-data_dir = Path.home() / ".openclaw/workspace/data/social-media/xiaohongshu"
+data_dir = Path("/Users/linweihao/project/MuskOrchestrator/data/social-media/xiaohongshu")
 latest_file = sorted(data_dir.glob("hot_notes_*.json"))[-1]
 
 with open(latest_file) as f:

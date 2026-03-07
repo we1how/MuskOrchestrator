@@ -6,7 +6,7 @@ set -e
 echo "🚀 安装 Social Media Crawler..."
 
 # 检查目录
-WORKSPACE_DIR="$HOME/.openclaw/workspace"
+WORKSPACE_DIR="/Users/linweihao/project/MuskOrchestrator"
 CRAWLER_DIR="$WORKSPACE_DIR/tools/MediaCrawler"
 
 if [ -d "$CRAWLER_DIR" ]; then

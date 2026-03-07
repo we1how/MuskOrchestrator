@@ -10,7 +10,7 @@ from datetime import datetime
 from pathlib import Path
 
 # 配置
-WORKSPACE = Path.home() / ".openclaw/workspace"
+WORKSPACE = Path("/Users/linweihao/project/MuskOrchestrator")
 OUTPUT_DIR = WORKSPACE / "data/social-media"
 
 def test_twitter_login():

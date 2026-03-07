@@ -15,7 +15,7 @@ from datetime import datetime
 from pathlib import Path
 
 # 配置
-WORKSPACE = Path.home() / ".openclaw/workspace"
+WORKSPACE = Path("/Users/linweihao/project/MuskOrchestrator")
 OUTPUT_DIR = WORKSPACE / "data/social-media"
 
 # 关注的 Twitter 账号列表（精简版）

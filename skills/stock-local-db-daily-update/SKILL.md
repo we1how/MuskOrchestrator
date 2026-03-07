@@ -11,7 +11,7 @@ A股本地数据库每日增量更新
 ### 手动运行
 
 ```bash
-cd ~/.openclaw/workspace/scripts/stock-db
+cd /Users/linweihao/project/MuskOrchestrator/scripts/stock-db
 python daily_update.py
 ```
 
@@ -42,7 +42,7 @@ python daily_update.py --base-path /path/to/data
 crontab -e
 
 # 添加每日 15:30 执行
-crontab: 30 15 * * 1-5 cd ~/.openclaw/workspace/scripts/stock-db && python daily_update.py
+crontab: 30 15 * * 1-5 cd /Users/linweihao/project/MuskOrchestrator/scripts/stock-db && python daily_update.py
 ```
 
 ### 使用 OpenClaw Cron

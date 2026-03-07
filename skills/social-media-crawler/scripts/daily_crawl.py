@@ -17,7 +17,7 @@ from datetime import datetime
 from pathlib import Path
 
 # 配置路径
-WORKSPACE = Path.home() / ".openclaw/workspace"
+WORKSPACE = Path("/Users/linweihao/project/MuskOrchestrator")
 CRAWLER_DIR = WORKSPACE / "tools/MediaCrawler"
 OUTPUT_DIR = WORKSPACE / "data/social-media"
 

@@ -24,7 +24,7 @@ print(format_results(results))
 
 ## 配置
 
-API Key已存储在：`~/.openclaw/workspace/.credentials/tavily-api-key`
+API Key已存储在：`/Users/linweihao/project/MuskOrchestrator/.credentials/tavily-api-key`
 
 **限额**：1000次/月
 

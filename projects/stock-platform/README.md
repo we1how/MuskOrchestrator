@@ -28,14 +28,14 @@ stock-platform/
 ### 1. 安装依赖
 
 ```bash
-cd /Users/linweihao/.openclaw/workspace/stock-platform
+cd /Users/linweihao/project/MuskOrchestrator/projects/stock-platform
 python3 -m pip install -r requirements.txt
 ```
 
 ### 2. 启动应用
 
 ```bash
-cd /Users/linweihao/.openclaw/workspace/stock-platform
+cd /Users/linweihao/project/MuskOrchestrator/projects/stock-platform
 streamlit run app.py
 ```
 

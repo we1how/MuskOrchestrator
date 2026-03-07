@@ -11,7 +11,7 @@ import argparse
 import sys
 from pathlib import Path
 
-WORKSPACE = Path.home() / ".openclaw/workspace"
+WORKSPACE = Path("/Users/linweihao/project/MuskOrchestrator")
 CRAWLER_DIR = WORKSPACE / "tools/MediaCrawler"
 
 def test_xiaohongshu():

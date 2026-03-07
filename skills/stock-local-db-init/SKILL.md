@@ -9,7 +9,7 @@
 ## 安装依赖
 
 ```bash
-cd ~/.openclaw/workspace/scripts/stock-db
+cd /Users/linweihao/project/MuskOrchestrator/scripts/stock-db
 pip install -r requirements.txt
 ```
 
@@ -73,4 +73,4 @@ python init_stock_db.py --base-path /path/to/data
 
 ## Tushare 配置
 
-Token 已保存在 `~/.openclaw/credentials/tushare.json`
+Token 已保存在 `/Users/linweihao/project/MuskOrchestrator/.credentials/tushare.json`

@@ -36,13 +36,13 @@ description: |
 ### 1. 安装
 
 ```bash
-cd ~/.openclaw/workspace/skills/social-media-crawler/scripts
+cd /Users/linweihao/project/MuskOrchestrator/skills/social-media-crawler/scripts
 bash install.sh
 ```
 
 ### 2. 配置小红书凭证
 
-确保 `~/.openclaw/workspace/.credentials/platform-accounts.md` 已包含账号密码，然后运行：
+确保 `/Users/linweihao/project/MuskOrchestrator/.credentials/platform-accounts.md` 已包含账号密码，然后运行：
 
 ```bash
 python scripts/setup_credentials.py
@@ -89,7 +89,7 @@ openclaw cron run social-media-daily-crawl
 crontab -e
 
 # 添加每日 08:30 执行
-30 8 * * * cd ~/.openclaw/workspace/skills/social-media-crawler && python scripts/daily_crawl.py >> logs/crawl.log 2>&1
+30 8 * * * cd /Users/linweihao/project/MuskOrchestrator/skills/social-media-crawler && python scripts/daily_crawl.py >> logs/crawl.log 2>&1
 ```
 
 ## 数据输出
@@ -97,7 +97,7 @@ crontab -e
 ### 存储位置
 
 ```
-~/.openclaw/workspace/data/social-media/
+/Users/linweihao/project/MuskOrchestrator/data/social-media/
 ├── xiaohongshu/              # 国内：小红书热门
 │   └── hot_notes_YYYYMMDD.json
 ├── western/                  # 国外：高质量情报
@@ -159,7 +159,7 @@ from pathlib import Path
 from datetime import datetime
 
 # 获取今日数据
-data_dir = Path.home() / ".openclaw/workspace/data/social-media"
+data_dir = Path("/Users/linweihao/project/MuskOrchestrator/data/social-media")
 today = datetime.now().strftime("%Y%m%d")
 
 # 小红书数据
@@ -226,7 +226,7 @@ A: 本方案使用 **Jina Reader** (r.jina.ai) 获取 Twitter 公开内容，优
 
 ### Q: 数据在哪里查看？
 
-A: 所有数据保存在 `~/.openclaw/workspace/data/social-media/`，按日期分文件夹存储。
+A: 所有数据保存在 `/Users/linweihao/project/MuskOrchestrator/data/social-media/`，按日期分文件夹存储。
 
 ### Q: 如何修改爬取时间？
 
@@ -241,7 +241,7 @@ A: 编辑 OpenClaw Cron 配置或系统 crontab，修改执行时间。
 
 - **数据格式**: JSON
 - **调度方式**: OpenClaw Cron / 系统 Crontab
-- **存储位置**: `~/.openclaw/workspace/data/social-media/`
+- **存储位置**: `/Users/linweihao/project/MuskOrchestrator/data/social-media/`
 
 ## 免责声明
 

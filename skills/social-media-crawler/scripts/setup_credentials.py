@@ -13,7 +13,7 @@ from pathlib import Path
 
 def read_credentials():
     """从凭证文件读取账号密码"""
-    cred_file = Path.home() / ".openclaw/workspace/.credentials/platform-accounts.md"
+    cred_file = Path("/Users/linweihao/project/MuskOrchestrator/.credentials/platform-accounts.md")
     
     if not cred_file.exists():
         print(f"❌ 凭证文件不存在: {cred_file}")
@@ -48,7 +48,7 @@ def setup_mediacrawler_config():
     if not creds:
         return False
     
-    workspace = Path.home() / ".openclaw/workspace"
+    workspace = Path("/Users/linweihao/project/MuskOrchestrator")
     crawler_dir = workspace / "tools/MediaCrawler"
     
     if not crawler_dir.exists():

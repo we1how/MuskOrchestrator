@@ -16,7 +16,7 @@ def get_api_key() -> str:
     api_key = os.getenv("TAVILY_API_KEY")
     if not api_key:
         # 尝试从credentials文件读取
-        cred_path = os.path.expanduser("~/.openclaw/workspace/.credentials/tavily-api-key")
+        cred_path = os.path.expanduser("/Users/linweihao/project/MuskOrchestrator/.credentials/tavily-api-key")
         if os.path.exists(cred_path):
             with open(cred_path) as f:
                 for line in f:

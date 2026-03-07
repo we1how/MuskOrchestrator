@@ -561,7 +561,7 @@ python scripts/western_intelligence_summary.py
 ### 数据存储
 
 ```
-~/.openclaw/workspace/data/agent-intelligence/
+/Users/linweihao/project/MuskOrchestrator/data/agent-intelligence/
 ├── quant-munger/
 │   └── western_YYYYMMDD.json
 ├── product-engineer/

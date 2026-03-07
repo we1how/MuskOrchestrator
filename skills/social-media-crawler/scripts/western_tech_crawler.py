@@ -20,7 +20,7 @@ import subprocess
 from datetime import datetime
 from pathlib import Path
 
-WORKSPACE = Path.home() / ".openclaw/workspace"
+WORKSPACE = Path("/Users/linweihao/project/MuskOrchestrator")
 OUTPUT_DIR = WORKSPACE / "data/social-media"
 
 def fetch_hackernews():
