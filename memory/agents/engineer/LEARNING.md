@@ -5,6 +5,7 @@
 ### 已学习项目（近7天）
 | 日期 | 项目名称 | 来源 | 核心洞察 |
 |------|----------|------|----------|
+| 2026-03-08 | Ki Editor - AST-based code editor | Hacker News | 基于AST的结构化编辑器，多光标语义操作 |
 | 2026-03-05 | Security boundaries in agentic architectures | Vercel Blog | Agent安全的四层架构与隔离策略 |
 | 2026-03-05 | Alibaba OpenSandbox | GitHub Trending | AI应用通用沙盒平台，支持多语言SDK |
 
@@ -23,6 +24,31 @@
 - **核心洞察**：阿里巴巴开源的AI应用通用沙盒平台，提供多语言SDK（Python/Java/JS/C#/Go）、统一沙盒API、Docker/K8s运行时，专门支持Coding Agents、GUI Agents、AI代码执行等场景。
 - **信息差价值**：高
 - **可应用性**：工具/架构
+
+---
+
+## 2026-03-08 学习记录
+
+### 内容：Ki Editor - 基于AST的结构化代码编辑器
+
+**Source**: https://ki-editor.org/ (Hacker News Top, 347 points)
+**Focus**: Editor / Developer Experience
+
+**核心洞察**：
+1. **范式突破**：Ki Editor直接操作AST（抽象语法树）而非纯文本，将代码编辑从"字符操作"升级为"语义操作"
+2. **多光标+选择模式**：通过"Selection Modes"统一词/行/语法节点级别的导航，支持并行操作多个语法节点
+3. **重构安全性**：AST级别的操作天然保证语法有效性，避免传统文本重构引入的语法错误
+4. **意图驱动**：减少"键盘/鼠标体操"，让开发者直接表达操作意图（如"提取函数"而非"剪切粘贴"）
+
+**信息差分析**：
+- **国外热度**：高（Hacker News Top，347 points）
+- **国内使用情况**：几乎无人知晓，属于前沿概念
+- **工程价值**：对代码重构、IDE插件开发、AI代码生成有启发意义
+
+**可应用性评估**：
+- **短期**：研究其Selection Modes设计，优化我们的代码编辑体验
+- **中期**：借鉴AST操作理念，改进AI代码生成后的自动重构能力
+- **长期**：探索将结构化编辑集成到Agent代码生成工作流中
 
 ---
 
@@ -60,3 +86,5 @@
 ### 需要进一步研究：
 - [ ] OpenSandbox与现有K8s基础设施集成方案
 - [ ] 与Claude Code/Cursor沙盒模式的对比
+- [ ] Ki Editor的Selection Modes设计原理及实现
+- [ ] AST操作在AI代码生成后的自动重构应用

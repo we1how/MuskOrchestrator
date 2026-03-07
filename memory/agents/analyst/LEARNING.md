@@ -5,6 +5,7 @@
 ### 已学习论文（近7天）
 | 日期 | Arxiv ID/标题 | 核心主题 | 状态 |
 |------|---------------|----------|------|
+| 2026-03-08 | Multi-Agent LLM Trading System | 多智能体交易系统工程化实践 | ✅ 已学习 |
 | 2026-03-06 | 2603.03671 - Is an investor stolen their profits by mimic investors? | 策略拥挤度、Agent-Based模型 | ✅ 已学习 |
 | 2026-03-05 | 2603.02898 - Range-Based Volatility Estimators for Monitoring Market Stress | OHLC波动率估计器、市场压力监测 | ✅ 已学习 |
 
@@ -106,3 +107,33 @@ Yang-Zhang:    σ² = σ_overnight² + k·σ_open_close² + (1-k)·σ_RS²
 ### 数据来源
 - Arxiv q-fin: 每日检查
 - 本文件创建时间: 2026-03-05
+
+---
+
+### 今日学习（2026-03-08 Saturday）
+
+#### 学习内容
+- **主题**: 多智能体交易系统的工程化实践 - 从论文到落地
+- **来源**: Research Synthesis / Knowledge Base
+- **基础论文**: arXiv:2602.23330 - Multi-Agent LLM Trading System
+
+#### 核心洞察
+1. **细粒度任务设计的本质**: 把计算工作从LLM转移到确定性代码是提升可靠性的关键。预计算指标（Z-score、RoC、归一化MACD）后再喂给LLM，比让LLM自己算更准确、可解释。
+
+2. **分层架构的真正价值**: 不是"多Agent更准"，而是"分层让每层的职责清晰"。底层专注信号提取（噪声过滤），中层专注校准对齐（语境判断），顶层专注综合决策（权重分配）。
+
+3. **归一化的战略意义**: 任何跨标的策略都必须考虑归一化。普通MACD无法比较不同价格的股票，而归一化MACD（除以收盘价）让所有股票在同一尺度上可比。
+
+4. **语义一致性的工程启示**: 多Agent系统的"黑箱"问题可以通过强制逻辑链条可追溯来解决。即使单Agent系统，也可以要求输出"分析理由"并建立"理由模板"。
+
+5. **A股应用路径**: 当前Stock Platform可以先引入"分层函数"思想（extract_signals → calibrate_signals → make_decision），无需立即做多Agent。
+
+#### 信息差价值
+- **国外热点**: 多智能体LLM交易系统是2025-2026量化研究热点，arXiv q-fin相关论文激增
+- **国内讨论**: 国内量化圈讨论较少，多数团队仍聚焦传统因子挖掘
+- **可应用性**: **高** - 细粒度任务设计和归一化指标可直接应用于现有Stock Platform
+
+#### 下一步行动
+- [ ] 本周: 在Stock Platform中实现归一化MACD和Bollinger Z-score计算模块
+- [ ] 下周: 重构策略函数为分层结构（信号提取→校准→决策）
+- [ ] 本月: 设计"理由模板"，强制策略输出包含关键术语的分析理由
