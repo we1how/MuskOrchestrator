@@ -92,6 +92,7 @@
 | `scripts/cron/jobs.json` | 定时任务配置（Claude Code格式） | 2026-03-08 |
 | `scripts/daily_learning.py` | 每日微学习执行脚本 | 2026-03-08 |
 | `scripts/weekly_review.py` | 每周回顾执行脚本 | 2026-03-08 |
+| `scripts/monthly_evolution.py` | 月度人格进化脚本 | 2026-03-08 |
 | `scripts/git_auto_commit.sh` | Git自动提交脚本 | 2026-03-08 |
 | `scripts/archive_agent_outputs.py` | Agent输出归档脚本（路径已适配） | 2026-03-08 |
 
@@ -105,6 +106,7 @@
 |------|------|----------|
 | `skills/daily-learning/SKILL.md` | 每日微学习Skill（Claude Code格式） | 2026-03-08 |
 | `skills/weekly-review/SKILL.md` | 每周深度回顾Skill | 2026-03-08 |
+| `skills/monthly-evolution/SKILL.md` | 月度人格进化Skill | 2026-03-08 |
 | `skills/knowledge-archive/SKILL.md` | 知识归档Skill | 2026-03-08 |
 | `skills/everything-claude-code/` | 完整技能库（673个文件，从OpenClaw迁移） | 2026-03-08 |
 | `skills/social-media-crawler/` | 社交媒体爬虫技能 | 2026-03-08 |
@@ -165,9 +167,9 @@
 | Agent定义 | 12 (6个Agent × 2文件) |
 | 一级目录 | 9 |
 | 已迁移项目 | 1 (stock-platform) |
-| Skills | 20+ (673个文件) |
-| 定时任务 | 7 (6启用, 1禁用) |
-| 脚本工具 | 8 |
+| Skills | 25 (673个文件) |
+| 定时任务 | 8 (7启用, 1禁用) |
+| 脚本工具 | 9 |
 | 知识文档 | 40+ |
 
 ---

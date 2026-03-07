@@ -114,6 +114,21 @@
         "command": "cd skills/social-media-crawler && python scripts/daily_crawl.py && python scripts/western_tech_crawler.py"
       },
       "note": "需要MediaCrawler登录态，暂时禁用"
+    },
+    {
+      "id": "monthly-personality-evolution",
+      "name": "Monthly Personality Evolution",
+      "enabled": true,
+      "schedule": {
+        "cron": "0 20 * * 0",
+        "timezone": "Asia/Shanghai"
+      },
+      "condition": "每月最后一个周日",
+      "action": {
+        "type": "skill",
+        "skill": "/evolve"
+      },
+      "description": "每月人格进化检查，将验证有效的洞察固化为Agent人格"
     }
   ]
 }

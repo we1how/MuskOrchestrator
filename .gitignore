@@ -1,0 +1,23 @@
+# Logs
+logs/*.log
+logs/*.err
+logs/*.out
+
+# Temporary markers
+.auto-task-marker
+
+# OS files
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Data
+data/stock/raw/
+data/stock/cache/
