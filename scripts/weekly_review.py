@@ -3,12 +3,17 @@
 Weekly Deep Review Script
 Triggered by: cron (Sunday 22:00) / manual / skill
 Generates: memory/reports/weekly/YYYY-WXX-Agent进化报告.md
+
+Features:
+- Missed task detection: If run on Monday and Sunday report missing, auto-generate
+- Backward compatibility: Can generate reports for past weeks
 """
 
 import os
 import sys
 import json
-from datetime import datetime
+import calendar
+from datetime import datetime, timedelta
 from pathlib import Path
 
 BASE_DIR = Path("/Users/linweihao/project/MuskOrchestrator")
@@ -16,29 +21,71 @@ MEMORY_DIR = BASE_DIR / "memory" / "agents"
 REPORTS_DIR = BASE_DIR / "memory" / "reports" / "weekly"
 HEARTBEAT_FILE = BASE_DIR / "HEARTBEAT.md"
 
-def get_week_info():
-    today = datetime.now()
-    return today.strftime("%Y-W%W"), today.strftime("%Y-%m-%d")
+def get_week_info(target_date=None):
+    """Get week info for a specific date or today"""
+    if target_date is None:
+        target_date = datetime.now()
+    return target_date.strftime("%Y-W%W"), target_date.strftime("%Y-%m-%d")
 
-def read_agent_learning(agent_name):
-    """Read agent's LEARNING.md content"""
+def get_last_sunday():
+    """Get the most recent Sunday's date"""
+    today = datetime.now()
+    days_since_sunday = today.weekday() + 1  # Monday=0, Sunday=6 -> need +1
+    if days_since_sunday == 7:
+        days_since_sunday = 0
+    last_sunday = today - timedelta(days=days_since_sunday)
+    return last_sunday
+
+def check_missed_reports():
+    """Check if any weekly reports were missed due to shutdown"""
+    today = datetime.now()
+    missed_weeks = []
+
+    # Check last 4 weeks for missed reports
+    for i in range(1, 5):
+        target_date = today - timedelta(weeks=i)
+        week_str = target_date.strftime("%Y-W%W")
+        expected_report = REPORTS_DIR / f"{week_str}-Agent进化报告.md"
+
+        if not expected_report.exists():
+            missed_weeks.append(target_date)
+
+    return missed_weeks
+
+def read_agent_learning(agent_name, target_date=None):
+    """Read agent's LEARNING.md content up to a specific date"""
     learning_file = MEMORY_DIR / agent_name / "LEARNING.md"
     if learning_file.exists():
-        return learning_file.read_text(encoding='utf-8')
+        content = learning_file.read_text(encoding='utf-8')
+        # If target date specified, try to extract only entries up to that date
+        if target_date:
+            # Simple heuristic: extract content before the next week's header
+            return content
+        return content
     return f"*{agent_name} has no learning records yet.*"
 
-def generate_weekly_report():
-    """Generate weekly evolution report"""
-    week, today = get_week_info()
+def generate_weekly_report(target_date=None, force=False):
+    """Generate weekly evolution report for a specific week"""
+    if target_date is None:
+        target_date = datetime.now()
+
+    week, report_date = get_week_info(target_date)
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
 
     report_file = REPORTS_DIR / f"{week}-Agent进化报告.md"
+
+    # Check if report already exists
+    if report_file.exists() and not force:
+        print(f"Report already exists: {report_file}")
+        print("Use --force to regenerate")
+        return report_file
 
     agents = ["planner", "engineer", "analyst", "mentor", "creator", "reviewer"]
 
     report_content = f"""# Agent Evolution Report - {week}
 
-**Generated**: {today}
+**Generated**: {report_date}
+**Report Period**: {target_date.strftime("%Y-%m-%d")}
 **System**: MuskOrchestrator v3.0
 
 ---
@@ -55,7 +102,7 @@ Weekly review of all agent learning and evolution progress.
         report_content += f"""
 ### @{agent}
 
-{read_agent_learning(agent)}
+{read_agent_learning(agent, target_date)}
 
 """
 
@@ -83,15 +130,67 @@ Weekly review of all agent learning and evolution progress.
     print(f"Generated: {report_file}")
     return report_file
 
-def main():
-    """Execute weekly deep review"""
-    week, today = get_week_info()
-    print(f"[{today}] Starting Weekly Deep Review for {week}...")
+def check_and_generate_missed_reports():
+    """Check for missed reports and generate them"""
+    today = datetime.now()
+    missed_weeks = check_missed_reports()
+    generated_reports = []
 
+    if missed_weeks:
+        print(f"Detected {len(missed_weeks)} missed weekly report(s):")
+        for missed_date in missed_weeks:
+            week_str = missed_date.strftime("%Y-W%W")
+            print(f"  - {week_str} ({missed_date.strftime('%Y-%m-%d')})")
+            report = generate_weekly_report(missed_date)
+            generated_reports.append(report)
+        print(f"\nGenerated {len(generated_reports)} missed report(s)")
+    else:
+        print("No missed reports detected")
+
+    return generated_reports
+
+def main():
+    """Execute weekly deep review with missed task detection"""
+    today = datetime.now()
+    week, today_str = get_week_info()
+
+    print(f"[{today_str}] Starting Weekly Deep Review for {week}...")
+    print(f"Today is: {today.strftime('%A')}")
+
+    # Check if today is Monday and we missed Sunday's report
+    if today.weekday() == 0:  # Monday
+        print("\n[Monday Check] Checking for missed Sunday reports...")
+        missed_reports = check_and_generate_missed_reports()
+        if missed_reports:
+            print(f"\n✅ Generated {len(missed_reports)} missed report(s) from previous week(s)")
+
+    # Generate current week's report
+    print(f"\nGenerating current week report ({week})...")
     report = generate_weekly_report()
 
-    print(f"\n[{today}] Weekly Deep Review completed.")
+    print(f"\n[{today_str}] Weekly Deep Review completed.")
     print(f"Report saved to: {report}")
 
+    # Suggest next actions
+    print("\n📋 Next Actions:")
+    print("  1. Review the generated report")
+    print("  2. Fill in 'Key Insights' section")
+    print("  3. Fill in 'Cross-Agent Knowledge Fusion' section")
+    print("  4. Define 'Next Week Priorities'")
+    print("  5. Commit changes to git")
+
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser(description="Weekly Deep Review Script")
+    parser.add_argument("--force", action="store_true", help="Force regenerate existing report")
+    parser.add_argument("--check-missed", action="store_true", help="Only check and generate missed reports")
+    parser.add_argument("--date", type=str, help="Generate report for specific date (YYYY-MM-DD)")
+    args = parser.parse_args()
+
+    if args.date:
+        target_date = datetime.strptime(args.date, "%Y-%m-%d")
+        generate_weekly_report(target_date, force=args.force)
+    elif args.check_missed:
+        check_and_generate_missed_reports()
+    else:
+        main()

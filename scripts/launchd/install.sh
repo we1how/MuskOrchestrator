@@ -26,10 +26,11 @@ cp "$SCRIPT_DIR/com.muskorchestrator.archive-daily.plist" "$LAUNCHD_DIR/"
 cp "$SCRIPT_DIR/com.muskorchestrator.git-commit.plist" "$LAUNCHD_DIR/"
 cp "$SCRIPT_DIR/com.muskorchestrator.cleanup-weekly.plist" "$LAUNCHD_DIR/"
 cp "$SCRIPT_DIR/com.muskorchestrator.monthly-evolution.plist" "$LAUNCHD_DIR/"
+cp "$SCRIPT_DIR/com.muskorchestrator.startup-check.plist" "$LAUNCHD_DIR/"
 
 # 替换路径（使用用户的实际路径）
 echo "2. 配置路径..."
-for plist in daily-learning daily-learning-weekend weekly-review archive-daily git-commit cleanup-weekly monthly-evolution; do
+for plist in daily-learning daily-learning-weekend weekly-review archive-daily git-commit cleanup-weekly monthly-evolution startup-check; do
     sed -i '' "s|/Users/linweihao/project/MuskOrchestrator|$PROJECT_DIR|g" "$LAUNCHD_DIR/com.muskorchestrator.$plist.plist"
 done
 
@@ -42,13 +43,14 @@ launchctl load "$LAUNCHD_DIR/com.muskorchestrator.archive-daily.plist" 2>/dev/nu
 launchctl load "$LAUNCHD_DIR/com.muskorchestrator.git-commit.plist" 2>/dev/null || launchctl bootstrap gui/$(id -u) "$LAUNCHD_DIR/com.muskorchestrator.git-commit.plist"
 launchctl load "$LAUNCHD_DIR/com.muskorchestrator.cleanup-weekly.plist" 2>/dev/null || launchctl bootstrap gui/$(id -u) "$LAUNCHD_DIR/com.muskorchestrator.cleanup-weekly.plist"
 launchctl load "$LAUNCHD_DIR/com.muskorchestrator.monthly-evolution.plist" 2>/dev/null || launchctl bootstrap gui/$(id -u) "$LAUNCHD_DIR/com.muskorchestrator.monthly-evolution.plist"
+launchctl load "$LAUNCHD_DIR/com.muskorchestrator.startup-check.plist" 2>/dev/null || launchctl bootstrap gui/$(id -u) "$LAUNCHD_DIR/com.muskorchestrator.startup-check.plist"
 
 echo ""
 echo "======================================"
 echo "安装完成！"
 echo "======================================"
 echo ""
-echo "已配置的定时任务（7个）："
+echo "已配置的定时任务（8个）："
 echo "  📚 学习成长"
 echo "    • 工作日每日学习: 07:00 (周一到周五)"
 echo "    • 周末每日学习: 07:00 (周六、周日)"
@@ -59,6 +61,12 @@ echo "  🛠️ 系统维护"
 echo "    • Agent输出归档: 23:00 (每天)"
 echo "    • Git自动提交: 23:30 (每天)"
 echo "    • 过期文件清理: 02:00 (每周日)"
+echo "    • 启动检查: 系统启动时"
+echo ""
+echo "💡 启动检查功能:"
+echo "  • 每次开机自动检测错过的任务"
+echo "  • 如果周日22:00周报未生成，周一开机时自动补生成"
+echo "  • 检查日志: logs/startup-check.log"
 echo ""
 echo "查看任务状态:"
 echo "  launchctl list | grep muskorchestrator"

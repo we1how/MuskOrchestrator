@@ -46,7 +46,7 @@ def render_route_manager(rss_manager: RSSManager):
 
     if not routes:
         st.markdown("""
-        <div style="background: #1E293B; border: 1px dashed #4B5563; border-radius: 8px; padding: 20px; text-align: center; color: #9CA3AF;">
+        <div style="background: var(--bg-card); border: 1px dashed var(--border-strong); border-radius: 8px; padding: 20px; text-align: center; color: var(--text-muted);">
             <span style="font-size: 24px; display: block; margin-bottom: 8px;">📭</span>
             暂无路由，请点击下方添加
         </div>
@@ -167,18 +167,18 @@ def render_news_list():
 
     if not st.session_state.selected_route_id:
         st.markdown("""
-        <div style="background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%); border: 1px solid #374151; border-radius: 8px; padding: 24px; text-align: center;">
+        <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 24px; text-align: center;">
             <span style="font-size: 32px; display: block; margin-bottom: 12px;">👈</span>
-            <span style="color: #9CA3AF; font-weight: 500; font-size: 15px;">请从左侧选择一个RSS路由</span>
+            <span style="color: var(--text-muted); font-weight: 500; font-size: 15px;">请从左侧选择一个RSS路由</span>
         </div>
         """, unsafe_allow_html=True)
         return
 
     if not st.session_state.news_list:
         st.markdown("""
-        <div style="background: #1E293B; border: 1px solid #4B5563; border-radius: 8px; padding: 20px; text-align: center;">
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; text-align: center;">
             <span style="font-size: 24px; display: block; margin-bottom: 8px;">📭</span>
-            <span style="color: #9CA3AF;">该路由暂无新闻内容</span>
+            <span style="color: var(--text-muted);">该路由暂无新闻内容</span>
         </div>
         """, unsafe_allow_html=True)
         return
@@ -211,21 +211,20 @@ def render_news_list():
     for news in st.session_state.news_list:
         render_news_card(news)
 
-    # 显示已选数量提示 - 金融暗黑风格
+    # 显示已选数量提示 - 自动适配主题
     if len(st.session_state.selected_news_ids) > 0:
         selected_count = len(st.session_state.selected_news_ids)
         st.markdown(f"""
-        <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
-                    border: 1px solid #10B981;
+        <div style="background: var(--bg-card);
+                    border: 1px solid var(--accent-green);
                     border-radius: 8px;
                     padding: 12px 16px;
                     margin-top: 16px;
                     display: flex;
                     align-items: center;
-                    gap: 8px;
-                    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);">
-            <span style="font-size: 18px; color: #10B981;">✓</span>
-            <span style="color: #10B981; font-weight: 500;">
+                    gap: 8px;">
+            <span style="font-size: 18px; color: var(--accent-green);">✓</span>
+            <span style="color: var(--accent-green); font-weight: 500;">
                 已选择 {selected_count} 条新闻，已自动同步到右侧AI助手
             </span>
         </div>
@@ -278,9 +277,9 @@ def render_news_card(news: Dict):
 
             st.markdown(f"""
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                <span style="font-size: 15px; font-weight: 600; color: #F9FAFB; line-height: 1.5;">{title_display}</span>
+                <span style="font-size: 15px; font-weight: 600; color: var(--text-primary); line-height: 1.5;">{title_display}</span>
             </div>
-            <div style="font-size: 12px; color: #9CA3AF; display: flex; gap: 12px; align-items: center;">
+            <div style="font-size: 12px; color: var(--text-muted); display: flex; gap: 12px; align-items: center;">
                 <span>📅 {pub_date}</span>
                 <span>📢 {source}</span>
             </div>
@@ -289,9 +288,9 @@ def render_news_card(news: Dict):
             # 展开详情
             with st.expander("查看详情"):
                 st.markdown(f"**{title}**")
-                st.markdown(f"<span style='color: #9CA3AF;'>来源：{source} · {pub_date}</span>", unsafe_allow_html=True)
+                st.markdown(f"<span style='color: var(--text-muted);'>来源：{source} · {pub_date}</span>", unsafe_allow_html=True)
                 if news.get('author'):
-                    st.markdown(f"<span style='color: #9CA3AF;'>作者：{news.get('author')}</span>", unsafe_allow_html=True)
+                    st.markdown(f"<span style='color: var(--text-muted);'>作者：{news.get('author')}</span>", unsafe_allow_html=True)
 
                 st.divider()
 
@@ -359,26 +358,9 @@ def render_finance_page():
         }
     }
 
-    /* 强制使用深色主题（金融专业风格） */
-    :root {
-        --bg-primary: #0B1120;
-        --bg-secondary: #111827;
-        --bg-card: #1E293B;
-        --bg-hover: #374151;
-        --border-color: #374151;
-        --border-strong: #4B5563;
-        --text-primary: #F9FAFB;
-        --text-secondary: #D1D5DB;
-        --text-muted: #9CA3AF;
-        --accent-primary: #3B82F6;
-        --accent-secondary: #D4AF37;
-        --accent-green: #10B981;
-        --accent-red: #EF4444;
-    }
-
-    /* 全局背景 */
+    /* 全局背景 - 自动适配主题 */
     .stApp {
-        background: linear-gradient(180deg, #0B1120 0%, #111827 100%) !important;
+        background: var(--bg-primary) !important;
     }
 
     /* 三栏独立滚动 */
@@ -390,20 +372,20 @@ def render_finance_page():
         background: transparent !important;
     }
 
-    /* 自定义滚动条 - 金融暗黑风格 */
+    /* 自定义滚动条 - 自动适配主题 */
     [data-testid="stColumn"]::-webkit-scrollbar {
         width: 6px;
     }
     [data-testid="stColumn"]::-webkit-scrollbar-track {
-        background: #1F2937;
+        background: var(--border-color);
         border-radius: 3px;
     }
     [data-testid="stColumn"]::-webkit-scrollbar-thumb {
-        background: #4B5563;
+        background: var(--border-strong);
         border-radius: 3px;
     }
     [data-testid="stColumn"]::-webkit-scrollbar-thumb:hover {
-        background: #6B7280;
+        background: var(--text-muted);
     }
 
     /* 隐藏Streamlit默认的main区域滚动 */
@@ -419,7 +401,6 @@ def render_finance_page():
         font-weight: 700 !important;
         border-bottom: 2px solid var(--accent-secondary) !important;
         padding-bottom: 8px !important;
-        text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
     }
 
     /* ===== 路由按钮样式 - 金融风 ===== */
@@ -446,15 +427,15 @@ def render_finance_page():
         color: #0B1120 !important;
         font-weight: 600 !important;
         padding: 10px 16px !important;
-        box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
         transition: all 0.2s ease !important;
     }
     div[data-testid="stButton"] > button[kind="primary"]:hover {
         transform: translateY(-1px) !important;
-        box-shadow: 0 4px 16px rgba(212, 175, 55, 0.5) !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
     }
 
-    /* ===== 新闻卡片样式 - 金融暗黑风 ===== */
+    /* ===== 新闻卡片样式 - 金融风 ===== */
     .news-card {
         background: var(--bg-card);
         border: 1px solid var(--border-color);
@@ -462,16 +443,16 @@ def render_finance_page():
         padding: 16px;
         margin-bottom: 12px;
         transition: all 0.2s ease;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
     .news-card:hover {
         border-color: var(--border-strong);
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
         transform: translateY(-1px);
     }
     .news-card.selected {
         border-color: var(--accent-secondary);
-        background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(30, 64, 175, 0.1) 100%);
+        background: var(--bg-hover);
         box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
     }
     .news-title {
@@ -517,13 +498,12 @@ def render_finance_page():
 
     /* ===== 选中提示样式 - 金融风 ===== */
     .selected-info {
-        background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%);
+        background: var(--bg-card);
         border: 1px solid var(--accent-green);
         border-radius: 8px;
         padding: 12px 16px;
         color: var(--accent-green);
         font-weight: 500;
-        box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
     }
 
     /* ===== 标签和徽章 ===== */

@@ -65,7 +65,13 @@ st.markdown("""
 def init_session_state():
     """初始化 session state"""
     if 'data_loader' not in st.session_state:
-        st.session_state.data_loader = StockDataLoader()
+        try:
+            # 使用只读模式避免 DuckDB 锁定冲突
+            st.session_state.data_loader = StockDataLoader(read_only=True)
+        except Exception as e:
+            st.error(f"数据库连接失败: {e}")
+            st.info("请检查是否有其他应用实例正在运行，或稍后再试。")
+            st.stop()
     if 'backtest_results' not in st.session_state:
         st.session_state.backtest_results = None
     if 'oversold_scan_results' not in st.session_state:

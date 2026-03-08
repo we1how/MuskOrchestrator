@@ -14,18 +14,31 @@ from typing import Optional, List
 
 class StockDataLoader:
     """股票数据加载器"""
-    
-    def __init__(self, base_path: str = "~/StockData"):
+
+    def __init__(self, base_path: str = "~/StockData", read_only: bool = False):
         self.base_path = Path(base_path).expanduser()
         self.parquet_path = self.base_path / "parquet"
         self.db_path = self.base_path / "stock.duckdb"
-        
-        # 连接 DuckDB
-        self.conn = duckdb.connect(str(self.db_path))
+
+        # 连接 DuckDB（支持只读模式避免锁定冲突）
+        self.conn = duckdb.connect(str(self.db_path), read_only=read_only)
         self._init_views()
     
     def _init_views(self):
         """初始化视图"""
+        # 检查是否只读模式（只读模式下视图应已存在）
+        try:
+            is_readonly = self.conn.execute("PRAGMA database_list").fetchall()
+            # 尝试获取当前数据库的只读状态
+            readonly_setting = self.conn.execute("SELECT current_setting('access_mode')").fetchone()[0]
+            is_readonly_mode = (readonly_setting == 'read_only')
+        except:
+            is_readonly_mode = False
+
+        # 只读模式下跳过视图创建（视图应已存在）
+        if is_readonly_mode:
+            return
+
         # 日线数据视图 - 支持分区路径 (year=*/month=*/data.parquet)
         daily_path = self.parquet_path / "daily"
         try:
@@ -38,9 +51,9 @@ class StockDataLoader:
                 """)
         except Exception as e:
             print(f"Warning: daily view creation failed: {e}")
-        
+
         # 其他表视图
-        tables = ['stock_basic', 'fundamentals', 'income_statement', 
+        tables = ['stock_basic', 'fundamentals', 'income_statement',
                   'balance_sheet', 'cash_flow']
         for table in tables:
             parquet_path = self.parquet_path / f"{table}.parquet"
