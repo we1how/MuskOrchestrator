@@ -5,6 +5,9 @@
 ### 已学习项目（近7天）
 | 日期 | 项目名称 | 来源 | 核心洞察 |
 |------|----------|------|----------|
+| 2026-03-11 | Microsoft MarkItDown | GitHub Trending Python | 文档转Markdown流水线，86k+ stars |
+| 2026-03-10 | MiroFish - Swarm Intelligence Engine | GitHub Trending #1 | 群体智能预测范式，去中心化决策 |
+| 2026-03-09 | ai-hedge-fund - 多智能体交易系统 | GitHub Trending | 分层Agent架构，信号归一化策略 |
 | 2026-03-08 | Ki Editor - AST-based code editor | Hacker News | 基于AST的结构化编辑器，多光标语义操作 |
 | 2026-03-05 | Security boundaries in agentic architectures | Vercel Blog | Agent安全的四层架构与隔离策略 |
 | 2026-03-05 | Alibaba OpenSandbox | GitHub Trending | AI应用通用沙盒平台，支持多语言SDK |
@@ -24,6 +27,84 @@
 - **核心洞察**：阿里巴巴开源的AI应用通用沙盒平台，提供多语言SDK（Python/Java/JS/C#/Go）、统一沙盒API、Docker/K8s运行时，专门支持Coding Agents、GUI Agents、AI代码执行等场景。
 - **信息差价值**：高
 - **可应用性**：工具/架构
+
+---
+
+## 2026-03-10 学习记录
+
+### 📚 今日精选
+**来源**: GitHub Trending Python
+**项目**: [MiroFish](https://github.com/666ghj/MiroFish)
+**作者**: 666ghj
+**热度**: GitHub Trending #1, +2,222 stars (单日)
+**主题**: Swarm Intelligence Engine - 群体智能预测引擎
+
+---
+
+### 🎯 核心主题
+**Swarm Intelligence（群体智能）正在成为AI预测的新范式**
+
+通过模拟自然界群体行为（鱼群、鸟群）来解决复杂预测问题。与单一LLM Agent不同，Swarm Intelligence强调多Agent协作、去中心化决策，每个Agent只有局部信息但能涌现全局智能。
+
+---
+
+### 💡 关键洞察
+
+1. **群体智能 vs 多Agent角色分工**
+   - ai-hedge-fund: 角色分工（分析师/风险管理员/PM）
+   - MiroFish: 去中心化群体决策（类似鱼群、鸟群的行为模式）
+   - **本质区别**: 前者是层级架构，后者是涌现架构
+
+2. **"Predicting Anything"的野心**
+   - 项目定位极具野心，覆盖股票预测、天气、趋势分析等多个领域
+   - 同作者的BettaFish（多Agent舆情分析）也在trending，显示多Agent系统正在形成生态
+
+3. **与ai-hedge-fund的互补性**
+   - ai-hedge-fund: 金融领域的分层决策
+   - MiroFish: 通用预测引擎的群体智能范式
+   - **Stock Platform应用**: 可将两者结合，分层决策+群体预测
+
+---
+
+### 🔧 技术亮点
+
+| 特性 | 说明 |
+|------|------|
+| Swarm协调机制 | 粒子群优化（PSO）或类似算法 |
+| 去中心化 | 每个Agent独立决策，无中心控制器 |
+| 局部信息 | Agent只基于局部信息行动，全局智能涌现 |
+
+---
+
+### 🧠 可应用技术
+
+**Swarm Prediction Engine（群体预测引擎）**
+- **触发**: 多维度预测任务
+- **步骤**: 定义目标 → 创建Specialized Agents → 独立预测 → Swarm聚合 → 输出结果
+- **应用**: Stock Platform预测模块、多因子信号融合
+
+---
+
+### 📊 信息差价值评估
+- **国外热度**: ⭐⭐⭐⭐⭐ 极高（GitHub #1，单日+2K星）
+- **国内讨论度**: ⭐⭐ 低（刚出现，中文社区尚未大规模讨论）
+- **工程可复刻性**: ⭐⭐⭐⭐⭐ 极高（开源Python）
+- **创新价值**: ⭐⭐⭐⭐ 高（群体智能范式不同于传统多Agent）
+
+---
+
+### 🔖 相关资源
+- GitHub: https://github.com/666ghj/MiroFish
+- 对比项目: https://github.com/virattt/ai-hedge-fund
+
+---
+
+### 备选发现（值得关注）
+| 项目 | 链接 | 描述 | 价值点 |
+|------|------|------|--------|
+| Terminal Use | - | Vercel for filesystem-based agents | 文件系统Agent托管 |
+| claude-skills | - | 169 production-ready skills | 技能设计模式参考 |
+| hermes-agent | - | The agent that grows with you | NousResearch出品，自我成长机制 |
 
 ---
 
@@ -88,3 +169,269 @@
 - [ ] 与Claude Code/Cursor沙盒模式的对比
 - [ ] Ki Editor的Selection Modes设计原理及实现
 - [ ] AST操作在AI代码生成后的自动重构应用
+
+---
+
+## 2026-03-09 学习记录
+
+### 📚 今日精选
+**来源**: GitHub Trending
+**项目**: [ai-hedge-fund](https://github.com/virattt/ai-hedge-fund)
+**作者**: virattt
+**趋势**: 11,000+ stars, 持续高热
+**学习时长**: 20分钟
+
+---
+
+### 🎯 核心主题
+**多智能体AI对冲基金系统：从概念到开源落地**
+
+这是一个由多个AI Agent组成的交易决策系统，模拟真实对冲基金的工作流程。每个Agent代表不同的投资流派（本杰明·格雷厄姆、巴菲特、比尔·阿克曼等），最终由风险管理和投资组合管理Agent整合决策。
+
+---
+
+### 💡 关键洞察
+
+**1. 分层Agent架构 (Layered Agent Architecture)**
+
+```
+┌─────────────────────────────────────────┐
+│  Portfolio Management Agent             │
+│  - 最终投资决策                         │
+└──────────────┬──────────────────────────┘
+               │ 综合各Agent信号
+┌──────────────▼──────────────────────────┐
+│  Risk Management Agent                  │
+│  - 风险评估、仓位控制                   │
+└──────────────┬──────────────────────────┘
+               │ 风险过滤
+┌──────────────▼──────────────────────────┐
+│  多Agent信号生成层                      │
+│  - 价值投资者Agent (Graham/Buffett)     │
+│  - 激进投资者Agent (Ackman)             │
+│  - 量化策略Agent                        │
+└─────────────────────────────────────────┘
+```
+
+**2. 每个Agent的细粒度任务设计**
+
+- **信号提取Agent**: 负责技术指标预计算（Z-score、RoC、归一化MACD）
+- **校准对齐Agent**: 基于市场语境调整信号权重
+- **决策综合Agent**: 多源信号加权融合
+
+**关键学习点**：把计算工作从LLM转移到确定性代码是提升可靠性的关键。
+
+**3. 信号归一化的战略意义**
+
+- 普通MACD无法跨标的比较（不同价格基数）
+- 归一化MACD（除以收盘价）让所有股票在同一尺度可比
+- 这是跨标的量化策略必须考虑的设计
+
+---
+
+### 🔧 技术栈分析
+
+| 组件 | 技术选择 | 启示 |
+|------|----------|------|
+| LLM | GPT-4/Claude | 不需要自研模型，善用API |
+| 数据 | Yahoo Finance + Financial Datasets API | 免费+付费数据源结合 |
+| 工作流 | LangGraph (State Machine) | 复杂Agent编排需要状态管理 |
+| 输出 | JSON结构化决策 | 便于程序化执行和回溯 |
+
+---
+
+### 🧠 可应用技术
+
+**1. 分层函数设计**
+```python
+# 分层架构模式
+def extract_signals(market_data):      # 信号提取
+    return normalized_indicators
+
+def calibrate_signals(signals, context):  # 校准对齐
+    return adjusted_weights
+
+def make_decision(calibrated_signals):    # 决策综合
+    return final_action
+```
+
+**2. 归一化指标实现**
+- 归一化MACD = MACD / Close_Price
+- Bollinger Z-score = (Price - MA) / Std
+- 所有指标在同一尺度上可比
+
+**3. 理由模板强制输出**
+每个Agent必须输出包含以下要素的分析理由：
+- 信号类型（趋势/均值回归/动量）
+- 置信度评分（0-100）
+- 关键数据支撑
+- 风险因素
+
+---
+
+### 📊 信息差价值评估
+- **国外热度**: ⭐⭐⭐⭐⭐ 极高（11K+ stars，持续上趋势榜）
+- **国内讨论度**: ⭐⭐⭐ 低（类似开源项目在国内少见讨论）
+- **工程可复刻性**: ⭐⭐⭐⭐⭐ 极高（Python代码清晰，依赖明确）
+- **创新价值**: ⭐⭐⭐⭐ 高（将多Agent架构应用于量化交易，思路可迁移）
+
+---
+
+### 🎯 可应用性路径
+
+**短期（本周）**:
+- [ ] 研究项目代码结构，理解LangGraph状态机设计
+- [ ] 提取归一化MACD和Bollinger Z-score实现
+- [ ] 设计"理由模板"格式，强制策略输出结构化理由
+
+**中期（本月）**:
+- [ ] 在Stock Platform中实现分层策略函数
+- [ ] 测试多Agent信号融合效果
+- [ ] 建立策略回测框架
+
+**长期（本季度）**:
+- [ ] 探索自定义Agent角色（A股特色因子）
+- [ ] 实现Agent间的辩论机制（多空对抗）
+- [ ] 研究如何将此架构扩展到其他决策场景
+
+---
+
+### 🔖 相关资源
+- GitHub: https://github.com/virattt/ai-hedge-fund
+- LangGraph文档: https://langchain-ai.github.io/langgraph/
+- 论文: arXiv:2602.23330 - Multi-Agent LLM Trading System
+
+---
+
+---
+
+## 2026-03-11 学习记录
+
+### 📚 今日精选
+**来源**: GitHub Trending Python
+**项目**: [Microsoft MarkItDown](https://github.com/microsoft/markitdown)
+**作者**: Microsoft
+**热度**: 86,000+ stars, Python分类趋势第一
+**学习时长**: 15分钟
+
+---
+
+### 🎯 核心主题
+**文档智能预处理：非结构化文档到结构化Markdown的流水线**
+
+MarkItDown是微软开源的文档转换工具，支持PDF、Word、Excel、PowerPoint、图片、音频、HTML等多种格式转换为Markdown。特别适用于RAG（检索增强生成）系统的文档预处理流程。
+
+---
+
+### 💡 关键洞察
+
+**1. RAG流程中的文档预处理痛点**
+
+传统RAG系统面临的挑战：
+- PDF/Word等非结构化文档难以直接切片
+- 文档结构（标题、表格、列表）丢失
+- 图片中的文字信息无法提取
+- 格式混乱影响检索质量
+
+**MarkItDown解决方案**:
+- 保留文档结构层次（转换为Markdown标题）
+- 表格转为Markdown表格格式
+- OCR提取图片文字（可选）
+- 统一输出格式便于后续处理
+
+**2. 多格式支持能力**
+
+| 格式 | 用途场景 |
+|------|----------|
+| PDF | 报告、论文、电子书 |
+| Word/Excel/PPT | 办公文档 |
+| 图片 | 截图、扫描件（需OCR） |
+| 音频 | 会议录音转文字 |
+| HTML | 网页存档 |
+
+**3. 工程集成友好**
+
+```python
+# Python API使用
+from markitdown import MarkItDown
+md = MarkItDown()
+result = md.convert("document.pdf")
+print(result.text_content)
+
+# 批量处理流水线
+def batch_convert(input_dir, output_dir):
+    # 批量转换 + 分块 + 元数据提取
+    pass
+```
+
+---
+
+### 🔧 技术特性
+
+| 特性 | 说明 |
+|------|------|
+| 多格式支持 | PDF/DOCX/XLSX/PPTX/HTML/PNG/JPG/MP3等 |
+| OCR集成 | 可选OCR提取图片文字 |
+| 结构保留 | 标题、列表、表格转换为Markdown格式 |
+| CLI支持 | 命令行直接转换 |
+
+---
+
+### 🧠 可应用技术
+
+**1. RAG文档预处理流水线**
+```python
+# 文档 → Markdown → 分块 → 向量存储
+def rag_pipeline(file_path):
+    # 1. MarkItDown转换
+    # 2. 文本分块（按标题/段落）
+    # 3. 元数据提取
+    # 4. 向量存储
+    pass
+```
+
+**2. 知识库构建**
+- 批量处理企业文档
+- 统一格式便于检索
+- 支持图片文字提取
+
+---
+
+### 📊 信息差价值评估
+- **国外热度**: ⭐⭐⭐⭐⭐ 极高（微软官方，86K+ stars）
+- **国内讨论度**: ⭐⭐⭐ 中（技术圈开始讨论）
+- **工程可复刻性**: ⭐⭐⭐⭐⭐ 极高（pip install即可用）
+- **创新价值**: ⭐⭐⭐⭐ 高（文档预处理的标准化方案）
+
+---
+
+### 🎯 可应用性路径
+
+**短期（本周）**:
+- [ ] 安装测试MarkItDown
+- [ ] 测试PDF/Word转换效果
+- [ ] 评估OCR功能准确性
+
+**中期（本月）**:
+- [ ] 集成到Stock Platform文档处理流程
+- [ ] 批量处理研报/财报PDF
+- [ ] 构建知识库RAG pipeline
+
+---
+
+### 🔖 相关资源
+- GitHub: https://github.com/microsoft/markitdown
+- 技能文件: `skills/coding/markitdown-document-pipeline.md`
+
+---
+
+### 📋 技能内化
+- **技能文件**: `skills/coding/markitdown-document-pipeline.md`
+- **触发条件**: RAG文档预处理、批量文档转换
+- **核心代码**: Python API + 批量处理函数
+
+---
+
+*Learning Date: 2026-03-11*
+
+*Learning Date: 2026-03-09*

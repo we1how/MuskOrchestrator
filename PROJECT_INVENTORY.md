@@ -3,7 +3,7 @@
 > **维护原则**：每次增加、修改、删除文件/文件夹时，必须同步更新本清单
 > **自动更新**：定时任务执行后自动更新
 > **手动更新**：其他变更需用户确认后更新
-> **最后更新**：2026-03-08
+> **最后更新**：2026-03-11
 > **版本**：v2.0 (迁移完成)
 
 ---
@@ -49,10 +49,11 @@
 
 | 路径 | 描述 | 修改时间 |
 |------|------|----------|
-| `memory/agents/engineer/LEARNING.md` | 产品工程师学习记录（迁移） | 2026-03-08 |
-| `memory/agents/analyst/LEARNING.md` | 量化分析师学习记录（迁移） | 2026-03-08 |
-| `memory/agents/mentor/LEARNING.md` | 成长导师学习记录（迁移） | 2026-03-08 |
-| `memory/agents/creator/LEARNING.md` | 内容创作者学习记录（迁移） | 2026-03-08 |
+| `memory/agents/engineer/LEARNING.md` | 产品工程师学习记录（每日更新） | 2026-03-11 |
+| `memory/agents/analyst/LEARNING.md` | 量化分析师学习记录（每日更新） | 2026-03-11 |
+| `memory/agents/mentor/LEARNING.md` | 成长导师学习记录（每日更新） | 2026-03-11 |
+| `memory/agents/creator/LEARNING.md` | 内容创作者学习记录（每日更新） | 2026-03-11 |
+| `memory/conversations/` | 每日学习执行记录存档 | 2026-03-11 |
 | `memory/reports/weekly/` | 周报存档目录 | 2026-03-08 |
 | `memory/reports/daily/` | 日报存档目录 | 2026-03-08 |
 
@@ -113,6 +114,10 @@
 | `skills/stock-local-db-init/` | 股票数据库初始化技能 | 2026-03-08 |
 | `skills/stock-local-db-daily-update/` | 股票数据库日更技能 | 2026-03-08 |
 | `skills/tavily-search/` | Tavily搜索技能 | 2026-03-08 |
+| `skills/coding/markitdown-document-pipeline.md` | MarkItDown文档预处理技能 | 2026-03-11 |
+| `skills/analysis/a-share-multi-agent-framework.md` | A股多Agent量化框架技能 | 2026-03-11 |
+| `skills/planning/ooda-decision-framework.md` | OODA快速决策框架技能 | 2026-03-11 |
+| `skills/communication/reddit-precision-marketing.md` | Reddit精准获客技能 | 2026-03-11 |
 
 ---
 
