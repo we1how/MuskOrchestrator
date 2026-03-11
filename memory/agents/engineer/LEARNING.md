@@ -5,6 +5,7 @@
 ### 已学习项目（近7天）
 | 日期 | 项目名称 | 来源 | 核心洞察 |
 |------|----------|------|----------|
+| 2026-03-12 | Promptfoo - RAG评估框架 | GitHub 25k+ stars | RAG质量可量化评估，CI/CD集成 |
 | 2026-03-11 | Microsoft MarkItDown | GitHub Trending Python | 文档转Markdown流水线，86k+ stars |
 | 2026-03-10 | MiroFish - Swarm Intelligence Engine | GitHub Trending #1 | 群体智能预测范式，去中心化决策 |
 | 2026-03-09 | ai-hedge-fund - 多智能体交易系统 | GitHub Trending | 分层Agent架构，信号归一化策略 |

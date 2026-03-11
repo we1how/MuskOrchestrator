@@ -11,16 +11,50 @@
         <string>/Users/linweihao/project/MuskOrchestrator/scripts/launchd/daily-learning.sh</string>
     </array>
 
-    <!-- 工作日 07:00 触发 -->
+    <!-- 工作日 07:00 触发 (周一到周五) -->
     <key>StartCalendarInterval</key>
-    <dict>
-        <key>Hour</key>
-        <integer>7</integer>
-        <key>Minute</key>
-        <integer>0</integer>
-        <key>Weekday</key>
-        <integer>1</integer> <!-- Monday -->
-    </dict>
+    <array>
+        <dict>
+            <key>Hour</key>
+            <integer>7</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+            <key>Weekday</key>
+            <integer>1</integer> <!-- Monday -->
+        </dict>
+        <dict>
+            <key>Hour</key>
+            <integer>7</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+            <key>Weekday</key>
+            <integer>2</integer> <!-- Tuesday -->
+        </dict>
+        <dict>
+            <key>Hour</key>
+            <integer>7</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+            <key>Weekday</key>
+            <integer>3</integer> <!-- Wednesday -->
+        </dict>
+        <dict>
+            <key>Hour</key>
+            <integer>7</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+            <key>Weekday</key>
+            <integer>4</integer> <!-- Thursday -->
+        </dict>
+        <dict>
+            <key>Hour</key>
+            <integer>7</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+            <key>Weekday</key>
+            <integer>5</integer> <!-- Friday -->
+        </dict>
+    </array>
 
     <key>StandardOutPath</key>
     <string>/Users/linweihao/project/MuskOrchestrator/logs/daily-learning.out</string>

@@ -66,35 +66,67 @@ class StockDataLoader:
                 except Exception as e:
                     print(f"Warning: {table} view creation failed: {e}")
     
+    def _normalize_stock_code(self, code: str) -> str:
+        """
+        将各种格式的股票代码统一转换为 ts_code 格式 (600408.SH)
+        支持的输入格式：
+        - 600408 (纯数字)
+        - 600408.SH (标准格式)
+        - sh.600408 / sz.600408 (stock_basic 格式)
+        """
+        if not code:
+            return code
+
+        # 已经是标准格式 (600408.SH)
+        if '.' in code and len(code.split('.')) == 2:
+            suffix = code.split('.')[1].upper()
+            if suffix in ['SH', 'SZ', 'BJ']:
+                return code.upper()
+
+        # 处理 sh.600408 / sz.600408 / bj.600408 格式
+        if '.' in code and len(code.split('.')) == 2:
+            parts = code.split('.')
+            prefix = parts[0].lower()
+            num = parts[1]
+            if prefix == 'sh':
+                return f"{num}.SH"
+            elif prefix == 'sz':
+                return f"{num}.SZ"
+            elif prefix == 'bj':
+                return f"{num}.BJ"
+
+        # 纯数字，根据前缀判断交易所
+        if code.startswith('6'):
+            return f"{code}.SH"
+        elif code.startswith('0') or code.startswith('3'):
+            return f"{code}.SZ"
+        elif code.startswith('8') or code.startswith('4'):
+            return f"{code}.BJ"
+
+        return code
+
     def get_stock_data(
-        self, 
-        code: str, 
-        start_date: str, 
+        self,
+        code: str,
+        start_date: str,
         end_date: str
     ) -> pd.DataFrame:
         """
         获取单只股票的历史数据
-        
+
         Args:
-            code: 股票代码 (如: 000001, 600519)
+            code: 股票代码 (如: 000001, 600519, sh.600408)
             start_date: 开始日期 (YYYY-MM-DD)
             end_date: 结束日期 (YYYY-MM-DD)
-        
+
         Returns:
             DataFrame 包含 OHLCV 数据，格式适配 backtesting.py
         """
         # 标准化股票代码格式
-        if '.' not in code:
-            # 根据代码前缀判断交易所
-            if code.startswith('6'):
-                code = f"{code}.SH"
-            elif code.startswith('0') or code.startswith('3'):
-                code = f"{code}.SZ"
-            elif code.startswith('8') or code.startswith('4'):
-                code = f"{code}.BJ"
-        
+        code = self._normalize_stock_code(code)
+
         query = f"""
-            SELECT 
+            SELECT
                 trade_date as Date,
                 open as Open,
                 high as High,
@@ -107,8 +139,17 @@ class StockDataLoader:
               AND trade_date <= '{end_date}'
             ORDER BY trade_date ASC
         """
-        
-        df = self.conn.execute(query).fetchdf()
+
+        try:
+            df = self.conn.execute(query).fetchdf()
+        except Exception as e:
+            error_msg = str(e)
+            if "No magic bytes found" in error_msg or "parquet" in error_msg.lower():
+                print(f"[数据加载] 警告: 数据文件可能损坏，尝试使用备用方法加载: {e}")
+                # 尝试直接从 parquet 文件加载，跳过损坏的文件
+                df = self._get_stock_data_fallback(code, start_date, end_date)
+            else:
+                raise
         
         if df.empty:
             return df
@@ -122,7 +163,97 @@ class StockDataLoader:
                       else col for col in df.columns]
         
         return df
-    
+
+    def _get_stock_data_fallback(self, code: str, start_date: str, end_date: str) -> pd.DataFrame:
+        """
+        备用方法：当视图查询失败时，尝试直接从 parquet 文件加载数据
+        跳过损坏的文件
+        """
+        import pandas as pd
+        from pathlib import Path
+
+        # 标准化代码格式
+        if '.' not in code:
+            if code.startswith('6'):
+                code = f"{code}.SH"
+            elif code.startswith('0') or code.startswith('3'):
+                code = f"{code}.SZ"
+            elif code.startswith('8') or code.startswith('4'):
+                code = f"{code}.BJ"
+
+        # 计算需要查询的年月范围
+        start_year = int(start_date[:4])
+        end_year = int(end_date[:4])
+        start_month = int(start_date[5:7])
+        end_month = int(end_date[5:7])
+
+        all_data = []
+        daily_path = self.parquet_path / "daily"
+
+        # 遍历可能的年月组合
+        for year in range(start_year, end_year + 1):
+            year_path = daily_path / f"year={year}"
+            if not year_path.exists():
+                continue
+
+            month_start = start_month if year == start_year else 1
+            month_end = end_month if year == end_year else 12
+
+            for month in range(month_start, month_end + 1):
+                month_str = f"{month:02d}"
+                parquet_file = year_path / f"month={month_str}" / "data.parquet"
+
+                if parquet_file.exists():
+                    try:
+                        # 尝试读取单个 parquet 文件
+                        df = pd.read_parquet(parquet_file)
+                        # 筛选特定股票
+                        if 'ts_code' in df.columns:
+                            df = df[df['ts_code'] == code]
+                        elif 'symbol' in df.columns:
+                            df = df[df['symbol'] == code]
+                        if not df.empty:
+                            all_data.append(df)
+                    except Exception as e:
+                        print(f"[数据加载] 跳过损坏的文件 {parquet_file}: {e}")
+                        continue
+
+        if not all_data:
+            return pd.DataFrame()
+
+        # 合并所有数据
+        combined = pd.concat(all_data, ignore_index=True)
+
+        # 标准化列名
+        column_mapping = {
+            'trade_date': 'Date',
+            'open': 'Open',
+            'high': 'High',
+            'low': 'Low',
+            'close': 'Close',
+            'vol': 'Volume',
+            'volume': 'Volume'
+        }
+
+        # 重命名列
+        for old_col, new_col in column_mapping.items():
+            if old_col in combined.columns:
+                combined = combined.rename(columns={old_col: new_col})
+
+        # 确保必要的列存在
+        required_cols = ['Date', 'Open', 'High', 'Low', 'Close', 'Volume']
+        for col in required_cols:
+            if col not in combined.columns:
+                print(f"[数据加载] 警告: 缺少列 {col}")
+
+        # 按日期排序和筛选
+        if 'Date' in combined.columns:
+            combined['Date'] = pd.to_datetime(combined['Date'])
+            combined = combined[(combined['Date'] >= start_date) & (combined['Date'] <= end_date)]
+            combined = combined.sort_values('Date')
+
+        return combined
+
     def get_available_stocks(self, limit: int = 1000) -> pd.DataFrame:
         """
         获取可用股票列表（去重，只包含当前上市股票）
@@ -134,25 +265,38 @@ class StockDataLoader:
         parquet_path = self.parquet_path / "stock_basic.parquet"
 
         if parquet_path.exists():
-            query = f"""
-                SELECT DISTINCT
-                    CASE
-                        WHEN symbol LIKE '%.SZ' OR symbol LIKE '%.SH' OR symbol LIKE '%.BJ'
-                        THEN SUBSTRING(symbol, 1, LENGTH(symbol) - 3)
-                        ELSE symbol
-                    END as code,
-                    name,
-                    industry,
-                    market
-                FROM stock_basic
-                WHERE list_status = 'L'
-                  AND (market = '主板' OR market = '创业板' OR market = '科创板' OR market = '北交所')
-                ORDER BY total_mv DESC
-                LIMIT {limit}
-            """
+            # 尝试使用兼容的列名（表结构可能不同）
             try:
+                # 先查看有哪些列
+                schema_query = "DESCRIBE SELECT * FROM stock_basic LIMIT 1"
+                schema = self.conn.execute(schema_query).fetchdf()
+                available_cols = schema['column_name'].tolist()
+
+                # 构建查询
+                select_cols = ['name']
+                if 'industry' in available_cols:
+                    select_cols.append('industry')
+                if 'market' in available_cols:
+                    select_cols.append('market')
+                if 'total_mv' in available_cols:
+                    select_cols.append('total_mv')
+                if 'tradeStatus' in available_cols:
+                    select_cols.append('tradeStatus')
+
+                query = f"""
+                    SELECT DISTINCT
+                        CASE
+                            WHEN symbol LIKE '%.SZ' OR symbol LIKE '%.SH' OR symbol LIKE '%.BJ'
+                            THEN SUBSTRING(symbol, 1, LENGTH(symbol) - 3)
+                            ELSE symbol
+                        END as code,
+                        {', '.join(select_cols)}
+                    FROM stock_basic
+                    ORDER BY symbol
+                    LIMIT {limit}
+                """
                 df = self.conn.execute(query).fetchdf()
-                print(f"[数据加载] 从stock_basic获取到 {len(df)} 只上市股票")
+                print(f"[数据加载] 从stock_basic获取到 {len(df)} 只股票")
                 return df
             except Exception as e:
                 print(f"[数据加载] 从stock_basic获取失败: {e}")

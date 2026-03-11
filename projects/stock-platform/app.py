@@ -1307,7 +1307,7 @@ def main():
             st.sidebar.caption("Finance 功能需要 RSSHub，请运行: `docker run -d -p 1200:1200 diygod/rsshub:latest`")
     page = st.sidebar.radio(
         "选择功能",
-        ["单股票回测", "超跌反弹策略", "Finance"]
+        ["单股票回测", "超跌反弹策略", "股票数据可视化", "Finance"]
     )
 
     if page == "单股票回测":
@@ -1380,6 +1380,9 @@ def main():
     elif page == "超跌反弹策略":
         params = render_oversold_sidebar()
         render_oversold_page(params)
+    elif page == "股票数据可视化":
+        from visualization import render_stock_overview
+        render_stock_overview()
     else:  # Finance
         render_finance_page()
 

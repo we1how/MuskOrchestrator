@@ -115,9 +115,13 @@
 | `skills/stock-local-db-daily-update/` | 股票数据库日更技能 | 2026-03-08 |
 | `skills/tavily-search/` | Tavily搜索技能 | 2026-03-08 |
 | `skills/coding/markitdown-document-pipeline.md` | MarkItDown文档预处理技能 | 2026-03-11 |
+| `skills/coding/rag-evaluation-pipeline.md` | RAG评估流水线技能 | 2026-03-12 |
 | `skills/analysis/a-share-multi-agent-framework.md` | A股多Agent量化框架技能 | 2026-03-11 |
+| `skills/analysis/fractional-kelly-position-sizing.md` | Fractional Kelly仓位管理技能 | 2026-03-12 |
 | `skills/planning/ooda-decision-framework.md` | OODA快速决策框架技能 | 2026-03-11 |
+| `skills/planning/chesterton-fence-principle.md` | Chesterton's Fence原则技能 | 2026-03-12 |
 | `skills/communication/reddit-precision-marketing.md` | Reddit精准获客技能 | 2026-03-11 |
+| `skills/communication/habit-app-launch-sop.md` | 习惯类App冷启动SOP技能 | 2026-03-12 |
 
 ---
 
