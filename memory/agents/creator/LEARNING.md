@@ -362,6 +362,100 @@
 
 ---
 
+---
+
+## 2026-03-12 学习记录
+
+### 📚 今日学习
+**来源**: Indie Hackers
+**案例**: Habit Pixel + HabitKit 习惯类App冷启动
+**链接**: https://www.indiehackers.com/post/from-0-to-1k-mrr-in-8-months-bootstrapping-habit-pixel-as-a-solo-dev
+**学习时长**: 20分钟
+
+---
+
+### 🎯 核心主题
+**习惯类App冷启动：ASO > 付费广告，季节性红利显著**
+
+Habit Pixel 8个月$1K MRR，HabitKit峰值$30K MRR。核心策略：ASO优化 + PPP定价 + 季节性营销。
+
+---
+
+### 💡 关键洞察
+
+**1. 渠道ROI对比**
+| 渠道 | 转化率 | 特点 |
+|------|--------|------|
+| Indie Hackers | 23% | 高质量独立开发者社区 |
+| Product Hunt | 3% | featured率暴跌至10% |
+| Reddit | 高 | 90/10价值分享原则 |
+
+**2. ASO > 广告**
+- HabitKit 50万下载几乎零广告支出
+- 核心靠App Store关键词排名
+- 习惯类关键词：time tracking, productivity, focus
+
+**3. 季节性红利**
+- 冬季收入是夏季2倍（New Year's Resolution效应）
+- 12月/1月是全年峰值
+- 必须在New Year前2个月完成产品开发
+
+**4. PPP定价策略**
+```
+美国: $9.99/月 (基准)
+印度: ~$3.5/月
+巴西: ~$4/月
+```
+参考Netflix指数调整，打开新兴市场。
+
+**5. Founding Plan**
+- 早期终身50%折扣验证需求
+- 目标：7天内5个付费预购
+- 无支付不开发
+
+---
+
+### 🔧 执行SOP
+
+**Week 1-2: 预发布**
+- Carrd落地页 + Stripe收款
+- ASO素材准备（截图/视频）
+- Indie Hackers账号预热（90/10内容）
+
+**Week 3-4: 软发布**
+- IH首发（journey post带具体数字）
+- Reddit 3社区发布
+- 社交媒体同步
+
+**Week 5-12: 增长**
+- PPP定价实施
+- ASO持续优化
+- 季节性促销（Black Friday/New Year）
+
+---
+
+### 📊 信息差价值
+- **国外热度**: ⭐⭐⭐⭐⭐ (IH 2025热门话题)
+- **国内讨论度**: ⭐ (ASO策略中文资料少)
+- **可复刻性**: ⭐⭐⭐⭐⭐ (技术门槛低)
+
+---
+
+### 🎯 对TimeScore的启示
+1. IH首发（23%转化率）> PH
+2. ASO为核心，不依赖付费广告
+3. New Year前2月完成开发，抓季节性红利
+4. Founding Plan验证需求
+
+---
+
+### 🔖 技能文件
+`skills/communication/habit-app-launch-sop.md`
+
+---
+
+*Learning Date: 2026-03-12*
+
 *Learning Date: 2026-03-11*
 
 *Last Updated: 2026-03-09*

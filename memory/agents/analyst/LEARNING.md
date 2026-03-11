@@ -424,6 +424,101 @@ A股多Agent量化框架
 
 ---
 
+---
+
+## 2026-03-12 学习记录
+
+### 📚 今日学习
+**主题**: Fractional Kelly仓位管理
+**来源**: 量化金融研究 (Kelly Criterion + A股适配)
+**链接**: https://mcginniscommawill.com/posts/2026-01-16-fractional-kelly/
+**学习时长**: 20分钟
+
+---
+
+### 🎯 核心主题
+**Kelly公式与Fractional Kelly仓位管理策略**
+
+最优仓位公式: f* = (bp - q) / b
+专业实践使用10-25%的Kelly比例控制风险。
+
+---
+
+### 💡 关键洞察
+
+**1. Kelly公式核心**
+```
+f* = (bp - q) / b
+
+f* = 最优仓位比例
+b = 平均盈利/平均亏损 (赔率)
+p = 胜率
+q = 败率 = 1-p
+```
+
+**2. Fractional Kelly实践**
+| 比例 | 风格 | 适用场景 |
+|------|------|----------|
+| 10% | 保守 | 严格回撤控制 |
+| 25% | 平衡 | 标准专业做法 |
+| 50% | 激进 | 高风险承受 |
+
+**3. A股特殊适配**
+- T+1限制惩罚系数: 0.95
+- 涨跌停惩罚系数: 0.90
+- 市场环境调整: 牛市1.2x / 正常1.0x / 熊市0.7x
+
+**4. 连续分布Kelly**
+公式: f* = (μ - r) / σ²
+适用于连续收益分布场景。
+
+---
+
+### 🔧 代码实现
+
+```python
+class FractionalKellySizer:
+    def calculate_kelly(self, win_rate, avg_win, avg_loss):
+        b = avg_win / avg_loss
+        kelly = (b * win_rate - (1 - win_rate)) / b
+        return kelly * self.fraction  # 0.25
+```
+
+---
+
+### 📊 信息差价值
+- **专业标准**: 量化投资核心技能
+- **A股适用**: ⭐⭐⭐⭐ 高（已适配T+1/涨跌停）
+- **可复刻性**: ⭐⭐⭐⭐⭐ 极高（Python完整实现）
+
+---
+
+### 🎯 可应用性路径
+
+**短期（本周）**:
+- [ ] 实现Fractional Kelly计算模块
+- [ ] 接入Stock Platform仓位管理
+
+**中期（本月）**:
+- [ ] 多策略仓位优化
+- [ ] 回测验证效果
+
+---
+
+### 🔖 相关资源
+- 技能文件: `skills/analysis/fractional-kelly-position-sizing.md`
+
+---
+
+### 📋 技能内化
+- **技能文件**: `skills/analysis/fractional-kelly-position-sizing.md`
+- **触发条件**: 计算最优仓位/设计资金管理策略
+- **核心公式**: Kelly公式 + Fractional系数 + A股调整
+
+---
+
+*Learning Date: 2026-03-12*
+
 *Learning Date: 2026-03-11*
 
 *Learning Date: 2026-03-09*

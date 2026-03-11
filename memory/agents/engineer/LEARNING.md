@@ -433,6 +433,83 @@ def rag_pipeline(file_path):
 
 ---
 
+---
+
+## 2026-03-12 学习记录
+
+### 📚 今日学习
+**来源**: GitHub Trending (Promptfoo)
+**项目**: [Promptfoo](https://github.com/promptfoo/promptfoo)
+**主题**: RAG评估与LLM测试框架
+**学习时长**: 20分钟
+
+---
+
+### 🎯 核心主题
+**RAG系统可量化评估：从主观感受走向数据驱动**
+
+Promptfoo是开源LLM测试框架，提供RAG专项测试套件，支持CI/CD集成。25k+ stars，被127家财富500强企业采用。
+
+---
+
+### 💡 关键洞察
+
+**1. RAG评估三大支柱**
+| 维度 | 指标 | 阈值 |
+|------|------|------|
+| Context Faithfulness | 事实一致性 | >0.85 |
+| Answer Relevance | 答案相关性 | >0.80 |
+| Retrieval Quality | 检索质量 | >0.75 |
+
+**2. YAML配置驱动**
+```yaml
+prompts:
+  - "基于以下上下文：{{context}}\n问题：{{question}}"
+providers:
+  - openai:gpt-4
+tests:
+  - vars:
+      question: "苹果Q4营收？"
+    assert:
+      - type: context-faithfulness
+        threshold: 0.9
+```
+
+**3. CI/CD集成**
+GitHub Actions自动化评估，设置阈值门禁。
+
+**4. 自定义指标**
+支持金融领域精确数字匹配等自定义scorer。
+
+---
+
+### 🔧 技术栈
+- Node.js CLI + Python SDK
+- 支持OpenAI/Anthropic/Azure等多provider
+- 可视化报告输出
+
+---
+
+### 📊 信息差价值
+- **国外热度**: ⭐⭐⭐⭐⭐ (25k+ stars)
+- **国内讨论度**: ⭐⭐⭐ (技术圈开始关注)
+- **工程价值**: ⭐⭐⭐⭐⭐ (RAG质量标准化)
+
+---
+
+### 🎯 可应用性
+**短期**: 在Stock Platform研报生成模块集成RAG评估
+**中期**: 构建自动化质量监控体系
+
+---
+
+### 🔖 技能文件
+`skills/coding/rag-evaluation-pipeline.md`
+
+---
+
+*Learning Date: 2026-03-12*
+
 *Learning Date: 2026-03-11*
 
 *Learning Date: 2026-03-09*
