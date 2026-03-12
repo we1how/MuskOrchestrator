@@ -5,6 +5,7 @@
 ### 已学习项目（近7天）
 | 日期 | 项目名称 | 来源 | 核心洞察 |
 |------|----------|------|----------|
+| 2026-03-13 | Hindsight - Agent Memory | GitHub Trending | 仿生记忆系统，retain/recall/reflect |
 | 2026-03-12 | Promptfoo - RAG评估框架 | GitHub 25k+ stars | RAG质量可量化评估，CI/CD集成 |
 | 2026-03-11 | Microsoft MarkItDown | GitHub Trending Python | 文档转Markdown流水线，86k+ stars |
 | 2026-03-10 | MiroFish - Swarm Intelligence Engine | GitHub Trending #1 | 群体智能预测范式，去中心化决策 |
@@ -507,6 +508,79 @@ GitHub Actions自动化评估，设置阈值门禁。
 `skills/coding/rag-evaluation-pipeline.md`
 
 ---
+
+---
+
+## 2026-03-13 学习记录
+
+### 📚 今日学习
+**来源**: GitHub Trending
+**项目**: [Hindsight](https://github.com/vectorize-io/hindsight)
+**主题**: Agent Memory系统 - 让Agent真正学习而非仅记忆
+**学习时长**: 20分钟
+
+---
+
+### 🎯 核心主题
+**仿生记忆架构：retain/recall/reflect三核心操作**
+
+Hindsight是Agent记忆系统的突破，不是简单存储对话历史，而是让Agent具备真正的学习能力——通过反思生成洞察、建立记忆间的连接。
+
+---
+
+### 💡 关键洞察
+
+**1. 三大核心操作**
+| 操作 | 功能 | 实现 |
+|------|------|------|
+| **retain** | 存储并提取实体/关系/时序 | 存储时处理，建立索引 |
+| **recall** | 4种策略并行检索 | 语义+关键词+图谱+时序 |
+| **reflect** | 生成洞察，建立新连接 | LLM分析模式生成洞察 |
+
+**2. 4种检索策略融合**
+- 语义检索 (向量相似度)
+- 关键词检索 (BM25)
+- 图谱检索 (实体关联)
+- 时序检索 (最近+重要性)
+
+使用Reciprocal Rank Fusion合并，cross-encoder重排序。
+
+**3. 记忆vs学习的区别**
+| 传统记忆 | Hindsight记忆 |
+|----------|---------------|
+| 对话历史 | 结构化知识 |
+| 相似度匹配 | 多策略融合 |
+| 无学习 | 反思生成洞察 |
+| 孤立记录 | 知识图谱关联 |
+
+---
+
+### 🔧 技术实现
+
+```python
+class AgentMemory:
+    def retain(self, content):  # 存储+索引
+    def recall(self, query):    # 多策略检索
+    def reflect(self, query):   # 生成洞察
+```
+
+**与Stock Platform集成**: QuantAgentMemory专门存储交易信号，recall相似市场条件，reflect优化策略。
+
+---
+
+### 📊 信息差价值
+- **国外热度**: ⭐⭐⭐⭐⭐ (GitHub快速上升)
+- **国内讨论度**: ⭐⭐ (国内几乎无讨论)
+- **可复刻性**: ⭐⭐⭐⭐⭐ (开源Python)
+
+---
+
+### 🔖 技能文件
+`skills/coding/agent-memory-system.md`
+
+---
+
+*Learning Date: 2026-03-13*
 
 *Learning Date: 2026-03-12*
 

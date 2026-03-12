@@ -9,6 +9,7 @@
 ### 已学习案例（近7天）
 | 日期 | 案例/项目 | 来源 | 关键收获 |
 |------|----------|------|----------|
+| 2026-03-13 | Reddit反直觉发布策略 | Indie Hackers | 20+变体策略，低成本高转化SOP |
 | 2026-03-12 | Habit类App冷启动案例 | Indie Hackers | ASO>广告，季节性红利，IH转化率23% |
 | 2026-03-11 | Reddit精准获客案例 | Indie Hackers | 8%流量贡献67%收入，高意图用户 |
 | 2026-03-10 | $25K MRR反野心创业法 | Indie Hackers | 降低野心反而成功，API工具+混合定价 |
@@ -453,6 +454,83 @@ Habit Pixel 8个月$1K MRR，HabitKit峰值$30K MRR。核心策略：ASO优化 +
 `skills/communication/habit-app-launch-sop.md`
 
 ---
+
+## 2026-03-13 学习记录
+
+### 📚 今日学习
+**来源**: Indie Hackers
+**案例**: Reddit反直觉发布策略 (Redchecker + PressPulse)
+**链接**: https://www.indiehackers.com/post/spent-0-on-marketing-and-got-10k-visitors-from-reddit-by-doing-the-opposite-of-what-everyone-teaches-K2nBwiULphanhiYi0tD9
+**学习时长**: 20分钟
+
+---
+
+### 🎯 核心主题
+**Reddit反直觉策略：20+变体发布，低成本高转化**
+
+---
+
+### 💡 关键洞察
+
+**1. 传统建议 vs 实际有效做法**
+| 传统建议 | 反直觉做法 |
+|---------|-----------|
+| 首帖绝不提产品 | **第一句就提产品**（作为上下文） |
+| 发一次就换话题 | 同一主题发**20+变体** |
+| 慢慢积累karma | **3周内快速积累500 karma** |
+| 只在1个subreddit | 适配到**10-15个**subreddit |
+| 早上8-10点发 | 每个subreddit有**不同最佳时间** |
+| 长文2500+字 | **800-1500字**最佳 |
+
+**2. 平台选择比内容质量更重要**
+- PressPulse.ai: HN零互动，Reddit同内容爆发（24K浏览，70 leads）
+- 找到用户"居住"的社区
+
+**3. 内容变体矩阵**
+同一主题的10个角度：
+- 失败版本、数据版本、反直觉版本
+- 教程版本、工具对比、成本版本
+- 时间线版本、错误版本、未来版本、邀请版本
+
+**4. 关键指标**
+- 首小时upvotes < 5 = 帖子死亡
+- r/Entrepreneur: 8-12访客/upvote
+- CAC比付费搜索低63%
+
+---
+
+### 🔧 执行SOP
+
+**Phase 1: 快速Karma (Week 1-2)**
+- 每天30分钟浏览r/AskReddit rising
+- 回答5-7个问题
+- 目标：100+ karma
+
+**Phase 2: 内容验证 (Week 3)**
+- 创作800-1500字验证内容
+- 适配到3个subreddit
+- 监控首小时upvotes
+
+**Phase 3: 规模化 (Week 4-6)**
+- 围绕成功主题写20+变体
+- 每篇适配到5-10个subreddit
+- 追踪每个upvote带来的访客
+
+---
+
+### 📊 信息差价值
+- **国外热度**: ⭐⭐⭐⭐⭐ (Indie Hackers热门)
+- **国内讨论度**: ⭐ (极少系统讨论)
+- **可复刻性**: ⭐⭐⭐⭐⭐ (零成本，可立即执行)
+
+---
+
+### 🔖 技能文件
+`skills/communication/reddit-contrarian-launch.md`
+
+---
+
+*Learning Date: 2026-03-13*
 
 *Learning Date: 2026-03-12*
 

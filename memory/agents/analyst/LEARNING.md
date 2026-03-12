@@ -5,6 +5,7 @@
 ### 已学习论文（近7天）
 | 日期 | Arxiv ID/标题 | 核心主题 | 状态 |
 |------|---------------|----------|------|
+| 2026-03-13 | ML vs Trend分歧交易 | 模型分歧即信号，动态仓位 | ✅ 技能内化 |
 | 2026-03-12 | Fractional Kelly仓位管理 | Kelly公式+A股适配+风险管理 | ✅ 技能内化 |
 | 2026-03-11 | A股多Agent框架整合 | 信号融合+超跌反弹+策略拥挤度 | ✅ 技能内化 |
 | 2026-03-10 | 已有知识深化 | 超跌反弹策略+多Agent融合应用 | ✅ 已学习 |
@@ -516,6 +517,83 @@ class FractionalKellySizer:
 - **核心公式**: Kelly公式 + Fractional系数 + A股调整
 
 ---
+
+---
+
+## 2026-03-13 学习记录
+
+### 📚 今日学习
+**来源**: Quantpedia + ACM
+**主题**: ML vs Trend分歧交易 + 危机对冲整合
+**链接**: https://quantpedia.com/can-we-profit-from-disagreements-between-machine-learning-and-trend-following-models/
+**学习时长**: 20分钟
+
+---
+
+### 🎯 核心主题
+**模型分歧即信号：分歧越大，交易机会越大**
+
+当深度学习预测与传统趋势指标出现分歧时，分歧程度本身就是可交易的alpha源。
+
+---
+
+### 💡 关键洞察
+
+**1. 分歧公式**
+```
+Signal_Strength = |ML_Prediction - Trend_Prediction|
+Position_Size = Base_Size × (1 + Signal_Strength × k)
+```
+
+**2. 危机对冲稀缺性**
+- Quantpedia数据库中仅12%策略是真正的危机对冲
+- 最佳危机对冲：时间序列动量效应
+- 危机期间表现：质量因子+2.1%，动量因子+1.6%
+
+**3. 央行公告前漂移**
+| 央行 | 入场时机 | 夏普比率 |
+|------|----------|----------|
+| FOMC | D-1 | >1.0 |
+| ECB | D-1 | >1.0 |
+| BoE | D-2 | >1.0 |
+
+**4. 多Agent协作奖励**
+```
+R_i = α × Individual_Profit + (1-α) × Portfolio_Profit
+最优α = 0.8 (个体为主，组合为辅)
+```
+
+---
+
+### 🔧 可应用技术
+
+**1. 分歧加权仓位**
+- 高分歧：最小仓位
+- 低分歧：满仓
+- 中等分歧：动态调整
+
+**2. 危机对冲整合**
+```python
+if VIX > threshold:
+    Allocate_to_Crisis_Hedges = 20%
+    Preferred_Hedges = [Time_Series_Momentum, Quality_Factor]
+```
+
+---
+
+### 📊 信息差价值
+- **来源**: Quantpedia (顶级量化策略库)
+- **A股适用**: ⭐⭐⭐⭐ 高（模型分歧策略直接可用）
+- **时效性**: ⭐⭐⭐⭐⭐ 极高（2025最新研究）
+
+---
+
+### 🔖 技能文件
+`skills/analysis/disagreement-position-sizing.md`
+
+---
+
+*Learning Date: 2026-03-13*
 
 *Learning Date: 2026-03-12*
 
