@@ -1,0 +1,53 @@
+# Engineer Agent 学习历史记录
+# 技术实现、编程、系统设计
+
+agent: engineer
+last_updated: "2026-03-17T10:00:00Z"
+version: "1.0"
+
+---
+
+sources:
+  github_trending:
+    name: "GitHub Trending"
+    base_url: "https://github.com/trending"
+    learned_projects:
+      - url: "https://github.com/tradingagents-ai/trading-agents"
+        name: "TradingAgents"
+        date: "2026-03-17"
+        concepts: ["多Agent交易", "LangGraph", "LLM交易框架"]
+        fingerprint: "trading|agents|langgraph|llm|multi"
+        status: "completed"
+      - url: "https://github.com/abhigyanpatwari/GitNexus"
+        name: "GitNexus"
+        date: "2026-03-18"
+        concepts: ["知识图谱", "Graph RAG", "MCP Tools", "零服务器架构", "Tree-sitter"]
+        fingerprint: "knowledge|graph|rag|mcp|client-side|wasm"
+        status: "completed"
+
+  hackernews:
+    name: "Hacker News"
+    base_url: "https://news.ycombinator.com"
+    learned_articles: []
+
+---
+
+concept_window_days: 30
+
+learned_concepts:
+  active:
+    "TradingAgents": "2026-03-17"
+    "LangGraph": "2026-03-17"
+    "GitNexus": "2026-03-18"
+    "KnowledgeGraph": "2026-03-18"
+    "GraphRAG": "2026-03-18"
+    "MCPTools": "2026-03-18"
+
+  expired: []
+
+---
+
+total_learned: 2
+unique_sources: 2
+repeated_attempts: 0
+last_learning_date: "2026-03-18"

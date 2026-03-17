@@ -1,0 +1,209 @@
+# Mentor Agent 学习历史记录
+# 用于去重检查，确保每日学习新内容
+
+agent: mentor
+last_updated: "2026-03-18T08:00:00Z"
+version: "1.0"
+
+---
+
+## 信息源学习记录
+
+sources:
+  farnam_street:
+    name: "Farnam Street"
+    base_url: "https://fs.blog"
+    description: "决策思维、心理模型、查理·芒格"
+    learned_articles:
+      - url: "https://fs.blog/experts-vs-imitators/"
+        title: "Experts vs. Imitators"
+        date: "2026-03-04"
+        concepts: ["专家识别", "模仿者", "知识深度"]
+        fingerprint: "experts|imitators|knowledge|depth|genuine"
+        status: "completed"
+
+      - url: "https://fs.blog/ride-wave/"
+        title: "Ride the Wave"
+        date: "2026-03-05"
+        concepts: ["冲浪模型", "竞争毁灭", "先行者优势"]
+        fingerprint: "competitive|destruction|kodak|munger|surfing|wave"
+        status: "completed"
+
+      - url: "https://fs.blog/ride-wave/"
+        title: "Ride the Wave - 深化学习"
+        date: "2026-03-10"
+        concepts: ["72小时决策法则", "浪潮识别框架", "Wave Recognition"]
+        fingerprint: "competitive|destruction|72hours|wave|switching|framework"
+        status: "completed"
+        notes: "深化版本，增加了可执行框架"
+
+      - url: "https://fs.blog/ooda-loop/"
+        title: "OODA Loop"
+        date: "2026-03-11"
+        concepts: ["OODA循环", "快速决策", "Boyd理论"]
+        fingerprint: "boyd|decision|loop|observe|orient|act|fighter"
+        status: "completed"
+
+      - url: "https://fs.blog/chestertons-fence/"
+        title: "Chesterton's Fence"
+        date: "2026-03-12"
+        concepts: ["Chesterton栅栏", "改变前理解", "意外后果"]
+        fingerprint: "change|consequences|fence|understand|unintended"
+        status: "completed"
+
+      - url: "https://fs.blog/winners-edge/"
+        title: "Winner's Edge"
+        date: "2026-03-13"
+        concepts: ["赢家自信", "风险不对称", "Carlsen", "Magnus"]
+        fingerprint: "carlsen|confidence|edge|risk|winner"
+        status: "completed"
+
+      - url: "https://fs.blog/continuous-learning/"
+        title: "Continuous Learning"
+        date: "2026-03-16"
+        concepts: ["持续学习", "技能提取", "模式识别"]
+        fingerprint: "continuous|extraction|learning|pattern|skill"
+        status: "completed"
+        source_type: "ECC Skill"
+
+      - url: "https://fs.blog/circle-of-competence/"
+        title: "Circle of Competence"
+        date: "2026-03-17"
+        concepts: ["能力圈", "earned knowledge", "边界识别", "Buffett"]
+        fingerprint: "buffett|competence|circle|expertise|knowledge|munger|rose"
+        status: "completed"
+        notes: "修正后的学习内容，替代了重复的Ride the Wave"
+
+      - url: "https://fs.blog/first-principles/"
+        title: "First Principles Thinking"
+        date: "2026-03-18"
+        concepts: ["第一性原理", "苏格拉底提问", "五个为什么", "Musk", "创新思维"]
+        fingerprint: "first|principles|musk|tesla|spacex|socratic|why|fundamentals"
+        status: "completed"
+        notes: "与三层思维宫殿第一层高度关联的核心方法论"
+
+    # 已学习但可能值得重复学习的概念（间隔重复）
+    repeat_eligible:
+      - concept: "冲浪模型"
+        last_learned: "2026-03-10"
+        eligible_after: "2026-04-10"  # 30天后
+
+  wait_but_why:
+    name: "Wait But Why"
+    base_url: "https://waitbutwhy.com"
+    description: "深度长文、复杂主题简化"
+    learned_articles: []
+
+  lesswrong:
+    name: "LessWrong"
+    base_url: "https://lesswrong.com"
+    description: "理性思维、AI安全、认知科学"
+    learned_articles: []
+
+  atomic_habits:
+    name: "《原子习惯》"
+    base_url: "个人知识库"
+    description: "习惯养成、身份认同"
+    learned_articles:
+      - url: "internal://atomic-habits/identity"
+        title: "原子习惯 - 身份认同改变"
+        date: "2026-03-08"
+        concepts: ["身份认同", "身份投票", "两分钟规则"]
+        fingerprint: "atomic|habits|identity|rule|two|vote"
+        status: "completed"
+
+      - url: "internal://atomic-habits/advanced"
+        title: "原子习惯 - 身份认同高级策略"
+        date: "2026-03-09"
+        concepts: ["身份堆叠", "环境设计", "社交认同"]
+        fingerprint: "environment|habits|identity|leverage|social"
+        status: "completed"
+
+---
+
+## 概念追踪（30天滑动窗口）
+
+concept_window_days: 30
+
+learned_concepts:
+  # 当前窗口内（30天内）已学习，不再重复
+  active:
+    "专家识别": "2026-03-04"
+    "模仿者": "2026-03-04"
+    "冲浪模型": "2026-03-10"
+    "竞争毁灭": "2026-03-10"
+    "先行者优势": "2026-03-10"
+    "72小时决策法则": "2026-03-10"
+    "OODA循环": "2026-03-11"
+    "Chesterton栅栏": "2026-03-12"
+    "赢家自信": "2026-03-13"
+    "持续学习": "2026-03-16"
+    "能力圈": "2026-03-17"
+    "第一性原理": "2026-03-18"
+    "苏格拉底提问": "2026-03-18"
+    "五个为什么": "2026-03-18"
+
+  # 已过期，可以重新学习或深化
+  expired:
+    # 需要检查哪些已过期
+
+---
+
+## 备选信息源（当主源耗尽时）
+
+backup_sources:
+  - name: "Paul Graham Essays"
+    url: "http://www.paulgraham.com/articles.html"
+    priority: 1
+
+  - name: "Naval Ravikant"
+    url: "https://nav.al/"
+    priority: 2
+
+  - name: "Seth Godin"
+    url: "https://seths.blog/"
+    priority: 3
+
+  - name: "Derek Sivers"
+    url: "https://sive.rs/"
+    priority: 4
+
+---
+
+## 统计数据
+
+total_learned: 10
+unique_sources: 3
+repeated_attempts: 1  # 2026-03-17 重复学习 Ride the Wave
+duplicate_rate: "11%"  # 1/9
+
+last_learning_date: "2026-03-18"
+consecutive_days: 11
+
+---
+
+## 待学习内容队列
+
+queue:
+  - source: "farnam_street"
+    candidate_urls:
+      - "https://fs.blog/map-and-territory/"
+      - "https://fs.blog/first-principles/"
+      - "https://fs.blog/second-order-thinking/"
+      - "https://fs.blog/inversion/"
+      - "https://fs.blog/probabilistic-thinking/"
+
+  - source: "wait_but_why"
+    candidate_urls:
+      - "https://waitbutwhy.com/2015/01/artificial-intelligence-revolution-1.html"
+      - "https://waitbutwhy.com/2014/05/fermi-paradox.html"
+
+---
+
+# 去重检查规则
+
+deduplication_rules:
+  url_match: true  # URL完全匹配视为重复
+  fingerprint_similarity_threshold: 0.8  # 80%相似度视为重复
+  concept_repeat_window_days: 30  # 30天内不重复同一概念
+  allow_deepening: true  # 允许深化学习（标记为深化版本）

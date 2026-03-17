@@ -1,0 +1,186 @@
+[
+  {
+    "title": "PhysMoDPO: Physically-Plausible Humanoid Motion with Preference Optimization",
+    "url": "http://arxiv.org/abs/2603.13228v1",
+    "source": "arxiv",
+    "source_type": "paper",
+    "agent_target": "engineer",
+    "description": "Recent progress in text-conditioned human motion generation has been largely driven by diffusion models trained on large-scale human motion data. Building on this progress, recent methods attempt to transfer such models for character animation and real robot control by applying a Whole-Body Controller (WBC) that converts diffusion-generated motions into executable trajectories. While WBC trajectories become compliant with physics, they may expose substantial deviations from original motion. To a...",
+    "author": "Yangsong Zhang, Anujith Muraleedharan, Rikhat Akizhanov et al.",
+    "published_date": "2026-03-13T17:59:59+00:00",
+    "tags": [
+      "cs.LG",
+      "cs.AI",
+      "cs.CV",
+      "cs.RO"
+    ],
+    "metrics": {
+      "category": "cs.LG",
+      "authors_count": 8
+    },
+    "summary": "",
+    "content_hash": "f35789d4e024"
+  },
+  {
+    "title": "Representation Learning for Spatiotemporal Physical Systems",
+    "url": "http://arxiv.org/abs/2603.13227v1",
+    "source": "arxiv",
+    "source_type": "paper",
+    "agent_target": "engineer",
+    "description": "Machine learning approaches to spatiotemporal physical systems have primarily focused on next-frame prediction, with the goal of learning an accurate emulator for the system's evolution in time. However, these emulators are computationally expensive to train and are subject to performance pitfalls, such as compounding errors during autoregressive rollout. In this work, we take a different perspective and look at scientific tasks further downstream of predicting the next frame, such as estimation...",
+    "author": "Helen Qu, Rudy Morel, Michael McCabe et al.",
+    "published_date": "2026-03-13T17:59:51+00:00",
+    "tags": [
+      "cs.LG",
+      "cs.CV"
+    ],
+    "metrics": {
+      "category": "cs.LG",
+      "authors_count": 7
+    },
+    "summary": "",
+    "content_hash": "63d1f5900ee5"
+  },
+  {
+    "title": "Learnability and Privacy Vulnerability are Entangled in a Few Critical Weights",
+    "url": "http://arxiv.org/abs/2603.13186v1",
+    "source": "arxiv",
+    "source_type": "paper",
+    "agent_target": "engineer",
+    "description": "Prior approaches for membership privacy preservation usually update or retrain all weights in neural networks, which is costly and can lead to unnecessary utility loss or even more serious misalignment in predictions between training data and non-training data. In this work, we observed three insights: i) privacy vulnerability exists in a very small fraction of weights; ii) however, most of those weights also critically impact utility performance; iii) the importance of weights stems from their ...",
+    "author": "Xingli Fang, Jung-Eun Kim",
+    "published_date": "2026-03-13T17:20:12+00:00",
+    "tags": [
+      "cs.LG",
+      "cs.AI",
+      "cs.CR"
+    ],
+    "metrics": {
+      "category": "cs.LG",
+      "authors_count": 2
+    },
+    "summary": "",
+    "content_hash": "583be5adf9f5"
+  },
+  {
+    "title": "MXNorm: Reusing MXFP block scales for efficient tensor normalisation",
+    "url": "http://arxiv.org/abs/2603.13180v1",
+    "source": "arxiv",
+    "source_type": "paper",
+    "agent_target": "engineer",
+    "description": "Matrix multiplication performance has long been the major bottleneck to scaling deep learning workloads, which has stimulated the design of new accelerators that use increasingly low-precision number formats. However, improvements in matrix multiplication performance have far outstripped improvements in performance on reductions and elementwise computations, which are still being performed in higher precision. In this work, we propose MXNorm, a drop-in replacement for RMSNorm that estimates the ...",
+    "author": "Callum McLean, Luke Y. Prince, Alexandre Payot et al.",
+    "published_date": "2026-03-13T17:14:06+00:00",
+    "tags": [
+      "cs.LG",
+      "cs.AI",
+      "cs.NE"
+    ],
+    "metrics": {
+      "category": "cs.LG",
+      "authors_count": 5
+    },
+    "summary": "",
+    "content_hash": "143e5ce04a92"
+  },
+  {
+    "title": "Towards Faithful Multimodal Concept Bottleneck Models",
+    "url": "http://arxiv.org/abs/2603.13163v1",
+    "source": "arxiv",
+    "source_type": "paper",
+    "agent_target": "analyst",
+    "description": "Concept Bottleneck Models (CBMs) are interpretable models that route predictions through a layer of human-interpretable concepts. While widely studied in vision and, more recently, in NLP, CBMs remain largely unexplored in multimodal settings. For their explanations to be faithful, CBMs must satisfy two conditions: concepts must be properly detected, and concept representations must encode only their intended semantics, without smuggling extraneous task-relevant or inter-concept information into...",
+    "author": "Pierre Moreau, Emeline Pineau Ferrand, Yann Choho et al.",
+    "published_date": "2026-03-13T16:56:08+00:00",
+    "tags": [
+      "cs.CV",
+      "cs.LG"
+    ],
+    "metrics": {
+      "category": "cs.CV",
+      "authors_count": 6
+    },
+    "summary": "",
+    "content_hash": "03928759e899"
+  },
+  {
+    "title": "ZO-SAM: Zero-Order Sharpness-Aware Minimization for Efficient Sparse Training",
+    "url": "http://arxiv.org/abs/2603.13115v1",
+    "source": "arxiv",
+    "source_type": "paper",
+    "agent_target": "engineer",
+    "description": "Deep learning models, despite their impressive achievements, suffer from high computational costs and memory requirements, limiting their usability in resource-constrained environments. Sparse neural networks significantly alleviate these constraints by dramatically reducing parameter count and computational overhead. However, existing sparse training methods often experience chaotic and noisy gradient signals, severely hindering convergence and generalization performance, particularly at high s...",
+    "author": "Jie Ji, Gen Li, Kaiyuan Deng et al.",
+    "published_date": "2026-03-13T16:11:41+00:00",
+    "tags": [
+      "cs.LG"
+    ],
+    "metrics": {
+      "category": "cs.LG",
+      "authors_count": 5
+    },
+    "summary": "",
+    "content_hash": "cf5fe60b3659"
+  },
+  {
+    "title": "Visual-ERM: Reward Modeling for Visual Equivalence",
+    "url": "http://arxiv.org/abs/2603.13224v1",
+    "source": "arxiv",
+    "source_type": "paper",
+    "agent_target": "analyst",
+    "description": "Vision-to-code tasks require models to reconstruct structured visual inputs, such as charts, tables, and SVGs, into executable or structured representations with high visual fidelity. While recent Large Vision Language Models (LVLMs) achieve strong results via supervised fine-tuning, reinforcement learning remains challenging due to misaligned reward signals. Existing rewards either rely on textual rules or coarse visual embedding similarity, both of which fail to capture fine-grained visual dis...",
+    "author": "Ziyu Liu, Shengyuan Ding, Xinyu Fang et al.",
+    "published_date": "2026-03-13T17:58:14+00:00",
+    "tags": [
+      "cs.CV",
+      "cs.AI"
+    ],
+    "metrics": {
+      "category": "cs.CV",
+      "authors_count": 10
+    },
+    "summary": "",
+    "content_hash": "7bc79b6a9f2c"
+  },
+  {
+    "title": "From Experiments to Expertise: Scientific Knowledge Consolidation for AI-Driven Computational Research",
+    "url": "http://arxiv.org/abs/2603.13191v1",
+    "source": "arxiv",
+    "source_type": "paper",
+    "agent_target": "analyst",
+    "description": "While large language models (LLMs) have transformed AI agents into proficient executors of computational materials science, performing a hundred simulations does not make a researcher. What distinguishes research from routine execution is the progressive accumulation of knowledge -- learning which approaches fail, recognizing patterns across systems, and applying understanding to new problems. However, the prevailing paradigm in AI-driven computational science treats each execution in isolation,...",
+    "author": "Haonan Huang",
+    "published_date": "2026-03-13T17:25:47+00:00",
+    "tags": [
+      "physics.comp-ph",
+      "cond-mat.mtrl-sci",
+      "cs.AI"
+    ],
+    "metrics": {
+      "category": "physics.comp-ph",
+      "authors_count": 1
+    },
+    "summary": "",
+    "content_hash": "27826f32e126"
+  },
+  {
+    "title": "LLM Constitutional Multi-Agent Governance",
+    "url": "http://arxiv.org/abs/2603.13189v1",
+    "source": "arxiv",
+    "source_type": "paper",
+    "agent_target": "analyst",
+    "description": "Large Language Models (LLMs) can generate persuasive influence strategies that shift cooperative behavior in multi-agent populations, but a critical question remains: does the resulting cooperation reflect genuine prosocial alignment, or does it mask erosion of agent autonomy, epistemic integrity, and distributional fairness? We introduce Constitutional Multi-Agent Governance (CMAG), a two-stage framework that interposes between an LLM policy compiler and a networked agent population, combining ...",
+    "author": "J. de Curtò, I. de Zarzà",
+    "published_date": "2026-03-13T17:21:26+00:00",
+    "tags": [
+      "cs.MA",
+      "cs.AI"
+    ],
+    "metrics": {
+      "category": "cs.MA",
+      "authors_count": 2
+    },
+    "summary": "",
+    "content_hash": "8006f583b452"
+  }
+]

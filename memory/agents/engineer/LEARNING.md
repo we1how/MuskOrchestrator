@@ -5,6 +5,8 @@
 ### 已学习项目（近7天）
 | 日期 | 项目名称 | 来源 | 核心洞察 |
 |------|----------|------|----------|
+| 2026-03-18 | GitNexus - Zero-Server Code Intelligence | GitHub Trending TS #1 | 客户端知识图谱，Graph RAG Agent，MCP Tools |
+| 2026-03-17 | TradingAgents - Multi-Agent Trading | GitHub Trending Python | 多空辩论机制，六层Agent架构，双模型策略 |
 | 2026-03-13 | Hindsight - Agent Memory | GitHub Trending | 仿生记忆系统，retain/recall/reflect |
 | 2026-03-12 | Promptfoo - RAG评估框架 | GitHub 25k+ stars | RAG质量可量化评估，CI/CD集成 |
 | 2026-03-11 | Microsoft MarkItDown | GitHub Trending Python | 文档转Markdown流水线，86k+ stars |
@@ -580,10 +582,732 @@ class AgentMemory:
 
 ---
 
+---
+
+## 2026-03-16 学习记录
+
+### 📚 今日学习
+**来源**: Everything Claude Code (ECC) Skill Library
+**技能**: TDD Workflow - 测试驱动开发完整工作流
+**学习时长**: 20分钟
+
+---
+
+### 🎯 核心主题
+**测试驱动开发 (TDD) 的标准化工作流：红-绿-重构循环**
+
+TDD不是可选项，而是生产级代码的必要条件。80%+覆盖率是底线，不是目标。
+
+---
+
+### 💡 关键洞察
+
+**1. TDD七步工作流**
+
+```
+写用户故事 → 生成测试用例 → 运行测试(红) → 实现代码 → 运行测试(绿) → 重构 → 验证覆盖率
+```
+
+| 步骤 | 关键动作 | 时间分配 |
+|------|----------|----------|
+| 1. 用户故事 | As a [role], I want to [action], so that [benefit] | 2分钟 |
+| 2. 生成测试 | 覆盖正常路径+边界条件+错误场景 | 5分钟 |
+| 3. 运行测试 | 必须失败，验证测试有效 | 1分钟 |
+| 4. 实现代码 | 最小代码使测试通过 | 10分钟 |
+| 5. 再次测试 | 必须全部通过 | 1分钟 |
+| 6. 重构 | 消除重复，优化命名 | 5分钟 |
+| 7. 验证覆盖率 | 确保80%+ | 1分钟 |
+
+**2. 三层测试金字塔**
+
+```
+    /\
+   /  \  E2E Tests (Playwright) - 关键用户流程
+  /____\
+ /      \ Integration Tests - API端点、数据库操作
+/________\
+          Unit Tests - 函数、组件、工具函数 (最多)
+```
+
+**覆盖率要求**:
+- 单元测试: 覆盖所有函数和边界条件
+- 集成测试: 覆盖所有API端点和外部调用
+- E2E测试: 覆盖关键用户流程
+
+**3. 测试文件组织规范**
+
+```
+src/
+├── components/
+│   ├── Button/
+│   │   ├── Button.tsx
+│   │   ├── Button.test.tsx          # 同目录单元测试
+│   │   └── Button.stories.tsx
+├── app/api/markets/
+│   ├── route.ts
+│   └── route.test.ts                # API集成测试
+└── e2e/
+    ├── markets.spec.ts              # E2E测试
+    └── auth.spec.ts
+```
+
+**4. 常见测试错误**
+
+| 错误类型 | 错误示例 | 正确做法 |
+|----------|----------|----------|
+| 测试实现细节 | `expect(component.state.count).toBe(5)` | 测试用户可见行为 |
+| 脆弱选择器 | `await page.click('.css-class-xyz')` | 使用语义选择器 `[data-testid="submit-button"]` |
+| 测试依赖 | test2依赖test1创建的数据 | 每个测试独立设置数据 |
+
+---
+
+### 🔧 可应用代码模式
+
+**API集成测试模板**:
+```typescript
+import { NextRequest } from 'next/server'
+import { GET } from './route'
+
+describe('GET /api/markets', () => {
+  it('returns markets successfully', async () => {
+    const request = new NextRequest('http://localhost/api/markets')
+    const response = await GET(request)
+    const data = await response.json()
+
+    expect(response.status).toBe(200)
+    expect(data.success).toBe(true)
+    expect(Array.isArray(data.data)).toBe(true)
+  })
+
+  it('validates query parameters', async () => {
+    const request = new NextRequest('http://localhost/api/markets?limit=invalid')
+    const response = await GET(request)
+    expect(response.status).toBe(400)
+  })
+})
+```
+
+**Mock外部依赖**:
+```typescript
+jest.mock('@/lib/supabase', () => ({
+  supabase: {
+    from: jest.fn(() => ({
+      select: jest.fn(() => ({
+        eq: jest.fn(() => Promise.resolve({ data: [], error: null }))
+      }))
+    }))
+  }
+}))
+```
+
+---
+
+### 📊 信息差价值评估
+- **来源质量**: ⭐⭐⭐⭐⭐ 极高 (ECC生产级技能库)
+- **可应用性**: ⭐⭐⭐⭐⭐ 极高 (直接应用于Stock Platform开发)
+- **工程价值**: ⭐⭐⭐⭐⭐ 极高 (TDD是代码质量的保险)
+
+---
+
+### 🎯 立即行动
+1. **为Stock Platform建立测试框架** - Jest + React Testing Library + Playwright
+2. **设定覆盖率门槛** - 80%以下不允许提交
+3. **建立CI/CD测试门禁** - GitHub Actions自动运行测试
+4. **编写第一个TDD功能** - 从简单功能开始实践红-绿-重构
+
+---
+
+### 🔖 技能文件
+`skills/everything-claude-code/.agents/skills/tdd-workflow/SKILL.md`
+
+---
+
+### 📋 技能内化
+- **技能文件**: TDD Workflow
+- **触发条件**: 任何新功能开发、Bug修复、代码重构
+- **核心输出**: 红-绿-重构七步工作流
+
+---
+
+*Learning Date: 2026-03-16*
+
 *Learning Date: 2026-03-13*
 
 *Learning Date: 2026-03-12*
 
 *Learning Date: 2026-03-11*
 
-*Learning Date: 2026-03-09*
+---
+
+## 2026-03-17 学习记录
+
+### 📚 今日学习
+**来源**: GitHub Trending Python
+**标题/项目**: TradingAgents - Multi-Agents LLM Financial Trading Framework
+**链接**: https://github.com/TauricResearch/TradingAgents
+**学习时长**: 25分钟
+
+---
+
+### 🎯 核心主题
+**多Agent协作交易框架：模拟真实对冲基金的分层决策与多空辩论机制**
+
+TradingAgents是一个32K+ stars的开源项目，通过部署专业化的LLM驱动Agent团队，模拟真实交易公司的决策流程。核心创新在于"多空辩论机制"——通过Bullish/Bearish Researchers的结构化辩论来平衡潜在收益与固有风险。
+
+---
+
+### 💡 关键洞察（5点）
+
+**1. 六层Agent架构设计（Six-Layer Agent Architecture）**
+
+```
+┌─────────────────────────────────────────────┐
+│  Portfolio Manager Agent                    │
+│  - 最终交易决策：批准/拒绝/调整仓位          │
+└──────────────┬──────────────────────────────┘
+               │ 风险调整后的交易提案
+┌──────────────▼──────────────────────────────┐
+│  Risk Management Agent                      │
+│  - 评估市场波动率、流动性风险               │
+│  - 计算VaR、最大回撤等风险指标              │
+└──────────────┬──────────────────────────────┘
+               │ 风险评估报告
+┌──────────────▼──────────────────────────────┐
+│  Trader Agent                               │
+│  - 综合所有分析报告                         │
+│  - 确定交易时机和仓位规模                   │
+└──────────────┬──────────────────────────────┘
+               │ 多空平衡的研究报告
+┌──────────────▼──────────────────────────────┐
+│  Researcher Team (Bullish vs Bearish)       │
+│  - 结构化辩论：批判性评估分析师洞察          │
+│  - 平衡潜在收益 vs 固有风险                 │
+└──────────────┬──────────────────────────────┘
+               │ 多维度市场分析
+┌──────────────▼──────────────────────────────┐
+│  Analyst Team                               │
+│  - Fundamentals Analyst (财务指标)          │
+│  - Sentiment Analyst (情绪分析)             │
+│  - News Analyst (新闻宏观)                  │
+│  - Technical Analyst (技术指标)             │
+└─────────────────────────────────────────────┘
+```
+
+**关键学习点**：风险管理不是后置步骤，而是嵌入决策流程的独立Agent层级。
+
+---
+
+**2. 多空辩论机制（Bullish vs Bearish Debate）**
+
+这是项目最核心的创新点：
+
+| 传统多Agent系统 | TradingAgents辩论机制 |
+|----------------|----------------------|
+| 各Agent独立输出信号 | 多空双方强制对抗性辩论 |
+| 简单加权平均融合 | 结构化批判性评估 |
+| 无冲突解决机制 | 多轮辩论（configurable rounds） |
+| 容易确认偏误 | 强制考虑对立观点 |
+
+**辩论流程**：
+1. Bullish Researcher提出看多理由
+2. Bearish Researcher提出看空反驳
+3. 双方针对对方论点进行批判
+4. 经过`max_debate_rounds`轮后形成平衡报告
+5. Trader Agent基于辩论结果制定策略
+
+**Stock Platform应用**：可为每个交易信号引入"魔鬼代言人"角色，强制挑战策略假设。
+
+---
+
+**3. 双模型策略（Dual-Model Strategy）**
+
+```python
+config = {
+    "deep_think_llm": "gpt-5.2",      # 复杂推理：辩论、风险管理
+    "quick_think_llm": "gpt-5-mini",  # 快速任务：数据提取、格式化
+}
+```
+
+| 任务类型 | 使用模型 | 原因 |
+|---------|---------|------|
+| 多空辩论 | Deep Think | 需要复杂推理和批判性思维 |
+| 风险管理评估 | Deep Think | 涉及多维度风险评估 |
+| 技术指标计算 | Quick Think | 确定性计算，无需复杂推理 |
+| 报告格式化 | Quick Think | 结构化输出任务 |
+
+**成本优化**：通过任务分级可节省60%+的API成本，同时保证关键决策质量。
+
+---
+
+**4. LangGraph状态机设计（State Machine Architecture）**
+
+```python
+from tradingagents.graph.trading_graph import TradingAgentsGraph
+from tradingagents.default_config import DEFAULT_CONFIG
+
+# 初始化图
+ta = TradingAgentsGraph(debug=True, config=DEFAULT_CONFIG.copy())
+
+# 执行决策流程
+_, decision = ta.propagate(ticker="NVDA", date="2026-01-15")
+```
+
+**状态流转**：
+```
+[Start] → [Data Collection] → [Analyst Team] → [Researcher Debate]
+                                            ↓
+[Execution] ← [Portfolio Manager] ← [Risk Management] ← [Trader Decision]
+```
+
+**关键优势**：
+- 每个节点可独立测试和替换
+- 状态持久化支持断点恢复
+- 可视化调试（LangGraph Studio）
+
+---
+
+**5. 多LLM提供商支持（Multi-Provider Flexibility）**
+
+| 提供商 | 配置值 | 适用场景 |
+|--------|--------|---------|
+| OpenAI | "openai" | 通用推理 |
+| Anthropic | "anthropic" | 长文本分析 |
+| Google | "google" | 成本敏感任务 |
+| xAI | "xai" | 实时数据推理 |
+| OpenRouter | "openrouter" | 模型聚合 |
+| Ollama | "ollama" | 本地部署 |
+
+**策略**：可为不同Agent分配不同提供商，实现成本-质量平衡。
+
+---
+
+### 🔧 技术实现/执行步骤
+
+**1. 辩论机制实现模板**
+
+```python
+class DebateSystem:
+    """多空辩论系统"""
+
+    def __init__(self, max_rounds: int = 2):
+        self.max_rounds = max_rounds
+        self.bullish_agent = BullishResearcher()
+        self.bearish_agent = BearishResearcher()
+
+    def debate(self, market_analysis: dict) -> DebateResult:
+        """执行多空辩论"""
+        context = market_analysis
+
+        for round_num in range(self.max_rounds):
+            # 多方论证
+            bullish_case = self.bullish_agent.argue(context)
+
+            # 空方反驳
+            bearish_rebuttal = self.bearish_agent.rebut(bullish_case, context)
+
+            # 多方回应
+            bullish_response = self.bullish_agent.respond(bearish_rebuttal)
+
+            # 更新上下文
+            context = self._update_context(context, bullish_case, bearish_rebuttal)
+
+        return self._synthesize(context)
+```
+
+**2. 风险管理Agent集成**
+
+```python
+class RiskManagementAgent:
+    """风险管理Agent - 独立评估风险"""
+
+    def evaluate(self, trade_proposal: dict, portfolio: dict) -> RiskAssessment:
+        """评估交易提案风险"""
+        risks = {
+            'market_risk': self._calculate_market_risk(trade_proposal),
+            'liquidity_risk': self._assess_liquidity(trade_proposal),
+            'concentration_risk': self._check_concentration(trade_proposal, portfolio),
+            'var_95': self._calculate_var(trade_proposal, confidence=0.95)
+        }
+
+        # 风险阈值检查
+        if risks['var_95'] > portfolio['max_var_threshold']:
+            return RiskAssessment(
+                approved=False,
+                reason=f"VaR {risks['var_95']:.2%} exceeds threshold",
+                adjusted_position=self._suggest_adjustment(trade_proposal, risks)
+            )
+
+        return RiskAssessment(approved=True, risks=risks)
+```
+
+**3. 双模型配置模式**
+
+```python
+# config/trading_agents.yaml
+llm_config:
+  providers:
+    openai:
+      api_key: ${OPENAI_API_KEY}
+
+  # 任务-模型映射
+  task_models:
+    debate:
+      provider: openai
+      model: gpt-4o  # 复杂推理
+    risk_assessment:
+      provider: openai
+      model: gpt-4o  # 复杂推理
+    technical_analysis:
+      provider: openai
+      model: gpt-4o-mini  # 快速任务
+    report_formatting:
+      provider: openai
+      model: gpt-4o-mini  # 快速任务
+```
+
+**4. 可立即应用的SOP**
+
+| 步骤 | 行动 | 产出 |
+|------|------|------|
+| 1 | 为每个策略添加"魔鬼代言人" | 多空对比报告 |
+| 2 | 分离风险管理层 | 独立风险评估Agent |
+| 3 | 实施双模型策略 | 成本降低60%+ |
+| 4 | 使用LangGraph重构工作流 | 可视化、可测试 |
+| 5 | 配置多LLM提供商 | 降低单点依赖 |
+
+---
+
+### 📊 信息差价值
+
+| 维度 | 评分 | 说明 |
+|------|------|------|
+| **国外热度** | ⭐⭐⭐⭐⭐ | 32K+ stars，GitHub Trending持续上榜 |
+| **国内讨论度** | ⭐⭐⭐ | 中文社区讨论较少，信息差明显 |
+| **可复刻性** | ⭐⭐⭐⭐⭐ | Python开源，架构清晰，文档完善 |
+| **对项目价值** | **极高** | 与Stock Platform直接相关，可立即应用 |
+
+**独特价值点**：
+- 多空辩论机制是其他开源量化项目（如ai-hedge-fund）所没有的
+- 分层架构比MiroFish的群体智能更适合作坊式金融决策
+- LangGraph状态机设计提供了工程可落地的实现路径
+
+---
+
+### 🎯 可应用性路径
+
+**短期（本周）**:
+- [ ] 研究TradingAgents源码，提取辩论机制实现
+- [ ] 设计Stock Platform的"多空辩论"模块
+- [ ] 实现简单的Bullish/Bearish Agent原型
+- [ ] 配置双模型策略（gpt-4o vs gpt-4o-mini）
+
+**中期（本月）**:
+- [ ] 集成LangGraph重构现有Agent工作流
+- [ ] 实现独立RiskManagementAgent
+- [ ] 建立六层Agent架构的Stock Platform版本
+- [ ] 测试多空辩论对策略收益的改进效果
+
+**长期（本季度）**:
+- [ ] 实现多LLM提供商支持（降低OpenAI依赖）
+- [ ] 可视化Agent决策流程（LangGraph Studio）
+- [ ] 建立可配置的辩论轮数机制
+- [ ] 探索辩论历史的学习机制（优化辩论策略）
+
+---
+
+### 🔖 相关资源
+
+- **原文**: https://github.com/TauricResearch/TradingAgents
+- **LangGraph文档**: https://langchain-ai.github.io/langgraph/
+- **对比项目**: https://github.com/virattt/ai-hedge-fund（无辩论机制）
+- **相关学习**: 2026-03-09 ai-hedge-fund学习记录（分层架构）
+
+---
+
+### 📋 技能内化
+
+- **技能文件**: `skills/coding/multi-agent-debate-system.md`
+- **触发条件**: 量化策略设计、多Agent决策系统、风险管理
+- **核心输出**: 六层Agent架构 + 多空辩论机制 + 双模型策略
+
+---
+
+---
+
+## 2026-03-18 学习记录
+
+### 📚 今日学习
+**来源**: GitHub Trending TypeScript
+**标题/项目**: GitNexus - Zero-Server Code Intelligence Engine
+**链接**: https://github.com/abhigyanpatwari/GitNexus
+**学习时长**: 20分钟
+
+---
+
+### 🎯 核心主题
+**客户端知识图谱 + Graph RAG Agent：零服务器架构的代码智能引擎**
+
+GitNexus是一个革命性的代码智能工具，完全在浏览器端构建知识图谱，通过7个MCP工具为AI Agent提供预计算的关系智能。16K+ stars，核心创新是"Precomputed Relational Intelligence"——在索引时计算结构，使Agent能一次调用获得完整上下文。
+
+---
+
+### 💡 关键洞察（5点）
+
+**1. 六阶段索引流水线（Six-Phase Indexing Pipeline）**
+
+```
+Structure → Parsing → Resolution → Clustering → Processes → Search
+```
+
+| 阶段 | 功能 | 技术 |
+|------|------|------|
+| Structure | 文件树遍历 | 文件/文件夹关系映射 |
+| Parsing | AST提取 | Tree-sitter WASM |
+| Resolution | 跨文件解析 | Import追踪、调用链、继承关系 |
+| Clustering | 功能分组 | Leiden社区检测算法 |
+| Processes | 执行流追踪 | 从入口点追踪调用链 |
+| Search | 混合索引 | BM25 + 语义 + RRF |
+
+**关键学习点**：知识图谱构建是离线计算密集型任务，查询时只需检索预计算结果。
+
+---
+
+**2. Graph RAG Agent架构：7个MCP工具**
+
+GitNexus通过MCP协议暴露7个图能力工具，这是与Claude Code集成的核心：
+
+```python
+# MCP Tools暴露的图能力
+tools = [
+    "list_repos",      # 发现已索引仓库
+    "query",           # 混合搜索（BM25+语义+RRF）
+    "context",         # 360度符号视图（分类引用）
+    "impact",          # 影响范围分析（深度分组+置信度评分）
+    "detect_changes",  # Git diff影响映射
+    "rename",          # 多文件协调重命名
+    "cypher"           # 原始Cypher图查询
+]
+```
+
+**Precomputed Relational Intelligence**:
+- 传统RAG：Agent需要多次查询探索图结构
+- GitNexus：工具返回"8个调用者，3个集群，全部90%+置信度"的预结构化响应
+
+---
+
+**3. 零服务器架构（Zero-Server Architecture）**
+
+| 组件 | 技术选择 | 运行环境 |
+|------|----------|----------|
+| 数据库 | LadybugDB WASM | 浏览器内存 |
+| 解析 | Tree-sitter WASM | 浏览器 |
+| 嵌入 | 浏览器内计算（可选） | 浏览器 |
+| 存储 | `.gitnexus/`目录 | 本地文件系统 |
+
+**核心优势**："No server, no install — your code never leaves the browser"
+
+---
+
+**4. Claude Code深度集成：4个Agent Skills**
+
+GitNexus为Claude Code提供"Full"支持级别——最深度的编辑器集成：
+
+**MCP + Skills + Hooks**:
+- `claude mcp add gitnexus -- npx -y gitnexus@latest mcp`
+- **PreToolUse hooks**: "用图上下文丰富搜索"
+- **PostToolUse hooks**: "提交后自动重新索引"
+
+**4个自动安装的Agent Skills**（到`.claude/skills/`）:
+| Skill | 用途 |
+|-------|------|
+| Exploring | 用知识图谱导航陌生代码 |
+| Debugging | 通过调用链追踪Bug |
+| Impact Analysis | 变更前分析影响范围 |
+| Refactoring | 用依赖映射规划安全重构 |
+
+**Repo-specific Skills**: `--skills`标志通过Leiden社区检测识别功能区域，生成描述"模块关键文件、入口点、执行流、跨区域连接"的SKILL.md文件。
+
+---
+
+**5. 多仓库架构与连接池**
+
+```
+Global Registry (~/.gitnexus/registry.json)
+    ├── Repo A (.gitnexus/)
+    ├── Repo B (.gitnexus/)
+    └── Repo C (.gitnexus/)
+```
+
+- 一个MCP服务器可服务多个已索引仓库
+- 懒连接池（最大5个并发，5分钟驱逐）
+- 每个仓库独立的`.gitnexus/`目录存储索引
+
+---
+
+### 🔧 技术实现/执行步骤
+
+**1. 客户端知识图谱构建模板**
+
+```typescript
+// 六阶段索引流水线
+class KnowledgeGraphBuilder {
+    async build(repoPath: string): Promise<Graph> {
+        // Phase 1: Structure - 文件树遍历
+        const fileTree = await this.walkFileTree(repoPath);
+
+        // Phase 2: Parsing - AST提取
+        const astNodes = await Promise.all(
+            fileTree.map(f => this.parseAST(f))
+        );
+
+        // Phase 3: Resolution - 跨文件解析
+        const resolved = this.resolveCrossReferences(astNodes);
+
+        // Phase 4: Clustering - Leiden社区检测
+        const clusters = this.leidenClustering(resolved);
+
+        // Phase 5: Processes - 执行流追踪
+        const processes = this.traceExecutionFlows(clusters);
+
+        // Phase 6: Search - 混合索引
+        return this.buildSearchIndex(processes);
+    }
+
+    private async parseAST(file: File): Promise<ASTNode> {
+        // Tree-sitter WASM解析
+        const parser = await this.getParser(file.language);
+        return parser.parse(file.content);
+    }
+}
+```
+
+**2. MCP Tool实现模式**
+
+```typescript
+// 预计算关系智能的核心
+class GraphRAGTools {
+    async context(symbol: string): Promise<ContextResult> {
+        // 不是返回原始边，而是返回预计算的360度视图
+        const callers = this.getCallers(symbol, maxDepth=3);
+        const callees = this.getCallees(symbol, maxDepth=3);
+        const clusters = this.getRelatedClusters(symbol);
+
+        return {
+            symbol,
+            callers: { count: callers.length, confidence: 0.95 },
+            callees: { count: callees.length, confidence: 0.92 },
+            clusters: clusters.map(c => ({
+                name: c.name,
+                files: c.files,
+                relevance: c.relevanceScore
+            }))
+        };
+    }
+
+    async impact(symbol: string, depth: number): Promise<ImpactResult> {
+        // 影响范围分析：深度分组 + 置信度评分
+        const blastRadius = this.calculateBlastRadius(symbol, depth);
+        return {
+            affectedFiles: blastRadius.files,
+            affectedClusters: blastRadius.clusters,
+            confidence: blastRadius.confidence,
+            riskLevel: this.assessRisk(blastRadius)
+        };
+    }
+}
+```
+
+**3. 技能自动生成机制**
+
+```typescript
+// 基于Leiden社区检测生成repo-specific skills
+class SkillGenerator {
+    generateSkills(graph: KnowledgeGraph): Skill[] {
+        // 1. 运行Leiden算法识别功能社区
+        const communities = this.leiden.detect(graph);
+
+        // 2. 为每个社区生成SKILL.md
+        return communities.map(community => ({
+            name: community.name,
+            description: this.generateDescription(community),
+            keyFiles: community.entryPoints,
+            executionFlows: this.traceFlows(community),
+            crossAreaConnections: this.findConnections(community, graph)
+        }));
+    }
+}
+```
+
+**4. 可立即应用的SOP**
+
+| 步骤 | 行动 | 产出 |
+|------|------|------|
+| 1 | 研究Tree-sitter WASM集成 | AST解析能力 |
+| 2 | 实现Leiden社区检测 | 代码功能分组 |
+| 3 | 设计Precomputed Relational Intelligence | 快速查询响应 |
+| 4 | 构建MCP Tool接口 | Agent集成能力 |
+| 5 | 实现Skill自动生成 | 上下文感知Agent |
+
+---
+
+### 📊 信息差价值
+
+| 维度 | 评分 | 说明 |
+|------|------|------|
+| **国外热度** | ⭐⭐⭐⭐⭐ | 16K+ stars，GitHub Trending TypeScript #1 |
+| **国内讨论度** | ⭐⭐ | 中文社区几乎无讨论，信息差明显 |
+| **可复刻性** | ⭐⭐⭐⭐⭐ | TypeScript开源，架构清晰 |
+| **对Agent系统价值** | **极高** | 知识图谱+Graph RAG是下一代Agent基础设施 |
+| **对Stock Platform价值** | ⭐⭐⭐⭐ | 代码库分析、策略回测代码理解 |
+
+**独特价值点**：
+- 零服务器架构：完全客户端运行，隐私保护
+- Precomputed Relational Intelligence：查询性能革命
+- 自动生成Skills：Agent上下文感知的新范式
+- MCP深度集成：与Claude Code无缝协作
+
+---
+
+### 🎯 可应用性路径
+
+**短期（本周）**:
+- [ ] 研究GitNexus源码，理解六阶段索引流水线
+- [ ] 测试Tree-sitter WASM在浏览器端的解析能力
+- [ ] 设计Agent成长系统的知识图谱存储方案
+- [ ] 评估LadybugDB WASM的适用性
+
+**中期（本月）**:
+- [ ] 实现技能文件的自动生成机制
+- [ ] 构建Precomputed Relational Intelligence查询层
+- [ ] 集成MCP Tools到Agent工作流
+- [ ] 为Stock Platform代码库建立知识图谱
+
+**长期（本季度）**:
+- [ ] 实现零服务器架构的Agent记忆系统
+- [ ] 构建跨项目的知识图谱关联
+- [ ] 开发可视化知识图谱浏览器
+- [ ] 研究Leiden算法在策略分组中的应用
+
+---
+
+### 🔖 相关资源
+
+- **原文**: https://github.com/abhigyanpatwari/GitNexus
+- **Tree-sitter**: https://tree-sitter.github.io/tree-sitter/
+- **Leiden算法**: https://arxiv.org/abs/1810.08473
+- **对比项目**: Sourcegraph（服务器架构）、GitHub Copilot（闭源）
+- **相关学习**: 2026-03-13 Hindsight记忆系统、2026-03-09 ai-hedge-fund分层架构
+
+---
+
+### 📋 技能内化
+
+- **技能文件**: `skills/coding/client-side-knowledge-graph.md`
+- **触发条件**: 代码库分析、Agent记忆系统、技能自动生成
+- **核心输出**: 六阶段索引流水线 + Precomputed Relational Intelligence + MCP Tools
+
+---
+
+*Learning Date: 2026-03-18*
+
+*Learning Date: 2026-03-17*

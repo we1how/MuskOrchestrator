@@ -135,5 +135,144 @@
 
 ---
 
+## 2026-03-16 学习记录
+
+### 📚 今日学习
+**来源**: Everything Claude Code (ECC) Skill Library
+**技能**: Security Review + Backend Patterns + API Design
+**学习时长**: 30分钟
+
+---
+
+### 🎯 核心主题
+**生产级代码审查：安全、架构、API设计三维检查框架**
+
+Reviewer的职责不是"挑刺"，而是守护系统安全与质量。一次疏漏可能导致整个平台被攻破。
+
+---
+
+### 💡 关键洞察
+
+**1. 安全审查十项检查清单**
+
+| 检查项 | 风险等级 | 检查要点 |
+|--------|----------|----------|
+| Secrets管理 | 🔴 极高 | 无硬编码、环境变量、.gitignore |
+| 输入验证 | 🔴 极高 | Zod校验、文件类型/大小限制 |
+| SQL注入 | 🔴 极高 | 参数化查询、ORM正确使用 |
+| 认证授权 | 🔴 极高 | httpOnly cookies、JWT验证、RLS |
+| XSS防护 | 🟡 高 | HTML净化、CSP头配置 |
+| CSRF防护 | 🟡 高 | Token验证、SameSite=Strict |
+| 速率限制 | 🟡 高 | API限流、昂贵操作严格限制 |
+| 敏感数据 | 🟡 高 | 日志脱敏、错误信息泛化 |
+| 依赖安全 | 🟢 中 | npm audit、lock文件提交 |
+| 区块链安全 | 🟢 中 | 签名验证、交易校验 |
+
+**2. 后端架构审查要点**
+
+**分层架构检查**:
+```
+Repository层 → Service层 → Controller层
+   ↓               ↓            ↓
+数据访问        业务逻辑      HTTP处理
+```
+
+- Repository: 是否抽象数据访问？是否支持切换数据库？
+- Service: 业务逻辑是否独立？是否可单元测试？
+- Controller: 是否只处理HTTP相关逻辑？
+
+**数据库审查**:
+- N+1查询问题: 是否使用批量获取代替循环查询？
+- 事务处理: 多表操作是否有事务保护？
+- 索引优化: 查询字段是否有适当索引？
+
+**3. API设计审查标准**
+
+**RESTful规范检查**:
+| 维度 | 标准 | 常见错误 |
+|------|------|----------|
+| URL | 名词复数、kebab-case | `/getUsers` ❌ `/users` ✅ |
+| 方法 | GET/POST/PUT/PATCH/DELETE语义正确 | 所有操作用POST ❌ |
+| 状态码 | 200/201/204/400/401/403/404/422/429/500 | 全部返回200 ❌ |
+| 响应格式 | 统一envelope `{data: T}` / `{error: {...}}` | 不一致的格式 ❌ |
+
+**分页策略选择**:
+- Offset分页: 小数据集(<10K)、管理后台、需要跳页
+- Cursor分页: 大数据集、无限滚动、Feeds
+
+**4. 代码审查四维检查法**
+
+| 维度 | 检查内容 | 工具/方法 |
+|------|----------|-----------|
+| 安全性 | 注入风险、Secrets管理、权限控制 | 安全扫描、人工审查 |
+| 正确性 | 逻辑错误、边界条件、异常处理 | 单元测试、静态分析 |
+| 可维护性 | 代码结构、命名规范、文档 | Lint、Code Review |
+| 性能 | 时间/空间复杂度、资源泄漏 | 性能测试、Profiling |
+
+---
+
+### 🔧 可应用审查模板
+
+**预部署安全检查清单**:
+```markdown
+- [ ] Secrets: 无硬编码，全部使用环境变量
+- [ ] 输入验证: 所有用户输入经过Zod校验
+- [ ] SQL注入: 所有查询使用参数化查询
+- [ ] XSS: 用户内容经过DOMPurify净化
+- [ ] CSRF: 启用CSRF保护
+- [ ] 认证: httpOnly cookies存储token
+- [ ] 授权: 敏感操作前检查权限
+- [ ] 限流: API端点配置速率限制
+- [ ] HTTPS: 生产环境强制HTTPS
+- [ ] 错误处理: 不向用户暴露内部错误详情
+```
+
+**API端点审查清单**:
+```markdown
+- [ ] URL符合RESTful规范 (名词复数、kebab-case)
+- [ ] HTTP方法使用正确
+- [ ] 返回适当的状态码
+- [ ] 输入参数经过验证
+- [ ] 错误响应格式统一
+- [ ] 列表接口实现分页
+- [ ] 需要认证的端点已标记
+- [ ] 已检查资源所有权
+- [ ] 已配置速率限制
+- [ ] 响应不包含敏感信息
+```
+
+---
+
+### 📊 信息差价值评估
+- **来源质量**: ⭐⭐⭐⭐⭐ 极高 (ECC生产级技能库)
+- **可应用性**: ⭐⭐⭐⭐⭐ 极高 (Reviewer核心工作)
+- **风险防控价值**: ⭐⭐⭐⭐⭐ 极高 (预防安全事故)
+
+---
+
+### 🎯 立即行动
+1. **建立标准化审查清单** - 针对Agent代码的特殊安全检查
+2. **配置自动化安全扫描** - npm audit + 代码扫描工具
+3. **设计API审查模板** - 统一Stock Platform API设计标准
+4. **建立审查文化** - 冷酷无情、结果导向、有据可查
+
+---
+
+### 🔖 技能文件
+- `skills/everything-claude-code/.agents/skills/security-review/SKILL.md`
+- `skills/everything-claude-code/.agents/skills/backend-patterns/SKILL.md`
+- `skills/everything-claude-code/.agents/skills/api-design/SKILL.md`
+
+---
+
+### 📋 技能内化
+- **技能文件**: Security Review + Backend Patterns + API Design
+- **触发条件**: 任何代码审查、API设计、架构评审
+- **核心输出**: 三维检查框架 + 标准化清单
+
+---
+
+*Learning Date: 2026-03-16*
+
 *Created: 2026-03-09*
 *Role: Quality Reviewer - 专注质量验证与风险防控*

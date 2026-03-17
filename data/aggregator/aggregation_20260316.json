@@ -1,0 +1,1941 @@
+{
+  "timestamp": "2026-03-16T17:56:43.221906",
+  "total_items": 55,
+  "by_agent": {
+    "engineer": [
+      {
+        "title": "Canada's bill C-22 mandates mass metadata surveillance",
+        "url": "https://www.michaelgeist.ca/2026/03/a-tale-of-two-bills-lawful-access-returns-with-changes-to-warrantless-access-but-dangerous-backdoor-surveillance-risks-remains/",
+        "source": "hackernews",
+        "source_type": "discussion",
+        "agent_target": "engineer",
+        "description": "HN Discussion with 199 comments",
+        "author": "opengrass",
+        "published_date": "2026-03-16T05:22:16",
+        "tags": [
+          "hackernews",
+          "tech-news"
+        ],
+        "metrics": {
+          "score": 696,
+          "comments": 199
+        },
+        "summary": "",
+        "content_hash": "c909e1f9c997"
+      },
+      {
+        "title": "The 49MB web page",
+        "url": "https://thatshubham.com/blog/news-audit",
+        "source": "hackernews",
+        "source_type": "discussion",
+        "agent_target": "engineer",
+        "description": "HN Discussion with 249 comments",
+        "author": "kermatt",
+        "published_date": "2026-03-16T03:25:18",
+        "tags": [
+          "hackernews",
+          "tech-news"
+        ],
+        "metrics": {
+          "score": 554,
+          "comments": 249
+        },
+        "summary": "",
+        "content_hash": "9774a5b02126"
+      },
+      {
+        "title": "shadcn-ui/ui",
+        "url": "https://github.com/shadcn-ui/ui",
+        "source": "github",
+        "source_type": "trending",
+        "agent_target": "engineer",
+        "description": "A set of beautifully-designed, accessible components and a code distribution platform. Works with your favorite frameworks. Open Source. Open Code.",
+        "author": "",
+        "published_date": "2026-03-16T17:56:22.788590",
+        "tags": [
+          "TypeScript",
+          "weekly"
+        ],
+        "metrics": {
+          "stars": 109700,
+          "language": "TypeScript",
+          "period": "weekly"
+        },
+        "summary": "",
+        "content_hash": "5832b29ea8c6"
+      },
+      {
+        "title": "obra/superpowers",
+        "url": "https://github.com/obra/superpowers",
+        "source": "github",
+        "source_type": "trending",
+        "agent_target": "engineer",
+        "description": "An agentic skills framework & software development methodology that works.",
+        "author": "",
+        "published_date": "2026-03-16T17:56:17.108228",
+        "tags": [
+          "Shell",
+          "daily"
+        ],
+        "metrics": {
+          "stars": 87210,
+          "language": "Shell",
+          "period": "daily"
+        },
+        "summary": "",
+        "content_hash": "e7b6b0454faa"
+      },
+      {
+        "title": "virattt/ai-hedge-fund",
+        "url": "https://github.com/virattt/ai-hedge-fund",
+        "source": "github",
+        "source_type": "trending",
+        "agent_target": "engineer",
+        "description": "An AI Hedge Fund Team",
+        "author": "",
+        "published_date": "2026-03-16T17:56:18.814689",
+        "tags": [
+          "Python",
+          "weekly"
+        ],
+        "metrics": {
+          "stars": 49085,
+          "language": "Python",
+          "period": "weekly"
+        },
+        "summary": "",
+        "content_hash": "30b6453ec1d2"
+      },
+      {
+        "title": "Chrome DevTools MCP (2025)",
+        "url": "https://developer.chrome.com/blog/chrome-devtools-mcp-debug-your-browser-session",
+        "source": "hackernews",
+        "source_type": "discussion",
+        "agent_target": "engineer",
+        "description": "HN Discussion with 198 comments",
+        "author": "xnx",
+        "published_date": "2026-03-16T03:12:53",
+        "tags": [
+          "hackernews",
+          "tech-news"
+        ],
+        "metrics": {
+          "score": 472,
+          "comments": 198
+        },
+        "summary": "",
+        "content_hash": "cc0767e16bd6"
+      },
+      {
+        "title": "LLM Architecture Gallery",
+        "url": "https://sebastianraschka.com/llm-architecture-gallery/",
+        "source": "hackernews",
+        "source_type": "discussion",
+        "agent_target": "engineer",
+        "description": "HN Discussion with 31 comments",
+        "author": "tzury",
+        "published_date": "2026-03-16T00:01:09",
+        "tags": [
+          "hackernews",
+          "tech-news"
+        ],
+        "metrics": {
+          "score": 402,
+          "comments": 31
+        },
+        "summary": "",
+        "content_hash": "d16e698d43e2"
+      },
+      {
+        "title": "How I write software with LLMs",
+        "url": "https://www.stavros.io/posts/how-i-write-software-with-llms/",
+        "source": "hackernews",
+        "source_type": "discussion",
+        "agent_target": "engineer",
+        "description": "HN Discussion with 134 comments",
+        "author": "indigodaddy",
+        "published_date": "2026-03-16T09:24:09",
+        "tags": [
+          "hackernews",
+          "tech-news"
+        ],
+        "metrics": {
+          "score": 190,
+          "comments": 134
+        },
+        "summary": "",
+        "content_hash": "bba2333145ee"
+      },
+      {
+        "title": "Starlink Mini as a Failover",
+        "url": "https://www.jackpearce.co.uk/posts/starlink-failover/",
+        "source": "hackernews",
+        "source_type": "discussion",
+        "agent_target": "engineer",
+        "description": "HN Discussion with 18 comments",
+        "author": "jkpe",
+        "published_date": "2026-03-16T16:07:29",
+        "tags": [
+          "hackernews",
+          "tech-news"
+        ],
+        "metrics": {
+          "score": 30,
+          "comments": 18
+        },
+        "summary": "",
+        "content_hash": "076be00d68d4"
+      },
+      {
+        "title": "Acquiring micro-SaaS products and growing them to $120k MRRPascal Levy-Garboua is acquired six micro-SaaS companies, shut one down, sold two, and the remaining three are bringing in $120k/mo. Here's how.",
+        "url": "https://www.indiehackers.com/post/tech/acquiring-micro-saas-products-and-growing-them-to-120k-mrr-uC42WHXCFk9lKt3HTPK0",
+        "source": "indiehackers",
+        "source_type": "post",
+        "agent_target": "engineer",
+        "description": "",
+        "author": "",
+        "published_date": "2026-03-16T17:56:34.894574",
+        "tags": [
+          "indie-hackers",
+          "startup"
+        ],
+        "metrics": {},
+        "summary": "",
+        "content_hash": "104a971d9c1b"
+      },
+      {
+        "title": "Electric motor scaling laws and inertia in robot actuators",
+        "url": "https://robot-daycare.com/posts/actuation_series_1/",
+        "source": "hackernews",
+        "source_type": "discussion",
+        "agent_target": "engineer",
+        "description": "HN Discussion with 16 comments",
+        "author": "o4c",
+        "published_date": "2026-03-12T21:04:35",
+        "tags": [
+          "hackernews",
+          "tech-news"
+        ],
+        "metrics": {
+          "score": 82,
+          "comments": 16
+        },
+        "summary": "",
+        "content_hash": "c2733f2acfba"
+      },
+      {
+        "title": "What every computer scientist should know about floating-point arithmetic (1991) [pdf]",
+        "url": "https://www.itu.dk/~sestoft/bachelor/IEEE754_article.pdf",
+        "source": "hackernews",
+        "source_type": "discussion",
+        "agent_target": "engineer",
+        "description": "HN Discussion with 5 comments",
+        "author": "jbarrow",
+        "published_date": "2026-03-12T07:24:22",
+        "tags": [
+          "hackernews",
+          "tech-news"
+        ],
+        "metrics": {
+          "score": 65,
+          "comments": 5
+        },
+        "summary": "",
+        "content_hash": "7bb3876a7ea5"
+      },
+      {
+        "title": "Kona EV Hacking",
+        "url": "http://techno-fandom.org/~hobbit/cars/ev/",
+        "source": "hackernews",
+        "source_type": "discussion",
+        "agent_target": "engineer",
+        "description": "HN Discussion with 13 comments",
+        "author": "AnnikaL",
+        "published_date": "2026-03-12T05:26:16",
+        "tags": [
+          "hackernews",
+          "tech-news"
+        ],
+        "metrics": {
+          "score": 44,
+          "comments": 13
+        },
+        "summary": "",
+        "content_hash": "7a48d48188ff"
+      },
+      {
+        "title": "Home Assistant waters my plants",
+        "url": "https://finnian.io/blog/home-assistant-waters-my-plants/",
+        "source": "hackernews",
+        "source_type": "discussion",
+        "agent_target": "engineer",
+        "description": "HN Discussion with 2 comments",
+        "author": "finniananderson",
+        "published_date": "2026-03-12T18:19:14",
+        "tags": [
+          "hackernews",
+          "tech-news"
+        ],
+        "metrics": {
+          "score": 20,
+          "comments": 2
+        },
+        "summary": "",
+        "content_hash": "6fd813746de9"
+      },
+      {
+        "title": "PhysMoDPO: Physically-Plausible Humanoid Motion with Preference Optimization",
+        "url": "http://arxiv.org/abs/2603.13228v1",
+        "source": "arxiv",
+        "source_type": "paper",
+        "agent_target": "engineer",
+        "description": "Recent progress in text-conditioned human motion generation has been largely driven by diffusion models trained on large-scale human motion data. Building on this progress, recent methods attempt to transfer such models for character animation and real robot control by applying a Whole-Body Controller (WBC) that converts diffusion-generated motions into executable trajectories. While WBC trajectories become compliant with physics, they may expose substantial deviations from original motion. To a...",
+        "author": "Yangsong Zhang, Anujith Muraleedharan, Rikhat Akizhanov et al.",
+        "published_date": "2026-03-13T17:59:59+00:00",
+        "tags": [
+          "cs.LG",
+          "cs.AI",
+          "cs.CV",
+          "cs.RO"
+        ],
+        "metrics": {
+          "category": "cs.LG",
+          "authors_count": 8
+        },
+        "summary": "",
+        "content_hash": "f35789d4e024"
+      }
+    ],
+    "planner": [
+      {
+        "title": "openai/codex",
+        "url": "https://github.com/openai/codex",
+        "source": "github",
+        "source_type": "trending",
+        "agent_target": "planner",
+        "description": "Lightweight coding agent that runs in your terminal",
+        "author": "",
+        "published_date": "2026-03-16T17:56:24.657647",
+        "tags": [
+          "Rust",
+          "weekly"
+        ],
+        "metrics": {
+          "stars": 65554,
+          "language": "Rust",
+          "period": "weekly"
+        },
+        "summary": "",
+        "content_hash": "b338c827a83b"
+      },
+      {
+        "title": "ruvnet/RuView",
+        "url": "https://github.com/ruvnet/RuView",
+        "source": "github",
+        "source_type": "trending",
+        "agent_target": "planner",
+        "description": "π RuView: WiFi DensePose turns commodity WiFi signals into real-time human pose estimation, vital sign monitoring, and presence detection — all without a single pixel of video.",
+        "author": "",
+        "published_date": "2026-03-16T17:56:24.657397",
+        "tags": [
+          "Rust",
+          "weekly"
+        ],
+        "metrics": {
+          "stars": 37230,
+          "language": "Rust",
+          "period": "weekly"
+        },
+        "summary": "",
+        "content_hash": "490a19ee9ad7"
+      },
+      {
+        "title": "shareAI-lab/learn-claude-code",
+        "url": "https://github.com/shareAI-lab/learn-claude-code",
+        "source": "github",
+        "source_type": "trending",
+        "agent_target": "planner",
+        "description": "Bash is all you need - A nano Claude Code–like agent, built from 0 to 1",
+        "author": "",
+        "published_date": "2026-03-16T17:56:17.108125",
+        "tags": [
+          "TypeScript",
+          "daily"
+        ],
+        "metrics": {
+          "stars": 28822,
+          "language": "TypeScript",
+          "period": "daily"
+        },
+        "summary": "",
+        "content_hash": "161e47a10e07"
+      },
+      {
+        "title": "Simple Truths: Clear & Gentle Guidance on the Big Issues in Life",
+        "url": "https://fs.blog/highlights-simple-truths/",
+        "source": "farnamstreet",
+        "source_type": "article",
+        "agent_target": "planner",
+        "description": "My Kindle Highlights from Kent Nerburn’s Simple Truths: Clear & Gentle Guidance on the Big Issues in Life *** “Education is one of the great joys and solaces of life. It gives us a framework …",
+        "author": "Farnam Street",
+        "published_date": "2026-03-16T11:51:27.003377",
+        "tags": [
+          "mental-models",
+          "decision-making"
+        ],
+        "metrics": {},
+        "summary": "",
+        "content_hash": "d3f2200d78fa"
+      }
+    ],
+    "analyst": [
+      {
+        "title": "Towards Faithful Multimodal Concept Bottleneck Models",
+        "url": "http://arxiv.org/abs/2603.13163v1",
+        "source": "arxiv",
+        "source_type": "paper",
+        "agent_target": "analyst",
+        "description": "Concept Bottleneck Models (CBMs) are interpretable models that route predictions through a layer of human-interpretable concepts. While widely studied in vision and, more recently, in NLP, CBMs remain largely unexplored in multimodal settings. For their explanations to be faithful, CBMs must satisfy two conditions: concepts must be properly detected, and concept representations must encode only their intended semantics, without smuggling extraneous task-relevant or inter-concept information into...",
+        "author": "Pierre Moreau, Emeline Pineau Ferrand, Yann Choho et al.",
+        "published_date": "2026-03-13T16:56:08+00:00",
+        "tags": [
+          "cs.CV",
+          "cs.LG"
+        ],
+        "metrics": {
+          "category": "cs.CV",
+          "authors_count": 6
+        },
+        "summary": "",
+        "content_hash": "03928759e899"
+      },
+      {
+        "title": "Visual-ERM: Reward Modeling for Visual Equivalence",
+        "url": "http://arxiv.org/abs/2603.13224v1",
+        "source": "arxiv",
+        "source_type": "paper",
+        "agent_target": "analyst",
+        "description": "Vision-to-code tasks require models to reconstruct structured visual inputs, such as charts, tables, and SVGs, into executable or structured representations with high visual fidelity. While recent Large Vision Language Models (LVLMs) achieve strong results via supervised fine-tuning, reinforcement learning remains challenging due to misaligned reward signals. Existing rewards either rely on textual rules or coarse visual embedding similarity, both of which fail to capture fine-grained visual dis...",
+        "author": "Ziyu Liu, Shengyuan Ding, Xinyu Fang et al.",
+        "published_date": "2026-03-13T17:58:14+00:00",
+        "tags": [
+          "cs.CV",
+          "cs.AI"
+        ],
+        "metrics": {
+          "category": "cs.CV",
+          "authors_count": 10
+        },
+        "summary": "",
+        "content_hash": "7bc79b6a9f2c"
+      },
+      {
+        "title": "From Experiments to Expertise: Scientific Knowledge Consolidation for AI-Driven Computational Research",
+        "url": "http://arxiv.org/abs/2603.13191v1",
+        "source": "arxiv",
+        "source_type": "paper",
+        "agent_target": "analyst",
+        "description": "While large language models (LLMs) have transformed AI agents into proficient executors of computational materials science, performing a hundred simulations does not make a researcher. What distinguishes research from routine execution is the progressive accumulation of knowledge -- learning which approaches fail, recognizing patterns across systems, and applying understanding to new problems. However, the prevailing paradigm in AI-driven computational science treats each execution in isolation,...",
+        "author": "Haonan Huang",
+        "published_date": "2026-03-13T17:25:47+00:00",
+        "tags": [
+          "physics.comp-ph",
+          "cond-mat.mtrl-sci",
+          "cs.AI"
+        ],
+        "metrics": {
+          "category": "physics.comp-ph",
+          "authors_count": 1
+        },
+        "summary": "",
+        "content_hash": "27826f32e126"
+      },
+      {
+        "title": "LLM Constitutional Multi-Agent Governance",
+        "url": "http://arxiv.org/abs/2603.13189v1",
+        "source": "arxiv",
+        "source_type": "paper",
+        "agent_target": "analyst",
+        "description": "Large Language Models (LLMs) can generate persuasive influence strategies that shift cooperative behavior in multi-agent populations, but a critical question remains: does the resulting cooperation reflect genuine prosocial alignment, or does it mask erosion of agent autonomy, epistemic integrity, and distributional fairness? We introduce Constitutional Multi-Agent Governance (CMAG), a two-stage framework that interposes between an LLM policy compiler and a networked agent population, combining ...",
+        "author": "J. de Curtò, I. de Zarzà",
+        "published_date": "2026-03-13T17:21:26+00:00",
+        "tags": [
+          "cs.MA",
+          "cs.AI"
+        ],
+        "metrics": {
+          "category": "cs.MA",
+          "authors_count": 2
+        },
+        "summary": "",
+        "content_hash": "8006f583b452"
+      }
+    ],
+    "mentor": [
+      {
+        "title": "Ride the Wave",
+        "url": "https://fs.blog/ride-wave/",
+        "source": "farnamstreet",
+        "source_type": "article",
+        "agent_target": "mentor",
+        "description": "Imagine a surfer poised perfectly on the crest of a massive wave, making the impossible look effortless. The surfer can’t control the water—only ride it. This image illustrates one of the most …",
+        "author": "Farnam Street",
+        "published_date": "2026-03-16T11:51:27.002988",
+        "tags": [
+          "mental-models",
+          "decision-making"
+        ],
+        "metrics": {},
+        "summary": "",
+        "content_hash": "9a5baf919ae8"
+      },
+      {
+        "title": "Experts vs. Imitators",
+        "url": "https://fs.blog/experts-vs-imitators/",
+        "source": "farnamstreet",
+        "source_type": "article",
+        "agent_target": "mentor",
+        "description": "If you want the highest quality information, you have to speak to the best people. The problem is many people claim to be experts, who really aren’t. Safeguard: Take time to distinguish real …",
+        "author": "Farnam Street",
+        "published_date": "2026-03-16T11:51:27.003203",
+        "tags": [
+          "mental-models",
+          "decision-making"
+        ],
+        "metrics": {},
+        "summary": "",
+        "content_hash": "d39548080e12"
+      },
+      {
+        "title": "[FS Members] Lessons from Rockefeller: The Upside of Patience",
+        "url": "https://fs.blog/upside-of-patience/",
+        "source": "farnamstreet",
+        "source_type": "article",
+        "agent_target": "mentor",
+        "description": "Long-term thinking is one of the most valuable traits of successful individuals. It demands that you forego the rewards of the immediate future and position yourself for lasting success. Members Only …",
+        "author": "Farnam Street",
+        "published_date": "2026-03-16T11:51:27.003544",
+        "tags": [
+          "mental-models",
+          "decision-making"
+        ],
+        "metrics": {},
+        "summary": "",
+        "content_hash": "ec66db73dde1"
+      },
+      {
+        "title": "The Winner’s Edge",
+        "url": "https://fs.blog/winners-edge/",
+        "source": "farnamstreet",
+        "source_type": "article",
+        "agent_target": "mentor",
+        "description": "It is essential to take risks. Examine the life of any lucky man or woman, and you are all but certain to find that he or she was willing, at some point, to take a risk. Without that willingness, …",
+        "author": "Farnam Street",
+        "published_date": "2026-03-16T11:51:27.003714",
+        "tags": [
+          "mental-models",
+          "decision-making"
+        ],
+        "metrics": {},
+        "summary": "",
+        "content_hash": "b501a2870325"
+      },
+      {
+        "title": "The Surprising Reason Writing Remains Essential in an AI-Driven World",
+        "url": "https://fs.blog/why-write/",
+        "source": "farnamstreet",
+        "source_type": "article",
+        "agent_target": "mentor",
+        "description": "Why write an essay when you can type a few words and have AI generate one for you? Why write an email when AI can auto-respond for you with all the typical pleasantries and talking-points? While AI …",
+        "author": "Farnam Street",
+        "published_date": "2026-03-16T11:51:27.003882",
+        "tags": [
+          "mental-models",
+          "decision-making"
+        ],
+        "metrics": {},
+        "summary": "",
+        "content_hash": "769ed94f6138"
+      },
+      {
+        "title": "Lessons on Leadership: Michael Abrashoff’s Turnaround Playbook",
+        "url": "https://fs.blog/michael-abrashoff-leadership/",
+        "source": "farnamstreet",
+        "source_type": "article",
+        "agent_target": "mentor",
+        "description": "Michael Abrashoff was in his mid-thirties when he took command of the USS Benfold, a guided missile destroyer and one of the worst-performing ships in the Navy. Despite her potency, the …",
+        "author": "Farnam Street",
+        "published_date": "2026-03-16T11:51:27.004056",
+        "tags": [
+          "mental-models",
+          "decision-making"
+        ],
+        "metrics": {},
+        "summary": "",
+        "content_hash": "492c0cdd0ad8"
+      },
+      {
+        "title": "Let Go of the Learning Baggage",
+        "url": "https://fs.blog/learning-baggage/",
+        "source": "farnamstreet",
+        "source_type": "article",
+        "agent_target": "mentor",
+        "description": "We all want to learn better. That means retaining information, processing it, being able to use it when needed. More knowledge means better instincts; better insights into opportunities for both you …",
+        "author": "Farnam Street",
+        "published_date": "2026-03-16T11:51:27.004459",
+        "tags": [
+          "mental-models",
+          "decision-making"
+        ],
+        "metrics": {},
+        "summary": "",
+        "content_hash": "32e3a9390137"
+      },
+      {
+        "title": "Language: Why We Hear More Than Words",
+        "url": "https://fs.blog/language-not-just-code/",
+        "source": "farnamstreet",
+        "source_type": "article",
+        "agent_target": "mentor",
+        "description": "It’s a classic complaint in relationships, especially romantic ones: “She said she was okay with me forgetting her birthday! Then why is she throwing dishes in the kitchen? Are the two things …",
+        "author": "Farnam Street",
+        "published_date": "2026-03-16T11:51:27.004780",
+        "tags": [
+          "mental-models",
+          "decision-making"
+        ],
+        "metrics": {},
+        "summary": "",
+        "content_hash": "de0c34e5457f"
+      },
+      {
+        "title": "Learning Through Play",
+        "url": "https://fs.blog/learning-through-play/",
+        "source": "farnamstreet",
+        "source_type": "article",
+        "agent_target": "mentor",
+        "description": "Play is an essential way of learning about the world. Doing things we enjoy without a goal in mind leads us to find new information, better understand our own capabilities, and find unexpected beauty …",
+        "author": "Farnam Street",
+        "published_date": "2026-03-16T11:51:27.004932",
+        "tags": [
+          "mental-models",
+          "decision-making"
+        ],
+        "metrics": {},
+        "summary": "",
+        "content_hash": "f97b8def55e0"
+      }
+    ],
+    "creator": [
+      {
+        "title": "We made Android 10x faster. Now, we’re doing it for the Web.",
+        "url": "https://www.indiehackers.com/post/we-made-android-10x-faster-now-we-re-doing-it-for-the-web-af503318e9",
+        "source": "indiehackers",
+        "source_type": "post",
+        "agent_target": "creator",
+        "description": "",
+        "author": "",
+        "published_date": "2026-03-16T17:56:34.894457",
+        "tags": [
+          "indie-hackers",
+          "startup"
+        ],
+        "metrics": {},
+        "summary": "",
+        "content_hash": "4b13f9e8a0a1"
+      },
+      {
+        "title": "LeadSynth: The biggest lie founders tell themselves: “We just need more users”",
+        "url": "https://www.indiehackers.com/product/leadsynthai?post=h7PJ6fC4XHwZ8oHDOEV6",
+        "source": "indiehackers",
+        "source_type": "product-launch",
+        "agent_target": "creator",
+        "description": "",
+        "author": "",
+        "published_date": "2026-03-16T17:56:34.894494",
+        "tags": [
+          "indie-hackers",
+          "startup",
+          "product-launch"
+        ],
+        "metrics": {},
+        "summary": "",
+        "content_hash": "0f4f67124436"
+      },
+      {
+        "title": "MediaFast: I had a Reddit marketing problem that cost me 4 months and a product. So I reverse-engineered how their spam detection actually works.",
+        "url": "https://www.indiehackers.com/product/mediafast-15?post=Ntgf98G8PbS2mDbpl4sb",
+        "source": "indiehackers",
+        "source_type": "product-launch",
+        "agent_target": "creator",
+        "description": "",
+        "author": "",
+        "published_date": "2026-03-16T17:56:34.894504",
+        "tags": [
+          "indie-hackers",
+          "startup",
+          "product-launch",
+          "growth"
+        ],
+        "metrics": {},
+        "summary": "",
+        "content_hash": "c6c7aae55a6a"
+      },
+      {
+        "title": "ShipAhead: The fastest way I learned which ideas mattered",
+        "url": "https://www.indiehackers.com/product/shipahead?post=9qu8zlEy03SFODVPliet",
+        "source": "indiehackers",
+        "source_type": "product-launch",
+        "agent_target": "creator",
+        "description": "",
+        "author": "",
+        "published_date": "2026-03-16T17:56:34.894514",
+        "tags": [
+          "indie-hackers",
+          "startup",
+          "product-launch"
+        ],
+        "metrics": {},
+        "summary": "",
+        "content_hash": "494e438f40f2"
+      },
+      {
+        "title": "IndieDeck: I got tired of explaining myself with 5 different links, so I built this",
+        "url": "https://www.indiehackers.com/product/indiedeck-2?post=P5tINmBat3tkLtCYcNNy",
+        "source": "indiehackers",
+        "source_type": "product-launch",
+        "agent_target": "creator",
+        "description": "",
+        "author": "",
+        "published_date": "2026-03-16T17:56:34.894523",
+        "tags": [
+          "indie-hackers",
+          "startup",
+          "product-launch"
+        ],
+        "metrics": {},
+        "summary": "",
+        "content_hash": "924dded0f17d"
+      },
+      {
+        "title": "FeedBok: I realized growth was hiding in the feedback I ignored",
+        "url": "https://www.indiehackers.com/product/feedbok?post=zaMI92QrSp5iVfFwgmUM",
+        "source": "indiehackers",
+        "source_type": "product-launch",
+        "agent_target": "creator",
+        "description": "",
+        "author": "",
+        "published_date": "2026-03-16T17:56:34.894529",
+        "tags": [
+          "indie-hackers",
+          "startup",
+          "product-launch",
+          "growth"
+        ],
+        "metrics": {},
+        "summary": "",
+        "content_hash": "7a89fbf285ab"
+      },
+      {
+        "title": "VentureLens: I built an AI tool that analyses startup pitch decks like a VC — looking for feedback",
+        "url": "https://www.indiehackers.com/product/venturelens?post=WJbKwtuUeRoTqCn4Jj2h",
+        "source": "indiehackers",
+        "source_type": "product-launch",
+        "agent_target": "creator",
+        "description": "",
+        "author": "",
+        "published_date": "2026-03-16T17:56:34.894542",
+        "tags": [
+          "indie-hackers",
+          "startup",
+          "product-launch"
+        ],
+        "metrics": {},
+        "summary": "",
+        "content_hash": "425f4c94beaa"
+      },
+      {
+        "title": "What 300+ founders taught me about contracts",
+        "url": "https://www.indiehackers.com/post/what-300-founders-taught-me-about-contracts-89be84a3f6",
+        "source": "indiehackers",
+        "source_type": "post",
+        "agent_target": "creator",
+        "description": "",
+        "author": "",
+        "published_date": "2026-03-16T17:56:34.894552",
+        "tags": [
+          "indie-hackers",
+          "startup"
+        ],
+        "metrics": {},
+        "summary": "",
+        "content_hash": "71c639126477"
+      },
+      {
+        "title": "From simple newsletter to $4.5M/yr media companyIsaac Saul built the independent, nonpartisan political media company that he wanted to read. Now, it's bringing in $4.5M/yr. Here's how.",
+        "url": "https://www.indiehackers.com/post/creators/from-simple-newsletter-to-4-5m-yr-media-company-RgQf0f1CJEO8KzTFjExN",
+        "source": "indiehackers",
+        "source_type": "post",
+        "agent_target": "creator",
+        "description": "",
+        "author": "",
+        "published_date": "2026-03-16T17:56:34.894562",
+        "tags": [
+          "indie-hackers",
+          "startup",
+          "growth"
+        ],
+        "metrics": {},
+        "summary": "",
+        "content_hash": "61520efdfb51"
+      },
+      {
+        "title": "刘文祥致歉",
+        "url": "https://s.weibo.com/weibo?q=%23刘文祥致歉%23",
+        "source": "weibo",
+        "source_type": "trending",
+        "agent_target": "creator",
+        "description": "刘文祥致歉",
+        "author": "",
+        "published_date": "2026-03-16T17:56:41.989403",
+        "tags": [
+          "weibo",
+          "hot-search",
+          "chinese"
+        ],
+        "metrics": {
+          "heat": 0,
+          "rank": 0,
+          "flag": 1
+        },
+        "summary": "",
+        "content_hash": "022acae1e8dc"
+      },
+      {
+        "title": "315曝光名单",
+        "url": "https://s.weibo.com/weibo?q=%23315曝光名单%23",
+        "source": "weibo",
+        "source_type": "trending",
+        "agent_target": "creator",
+        "description": "315曝光名单",
+        "author": "",
+        "published_date": "2026-03-16T17:56:41.989461",
+        "tags": [
+          "weibo",
+          "hot-search",
+          "chinese"
+        ],
+        "metrics": {
+          "heat": 0,
+          "rank": 1,
+          "flag": 0
+        },
+        "summary": "",
+        "content_hash": "ed6c7ac858c6"
+      },
+      {
+        "title": "2026年以旧换新数据亮眼",
+        "url": "https://s.weibo.com/weibo?q=%232026年以旧换新数据亮眼%23",
+        "source": "weibo",
+        "source_type": "trending",
+        "agent_target": "creator",
+        "description": "2026年以旧换新数据亮眼",
+        "author": "",
+        "published_date": "2026-03-16T17:56:41.989482",
+        "tags": [
+          "weibo",
+          "hot-search",
+          "chinese"
+        ],
+        "metrics": {
+          "heat": 0,
+          "rank": 2,
+          "flag": 1
+        },
+        "summary": "",
+        "content_hash": "89630caed4c4"
+      }
+    ]
+  },
+  "all_items": [
+    {
+      "title": "shadcn-ui/ui",
+      "url": "https://github.com/shadcn-ui/ui",
+      "source": "github",
+      "source_type": "trending",
+      "agent_target": "engineer",
+      "description": "A set of beautifully-designed, accessible components and a code distribution platform. Works with your favorite frameworks. Open Source. Open Code.",
+      "author": "",
+      "published_date": "2026-03-16T17:56:22.788590",
+      "tags": [
+        "TypeScript",
+        "weekly"
+      ],
+      "metrics": {
+        "stars": 109700,
+        "language": "TypeScript",
+        "period": "weekly"
+      },
+      "summary": "",
+      "content_hash": "5832b29ea8c6"
+    },
+    {
+      "title": "obra/superpowers",
+      "url": "https://github.com/obra/superpowers",
+      "source": "github",
+      "source_type": "trending",
+      "agent_target": "engineer",
+      "description": "An agentic skills framework & software development methodology that works.",
+      "author": "",
+      "published_date": "2026-03-16T17:56:17.108228",
+      "tags": [
+        "Shell",
+        "daily"
+      ],
+      "metrics": {
+        "stars": 87210,
+        "language": "Shell",
+        "period": "daily"
+      },
+      "summary": "",
+      "content_hash": "e7b6b0454faa"
+    },
+    {
+      "title": "virattt/ai-hedge-fund",
+      "url": "https://github.com/virattt/ai-hedge-fund",
+      "source": "github",
+      "source_type": "trending",
+      "agent_target": "engineer",
+      "description": "An AI Hedge Fund Team",
+      "author": "",
+      "published_date": "2026-03-16T17:56:18.814689",
+      "tags": [
+        "Python",
+        "weekly"
+      ],
+      "metrics": {
+        "stars": 49085,
+        "language": "Python",
+        "period": "weekly"
+      },
+      "summary": "",
+      "content_hash": "30b6453ec1d2"
+    },
+    {
+      "title": "openai/codex",
+      "url": "https://github.com/openai/codex",
+      "source": "github",
+      "source_type": "trending",
+      "agent_target": "planner",
+      "description": "Lightweight coding agent that runs in your terminal",
+      "author": "",
+      "published_date": "2026-03-16T17:56:24.657647",
+      "tags": [
+        "Rust",
+        "weekly"
+      ],
+      "metrics": {
+        "stars": 65554,
+        "language": "Rust",
+        "period": "weekly"
+      },
+      "summary": "",
+      "content_hash": "b338c827a83b"
+    },
+    {
+      "title": "ruvnet/RuView",
+      "url": "https://github.com/ruvnet/RuView",
+      "source": "github",
+      "source_type": "trending",
+      "agent_target": "planner",
+      "description": "π RuView: WiFi DensePose turns commodity WiFi signals into real-time human pose estimation, vital sign monitoring, and presence detection — all without a single pixel of video.",
+      "author": "",
+      "published_date": "2026-03-16T17:56:24.657397",
+      "tags": [
+        "Rust",
+        "weekly"
+      ],
+      "metrics": {
+        "stars": 37230,
+        "language": "Rust",
+        "period": "weekly"
+      },
+      "summary": "",
+      "content_hash": "490a19ee9ad7"
+    },
+    {
+      "title": "shareAI-lab/learn-claude-code",
+      "url": "https://github.com/shareAI-lab/learn-claude-code",
+      "source": "github",
+      "source_type": "trending",
+      "agent_target": "planner",
+      "description": "Bash is all you need - A nano Claude Code–like agent, built from 0 to 1",
+      "author": "",
+      "published_date": "2026-03-16T17:56:17.108125",
+      "tags": [
+        "TypeScript",
+        "daily"
+      ],
+      "metrics": {
+        "stars": 28822,
+        "language": "TypeScript",
+        "period": "daily"
+      },
+      "summary": "",
+      "content_hash": "161e47a10e07"
+    },
+    {
+      "title": "Canada's bill C-22 mandates mass metadata surveillance",
+      "url": "https://www.michaelgeist.ca/2026/03/a-tale-of-two-bills-lawful-access-returns-with-changes-to-warrantless-access-but-dangerous-backdoor-surveillance-risks-remains/",
+      "source": "hackernews",
+      "source_type": "discussion",
+      "agent_target": "engineer",
+      "description": "HN Discussion with 199 comments",
+      "author": "opengrass",
+      "published_date": "2026-03-16T05:22:16",
+      "tags": [
+        "hackernews",
+        "tech-news"
+      ],
+      "metrics": {
+        "score": 696,
+        "comments": 199
+      },
+      "summary": "",
+      "content_hash": "c909e1f9c997"
+    },
+    {
+      "title": "Starlink Mini as a Failover",
+      "url": "https://www.jackpearce.co.uk/posts/starlink-failover/",
+      "source": "hackernews",
+      "source_type": "discussion",
+      "agent_target": "engineer",
+      "description": "HN Discussion with 18 comments",
+      "author": "jkpe",
+      "published_date": "2026-03-16T16:07:29",
+      "tags": [
+        "hackernews",
+        "tech-news"
+      ],
+      "metrics": {
+        "score": 30,
+        "comments": 18
+      },
+      "summary": "",
+      "content_hash": "076be00d68d4"
+    },
+    {
+      "title": "How I write software with LLMs",
+      "url": "https://www.stavros.io/posts/how-i-write-software-with-llms/",
+      "source": "hackernews",
+      "source_type": "discussion",
+      "agent_target": "engineer",
+      "description": "HN Discussion with 134 comments",
+      "author": "indigodaddy",
+      "published_date": "2026-03-16T09:24:09",
+      "tags": [
+        "hackernews",
+        "tech-news"
+      ],
+      "metrics": {
+        "score": 190,
+        "comments": 134
+      },
+      "summary": "",
+      "content_hash": "bba2333145ee"
+    },
+    {
+      "title": "The 49MB web page",
+      "url": "https://thatshubham.com/blog/news-audit",
+      "source": "hackernews",
+      "source_type": "discussion",
+      "agent_target": "engineer",
+      "description": "HN Discussion with 249 comments",
+      "author": "kermatt",
+      "published_date": "2026-03-16T03:25:18",
+      "tags": [
+        "hackernews",
+        "tech-news"
+      ],
+      "metrics": {
+        "score": 554,
+        "comments": 249
+      },
+      "summary": "",
+      "content_hash": "9774a5b02126"
+    },
+    {
+      "title": "Chrome DevTools MCP (2025)",
+      "url": "https://developer.chrome.com/blog/chrome-devtools-mcp-debug-your-browser-session",
+      "source": "hackernews",
+      "source_type": "discussion",
+      "agent_target": "engineer",
+      "description": "HN Discussion with 198 comments",
+      "author": "xnx",
+      "published_date": "2026-03-16T03:12:53",
+      "tags": [
+        "hackernews",
+        "tech-news"
+      ],
+      "metrics": {
+        "score": 472,
+        "comments": 198
+      },
+      "summary": "",
+      "content_hash": "cc0767e16bd6"
+    },
+    {
+      "title": "Home Assistant waters my plants",
+      "url": "https://finnian.io/blog/home-assistant-waters-my-plants/",
+      "source": "hackernews",
+      "source_type": "discussion",
+      "agent_target": "engineer",
+      "description": "HN Discussion with 2 comments",
+      "author": "finniananderson",
+      "published_date": "2026-03-12T18:19:14",
+      "tags": [
+        "hackernews",
+        "tech-news"
+      ],
+      "metrics": {
+        "score": 20,
+        "comments": 2
+      },
+      "summary": "",
+      "content_hash": "6fd813746de9"
+    },
+    {
+      "title": "Kona EV Hacking",
+      "url": "http://techno-fandom.org/~hobbit/cars/ev/",
+      "source": "hackernews",
+      "source_type": "discussion",
+      "agent_target": "engineer",
+      "description": "HN Discussion with 13 comments",
+      "author": "AnnikaL",
+      "published_date": "2026-03-12T05:26:16",
+      "tags": [
+        "hackernews",
+        "tech-news"
+      ],
+      "metrics": {
+        "score": 44,
+        "comments": 13
+      },
+      "summary": "",
+      "content_hash": "7a48d48188ff"
+    },
+    {
+      "title": "Electric motor scaling laws and inertia in robot actuators",
+      "url": "https://robot-daycare.com/posts/actuation_series_1/",
+      "source": "hackernews",
+      "source_type": "discussion",
+      "agent_target": "engineer",
+      "description": "HN Discussion with 16 comments",
+      "author": "o4c",
+      "published_date": "2026-03-12T21:04:35",
+      "tags": [
+        "hackernews",
+        "tech-news"
+      ],
+      "metrics": {
+        "score": 82,
+        "comments": 16
+      },
+      "summary": "",
+      "content_hash": "c2733f2acfba"
+    },
+    {
+      "title": "What every computer scientist should know about floating-point arithmetic (1991) [pdf]",
+      "url": "https://www.itu.dk/~sestoft/bachelor/IEEE754_article.pdf",
+      "source": "hackernews",
+      "source_type": "discussion",
+      "agent_target": "engineer",
+      "description": "HN Discussion with 5 comments",
+      "author": "jbarrow",
+      "published_date": "2026-03-12T07:24:22",
+      "tags": [
+        "hackernews",
+        "tech-news"
+      ],
+      "metrics": {
+        "score": 65,
+        "comments": 5
+      },
+      "summary": "",
+      "content_hash": "7bb3876a7ea5"
+    },
+    {
+      "title": "LLM Architecture Gallery",
+      "url": "https://sebastianraschka.com/llm-architecture-gallery/",
+      "source": "hackernews",
+      "source_type": "discussion",
+      "agent_target": "engineer",
+      "description": "HN Discussion with 31 comments",
+      "author": "tzury",
+      "published_date": "2026-03-16T00:01:09",
+      "tags": [
+        "hackernews",
+        "tech-news"
+      ],
+      "metrics": {
+        "score": 402,
+        "comments": 31
+      },
+      "summary": "",
+      "content_hash": "d16e698d43e2"
+    },
+    {
+      "title": "PhysMoDPO: Physically-Plausible Humanoid Motion with Preference Optimization",
+      "url": "http://arxiv.org/abs/2603.13228v1",
+      "source": "arxiv",
+      "source_type": "paper",
+      "agent_target": "engineer",
+      "description": "Recent progress in text-conditioned human motion generation has been largely driven by diffusion models trained on large-scale human motion data. Building on this progress, recent methods attempt to transfer such models for character animation and real robot control by applying a Whole-Body Controller (WBC) that converts diffusion-generated motions into executable trajectories. While WBC trajectories become compliant with physics, they may expose substantial deviations from original motion. To a...",
+      "author": "Yangsong Zhang, Anujith Muraleedharan, Rikhat Akizhanov et al.",
+      "published_date": "2026-03-13T17:59:59+00:00",
+      "tags": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CV",
+        "cs.RO"
+      ],
+      "metrics": {
+        "category": "cs.LG",
+        "authors_count": 8
+      },
+      "summary": "",
+      "content_hash": "f35789d4e024"
+    },
+    {
+      "title": "Representation Learning for Spatiotemporal Physical Systems",
+      "url": "http://arxiv.org/abs/2603.13227v1",
+      "source": "arxiv",
+      "source_type": "paper",
+      "agent_target": "engineer",
+      "description": "Machine learning approaches to spatiotemporal physical systems have primarily focused on next-frame prediction, with the goal of learning an accurate emulator for the system's evolution in time. However, these emulators are computationally expensive to train and are subject to performance pitfalls, such as compounding errors during autoregressive rollout. In this work, we take a different perspective and look at scientific tasks further downstream of predicting the next frame, such as estimation...",
+      "author": "Helen Qu, Rudy Morel, Michael McCabe et al.",
+      "published_date": "2026-03-13T17:59:51+00:00",
+      "tags": [
+        "cs.LG",
+        "cs.CV"
+      ],
+      "metrics": {
+        "category": "cs.LG",
+        "authors_count": 7
+      },
+      "summary": "",
+      "content_hash": "63d1f5900ee5"
+    },
+    {
+      "title": "Learnability and Privacy Vulnerability are Entangled in a Few Critical Weights",
+      "url": "http://arxiv.org/abs/2603.13186v1",
+      "source": "arxiv",
+      "source_type": "paper",
+      "agent_target": "engineer",
+      "description": "Prior approaches for membership privacy preservation usually update or retrain all weights in neural networks, which is costly and can lead to unnecessary utility loss or even more serious misalignment in predictions between training data and non-training data. In this work, we observed three insights: i) privacy vulnerability exists in a very small fraction of weights; ii) however, most of those weights also critically impact utility performance; iii) the importance of weights stems from their ...",
+      "author": "Xingli Fang, Jung-Eun Kim",
+      "published_date": "2026-03-13T17:20:12+00:00",
+      "tags": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CR"
+      ],
+      "metrics": {
+        "category": "cs.LG",
+        "authors_count": 2
+      },
+      "summary": "",
+      "content_hash": "583be5adf9f5"
+    },
+    {
+      "title": "MXNorm: Reusing MXFP block scales for efficient tensor normalisation",
+      "url": "http://arxiv.org/abs/2603.13180v1",
+      "source": "arxiv",
+      "source_type": "paper",
+      "agent_target": "engineer",
+      "description": "Matrix multiplication performance has long been the major bottleneck to scaling deep learning workloads, which has stimulated the design of new accelerators that use increasingly low-precision number formats. However, improvements in matrix multiplication performance have far outstripped improvements in performance on reductions and elementwise computations, which are still being performed in higher precision. In this work, we propose MXNorm, a drop-in replacement for RMSNorm that estimates the ...",
+      "author": "Callum McLean, Luke Y. Prince, Alexandre Payot et al.",
+      "published_date": "2026-03-13T17:14:06+00:00",
+      "tags": [
+        "cs.LG",
+        "cs.AI",
+        "cs.NE"
+      ],
+      "metrics": {
+        "category": "cs.LG",
+        "authors_count": 5
+      },
+      "summary": "",
+      "content_hash": "143e5ce04a92"
+    },
+    {
+      "title": "Towards Faithful Multimodal Concept Bottleneck Models",
+      "url": "http://arxiv.org/abs/2603.13163v1",
+      "source": "arxiv",
+      "source_type": "paper",
+      "agent_target": "analyst",
+      "description": "Concept Bottleneck Models (CBMs) are interpretable models that route predictions through a layer of human-interpretable concepts. While widely studied in vision and, more recently, in NLP, CBMs remain largely unexplored in multimodal settings. For their explanations to be faithful, CBMs must satisfy two conditions: concepts must be properly detected, and concept representations must encode only their intended semantics, without smuggling extraneous task-relevant or inter-concept information into...",
+      "author": "Pierre Moreau, Emeline Pineau Ferrand, Yann Choho et al.",
+      "published_date": "2026-03-13T16:56:08+00:00",
+      "tags": [
+        "cs.CV",
+        "cs.LG"
+      ],
+      "metrics": {
+        "category": "cs.CV",
+        "authors_count": 6
+      },
+      "summary": "",
+      "content_hash": "03928759e899"
+    },
+    {
+      "title": "ZO-SAM: Zero-Order Sharpness-Aware Minimization for Efficient Sparse Training",
+      "url": "http://arxiv.org/abs/2603.13115v1",
+      "source": "arxiv",
+      "source_type": "paper",
+      "agent_target": "engineer",
+      "description": "Deep learning models, despite their impressive achievements, suffer from high computational costs and memory requirements, limiting their usability in resource-constrained environments. Sparse neural networks significantly alleviate these constraints by dramatically reducing parameter count and computational overhead. However, existing sparse training methods often experience chaotic and noisy gradient signals, severely hindering convergence and generalization performance, particularly at high s...",
+      "author": "Jie Ji, Gen Li, Kaiyuan Deng et al.",
+      "published_date": "2026-03-13T16:11:41+00:00",
+      "tags": [
+        "cs.LG"
+      ],
+      "metrics": {
+        "category": "cs.LG",
+        "authors_count": 5
+      },
+      "summary": "",
+      "content_hash": "cf5fe60b3659"
+    },
+    {
+      "title": "Visual-ERM: Reward Modeling for Visual Equivalence",
+      "url": "http://arxiv.org/abs/2603.13224v1",
+      "source": "arxiv",
+      "source_type": "paper",
+      "agent_target": "analyst",
+      "description": "Vision-to-code tasks require models to reconstruct structured visual inputs, such as charts, tables, and SVGs, into executable or structured representations with high visual fidelity. While recent Large Vision Language Models (LVLMs) achieve strong results via supervised fine-tuning, reinforcement learning remains challenging due to misaligned reward signals. Existing rewards either rely on textual rules or coarse visual embedding similarity, both of which fail to capture fine-grained visual dis...",
+      "author": "Ziyu Liu, Shengyuan Ding, Xinyu Fang et al.",
+      "published_date": "2026-03-13T17:58:14+00:00",
+      "tags": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "metrics": {
+        "category": "cs.CV",
+        "authors_count": 10
+      },
+      "summary": "",
+      "content_hash": "7bc79b6a9f2c"
+    },
+    {
+      "title": "From Experiments to Expertise: Scientific Knowledge Consolidation for AI-Driven Computational Research",
+      "url": "http://arxiv.org/abs/2603.13191v1",
+      "source": "arxiv",
+      "source_type": "paper",
+      "agent_target": "analyst",
+      "description": "While large language models (LLMs) have transformed AI agents into proficient executors of computational materials science, performing a hundred simulations does not make a researcher. What distinguishes research from routine execution is the progressive accumulation of knowledge -- learning which approaches fail, recognizing patterns across systems, and applying understanding to new problems. However, the prevailing paradigm in AI-driven computational science treats each execution in isolation,...",
+      "author": "Haonan Huang",
+      "published_date": "2026-03-13T17:25:47+00:00",
+      "tags": [
+        "physics.comp-ph",
+        "cond-mat.mtrl-sci",
+        "cs.AI"
+      ],
+      "metrics": {
+        "category": "physics.comp-ph",
+        "authors_count": 1
+      },
+      "summary": "",
+      "content_hash": "27826f32e126"
+    },
+    {
+      "title": "LLM Constitutional Multi-Agent Governance",
+      "url": "http://arxiv.org/abs/2603.13189v1",
+      "source": "arxiv",
+      "source_type": "paper",
+      "agent_target": "analyst",
+      "description": "Large Language Models (LLMs) can generate persuasive influence strategies that shift cooperative behavior in multi-agent populations, but a critical question remains: does the resulting cooperation reflect genuine prosocial alignment, or does it mask erosion of agent autonomy, epistemic integrity, and distributional fairness? We introduce Constitutional Multi-Agent Governance (CMAG), a two-stage framework that interposes between an LLM policy compiler and a networked agent population, combining ...",
+      "author": "J. de Curtò, I. de Zarzà",
+      "published_date": "2026-03-13T17:21:26+00:00",
+      "tags": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "metrics": {
+        "category": "cs.MA",
+        "authors_count": 2
+      },
+      "summary": "",
+      "content_hash": "8006f583b452"
+    },
+    {
+      "title": "Ride the Wave",
+      "url": "https://fs.blog/ride-wave/",
+      "source": "farnamstreet",
+      "source_type": "article",
+      "agent_target": "mentor",
+      "description": "Imagine a surfer poised perfectly on the crest of a massive wave, making the impossible look effortless. The surfer can’t control the water—only ride it. This image illustrates one of the most …",
+      "author": "Farnam Street",
+      "published_date": "2026-03-16T11:51:27.002988",
+      "tags": [
+        "mental-models",
+        "decision-making"
+      ],
+      "metrics": {},
+      "summary": "",
+      "content_hash": "9a5baf919ae8"
+    },
+    {
+      "title": "Experts vs. Imitators",
+      "url": "https://fs.blog/experts-vs-imitators/",
+      "source": "farnamstreet",
+      "source_type": "article",
+      "agent_target": "mentor",
+      "description": "If you want the highest quality information, you have to speak to the best people. The problem is many people claim to be experts, who really aren’t. Safeguard: Take time to distinguish real …",
+      "author": "Farnam Street",
+      "published_date": "2026-03-16T11:51:27.003203",
+      "tags": [
+        "mental-models",
+        "decision-making"
+      ],
+      "metrics": {},
+      "summary": "",
+      "content_hash": "d39548080e12"
+    },
+    {
+      "title": "Simple Truths: Clear & Gentle Guidance on the Big Issues in Life",
+      "url": "https://fs.blog/highlights-simple-truths/",
+      "source": "farnamstreet",
+      "source_type": "article",
+      "agent_target": "planner",
+      "description": "My Kindle Highlights from Kent Nerburn’s Simple Truths: Clear & Gentle Guidance on the Big Issues in Life *** “Education is one of the great joys and solaces of life. It gives us a framework …",
+      "author": "Farnam Street",
+      "published_date": "2026-03-16T11:51:27.003377",
+      "tags": [
+        "mental-models",
+        "decision-making"
+      ],
+      "metrics": {},
+      "summary": "",
+      "content_hash": "d3f2200d78fa"
+    },
+    {
+      "title": "[FS Members] Lessons from Rockefeller: The Upside of Patience",
+      "url": "https://fs.blog/upside-of-patience/",
+      "source": "farnamstreet",
+      "source_type": "article",
+      "agent_target": "mentor",
+      "description": "Long-term thinking is one of the most valuable traits of successful individuals. It demands that you forego the rewards of the immediate future and position yourself for lasting success. Members Only …",
+      "author": "Farnam Street",
+      "published_date": "2026-03-16T11:51:27.003544",
+      "tags": [
+        "mental-models",
+        "decision-making"
+      ],
+      "metrics": {},
+      "summary": "",
+      "content_hash": "ec66db73dde1"
+    },
+    {
+      "title": "The Winner’s Edge",
+      "url": "https://fs.blog/winners-edge/",
+      "source": "farnamstreet",
+      "source_type": "article",
+      "agent_target": "mentor",
+      "description": "It is essential to take risks. Examine the life of any lucky man or woman, and you are all but certain to find that he or she was willing, at some point, to take a risk. Without that willingness, …",
+      "author": "Farnam Street",
+      "published_date": "2026-03-16T11:51:27.003714",
+      "tags": [
+        "mental-models",
+        "decision-making"
+      ],
+      "metrics": {},
+      "summary": "",
+      "content_hash": "b501a2870325"
+    },
+    {
+      "title": "The Surprising Reason Writing Remains Essential in an AI-Driven World",
+      "url": "https://fs.blog/why-write/",
+      "source": "farnamstreet",
+      "source_type": "article",
+      "agent_target": "mentor",
+      "description": "Why write an essay when you can type a few words and have AI generate one for you? Why write an email when AI can auto-respond for you with all the typical pleasantries and talking-points? While AI …",
+      "author": "Farnam Street",
+      "published_date": "2026-03-16T11:51:27.003882",
+      "tags": [
+        "mental-models",
+        "decision-making"
+      ],
+      "metrics": {},
+      "summary": "",
+      "content_hash": "769ed94f6138"
+    },
+    {
+      "title": "Lessons on Leadership: Michael Abrashoff’s Turnaround Playbook",
+      "url": "https://fs.blog/michael-abrashoff-leadership/",
+      "source": "farnamstreet",
+      "source_type": "article",
+      "agent_target": "mentor",
+      "description": "Michael Abrashoff was in his mid-thirties when he took command of the USS Benfold, a guided missile destroyer and one of the worst-performing ships in the Navy. Despite her potency, the …",
+      "author": "Farnam Street",
+      "published_date": "2026-03-16T11:51:27.004056",
+      "tags": [
+        "mental-models",
+        "decision-making"
+      ],
+      "metrics": {},
+      "summary": "",
+      "content_hash": "492c0cdd0ad8"
+    },
+    {
+      "title": "Let Go of the Learning Baggage",
+      "url": "https://fs.blog/learning-baggage/",
+      "source": "farnamstreet",
+      "source_type": "article",
+      "agent_target": "mentor",
+      "description": "We all want to learn better. That means retaining information, processing it, being able to use it when needed. More knowledge means better instincts; better insights into opportunities for both you …",
+      "author": "Farnam Street",
+      "published_date": "2026-03-16T11:51:27.004459",
+      "tags": [
+        "mental-models",
+        "decision-making"
+      ],
+      "metrics": {},
+      "summary": "",
+      "content_hash": "32e3a9390137"
+    },
+    {
+      "title": "Language: Why We Hear More Than Words",
+      "url": "https://fs.blog/language-not-just-code/",
+      "source": "farnamstreet",
+      "source_type": "article",
+      "agent_target": "mentor",
+      "description": "It’s a classic complaint in relationships, especially romantic ones: “She said she was okay with me forgetting her birthday! Then why is she throwing dishes in the kitchen? Are the two things …",
+      "author": "Farnam Street",
+      "published_date": "2026-03-16T11:51:27.004780",
+      "tags": [
+        "mental-models",
+        "decision-making"
+      ],
+      "metrics": {},
+      "summary": "",
+      "content_hash": "de0c34e5457f"
+    },
+    {
+      "title": "Learning Through Play",
+      "url": "https://fs.blog/learning-through-play/",
+      "source": "farnamstreet",
+      "source_type": "article",
+      "agent_target": "mentor",
+      "description": "Play is an essential way of learning about the world. Doing things we enjoy without a goal in mind leads us to find new information, better understand our own capabilities, and find unexpected beauty …",
+      "author": "Farnam Street",
+      "published_date": "2026-03-16T11:51:27.004932",
+      "tags": [
+        "mental-models",
+        "decision-making"
+      ],
+      "metrics": {},
+      "summary": "",
+      "content_hash": "f97b8def55e0"
+    },
+    {
+      "title": "We made Android 10x faster. Now, we’re doing it for the Web.",
+      "url": "https://www.indiehackers.com/post/we-made-android-10x-faster-now-we-re-doing-it-for-the-web-af503318e9",
+      "source": "indiehackers",
+      "source_type": "post",
+      "agent_target": "creator",
+      "description": "",
+      "author": "",
+      "published_date": "2026-03-16T17:56:34.894457",
+      "tags": [
+        "indie-hackers",
+        "startup"
+      ],
+      "metrics": {},
+      "summary": "",
+      "content_hash": "4b13f9e8a0a1"
+    },
+    {
+      "title": "LeadSynth: The biggest lie founders tell themselves: “We just need more users”",
+      "url": "https://www.indiehackers.com/product/leadsynthai?post=h7PJ6fC4XHwZ8oHDOEV6",
+      "source": "indiehackers",
+      "source_type": "product-launch",
+      "agent_target": "creator",
+      "description": "",
+      "author": "",
+      "published_date": "2026-03-16T17:56:34.894494",
+      "tags": [
+        "indie-hackers",
+        "startup",
+        "product-launch"
+      ],
+      "metrics": {},
+      "summary": "",
+      "content_hash": "0f4f67124436"
+    },
+    {
+      "title": "MediaFast: I had a Reddit marketing problem that cost me 4 months and a product. So I reverse-engineered how their spam detection actually works.",
+      "url": "https://www.indiehackers.com/product/mediafast-15?post=Ntgf98G8PbS2mDbpl4sb",
+      "source": "indiehackers",
+      "source_type": "product-launch",
+      "agent_target": "creator",
+      "description": "",
+      "author": "",
+      "published_date": "2026-03-16T17:56:34.894504",
+      "tags": [
+        "indie-hackers",
+        "startup",
+        "product-launch",
+        "growth"
+      ],
+      "metrics": {},
+      "summary": "",
+      "content_hash": "c6c7aae55a6a"
+    },
+    {
+      "title": "ShipAhead: The fastest way I learned which ideas mattered",
+      "url": "https://www.indiehackers.com/product/shipahead?post=9qu8zlEy03SFODVPliet",
+      "source": "indiehackers",
+      "source_type": "product-launch",
+      "agent_target": "creator",
+      "description": "",
+      "author": "",
+      "published_date": "2026-03-16T17:56:34.894514",
+      "tags": [
+        "indie-hackers",
+        "startup",
+        "product-launch"
+      ],
+      "metrics": {},
+      "summary": "",
+      "content_hash": "494e438f40f2"
+    },
+    {
+      "title": "IndieDeck: I got tired of explaining myself with 5 different links, so I built this",
+      "url": "https://www.indiehackers.com/product/indiedeck-2?post=P5tINmBat3tkLtCYcNNy",
+      "source": "indiehackers",
+      "source_type": "product-launch",
+      "agent_target": "creator",
+      "description": "",
+      "author": "",
+      "published_date": "2026-03-16T17:56:34.894523",
+      "tags": [
+        "indie-hackers",
+        "startup",
+        "product-launch"
+      ],
+      "metrics": {},
+      "summary": "",
+      "content_hash": "924dded0f17d"
+    },
+    {
+      "title": "FeedBok: I realized growth was hiding in the feedback I ignored",
+      "url": "https://www.indiehackers.com/product/feedbok?post=zaMI92QrSp5iVfFwgmUM",
+      "source": "indiehackers",
+      "source_type": "product-launch",
+      "agent_target": "creator",
+      "description": "",
+      "author": "",
+      "published_date": "2026-03-16T17:56:34.894529",
+      "tags": [
+        "indie-hackers",
+        "startup",
+        "product-launch",
+        "growth"
+      ],
+      "metrics": {},
+      "summary": "",
+      "content_hash": "7a89fbf285ab"
+    },
+    {
+      "title": "VentureLens: I built an AI tool that analyses startup pitch decks like a VC — looking for feedback",
+      "url": "https://www.indiehackers.com/product/venturelens?post=WJbKwtuUeRoTqCn4Jj2h",
+      "source": "indiehackers",
+      "source_type": "product-launch",
+      "agent_target": "creator",
+      "description": "",
+      "author": "",
+      "published_date": "2026-03-16T17:56:34.894542",
+      "tags": [
+        "indie-hackers",
+        "startup",
+        "product-launch"
+      ],
+      "metrics": {},
+      "summary": "",
+      "content_hash": "425f4c94beaa"
+    },
+    {
+      "title": "What 300+ founders taught me about contracts",
+      "url": "https://www.indiehackers.com/post/what-300-founders-taught-me-about-contracts-89be84a3f6",
+      "source": "indiehackers",
+      "source_type": "post",
+      "agent_target": "creator",
+      "description": "",
+      "author": "",
+      "published_date": "2026-03-16T17:56:34.894552",
+      "tags": [
+        "indie-hackers",
+        "startup"
+      ],
+      "metrics": {},
+      "summary": "",
+      "content_hash": "71c639126477"
+    },
+    {
+      "title": "From simple newsletter to $4.5M/yr media companyIsaac Saul built the independent, nonpartisan political media company that he wanted to read. Now, it's bringing in $4.5M/yr. Here's how.",
+      "url": "https://www.indiehackers.com/post/creators/from-simple-newsletter-to-4-5m-yr-media-company-RgQf0f1CJEO8KzTFjExN",
+      "source": "indiehackers",
+      "source_type": "post",
+      "agent_target": "creator",
+      "description": "",
+      "author": "",
+      "published_date": "2026-03-16T17:56:34.894562",
+      "tags": [
+        "indie-hackers",
+        "startup",
+        "growth"
+      ],
+      "metrics": {},
+      "summary": "",
+      "content_hash": "61520efdfb51"
+    },
+    {
+      "title": "Acquiring micro-SaaS products and growing them to $120k MRRPascal Levy-Garboua is acquired six micro-SaaS companies, shut one down, sold two, and the remaining three are bringing in $120k/mo. Here's how.",
+      "url": "https://www.indiehackers.com/post/tech/acquiring-micro-saas-products-and-growing-them-to-120k-mrr-uC42WHXCFk9lKt3HTPK0",
+      "source": "indiehackers",
+      "source_type": "post",
+      "agent_target": "engineer",
+      "description": "",
+      "author": "",
+      "published_date": "2026-03-16T17:56:34.894574",
+      "tags": [
+        "indie-hackers",
+        "startup"
+      ],
+      "metrics": {},
+      "summary": "",
+      "content_hash": "104a971d9c1b"
+    },
+    {
+      "title": "刘文祥致歉",
+      "url": "https://s.weibo.com/weibo?q=%23刘文祥致歉%23",
+      "source": "weibo",
+      "source_type": "trending",
+      "agent_target": "creator",
+      "description": "刘文祥致歉",
+      "author": "",
+      "published_date": "2026-03-16T17:56:41.989403",
+      "tags": [
+        "weibo",
+        "hot-search",
+        "chinese"
+      ],
+      "metrics": {
+        "heat": 0,
+        "rank": 0,
+        "flag": 1
+      },
+      "summary": "",
+      "content_hash": "022acae1e8dc"
+    },
+    {
+      "title": "315曝光名单",
+      "url": "https://s.weibo.com/weibo?q=%23315曝光名单%23",
+      "source": "weibo",
+      "source_type": "trending",
+      "agent_target": "creator",
+      "description": "315曝光名单",
+      "author": "",
+      "published_date": "2026-03-16T17:56:41.989461",
+      "tags": [
+        "weibo",
+        "hot-search",
+        "chinese"
+      ],
+      "metrics": {
+        "heat": 0,
+        "rank": 1,
+        "flag": 0
+      },
+      "summary": "",
+      "content_hash": "ed6c7ac858c6"
+    },
+    {
+      "title": "2026年以旧换新数据亮眼",
+      "url": "https://s.weibo.com/weibo?q=%232026年以旧换新数据亮眼%23",
+      "source": "weibo",
+      "source_type": "trending",
+      "agent_target": "creator",
+      "description": "2026年以旧换新数据亮眼",
+      "author": "",
+      "published_date": "2026-03-16T17:56:41.989482",
+      "tags": [
+        "weibo",
+        "hot-search",
+        "chinese"
+      ],
+      "metrics": {
+        "heat": 0,
+        "rank": 2,
+        "flag": 1
+      },
+      "summary": "",
+      "content_hash": "89630caed4c4"
+    },
+    {
+      "title": "小米新SU7发布定档3月19日",
+      "url": "https://s.weibo.com/weibo?q=%23小米新SU7发布定档3月19日%23",
+      "source": "weibo",
+      "source_type": "trending",
+      "agent_target": "creator",
+      "description": "小米新SU7发布定档3月19日",
+      "author": "",
+      "published_date": "2026-03-16T17:56:41.989501",
+      "tags": [
+        "weibo",
+        "hot-search",
+        "chinese"
+      ],
+      "metrics": {
+        "heat": 0,
+        "rank": 2,
+        "flag": ""
+      },
+      "summary": "",
+      "content_hash": "85961fcebe56"
+    },
+    {
+      "title": "鸿蒙智行 小米",
+      "url": "https://s.weibo.com/weibo?q=%23鸿蒙智行 小米%23",
+      "source": "weibo",
+      "source_type": "trending",
+      "agent_target": "creator",
+      "description": "鸿蒙智行 小米",
+      "author": "",
+      "published_date": "2026-03-16T17:56:41.989518",
+      "tags": [
+        "weibo",
+        "hot-search",
+        "chinese"
+      ],
+      "metrics": {
+        "heat": 0,
+        "rank": 3,
+        "flag": 0
+      },
+      "summary": "",
+      "content_hash": "97ddd9b2475e"
+    },
+    {
+      "title": "以为是火腿肠其实是炸药",
+      "url": "https://s.weibo.com/weibo?q=%23以为是火腿肠其实是炸药%23",
+      "source": "weibo",
+      "source_type": "trending",
+      "agent_target": "creator",
+      "description": "以为是火腿肠其实是炸药",
+      "author": "",
+      "published_date": "2026-03-16T17:56:41.989535",
+      "tags": [
+        "weibo",
+        "hot-search",
+        "chinese"
+      ],
+      "metrics": {
+        "heat": 0,
+        "rank": 4,
+        "flag": 1
+      },
+      "summary": "",
+      "content_hash": "cfde088a745e"
+    },
+    {
+      "title": "爱吃薯片的人天塌了",
+      "url": "https://s.weibo.com/weibo?q=%23爱吃薯片的人天塌了%23",
+      "source": "weibo",
+      "source_type": "trending",
+      "agent_target": "creator",
+      "description": "爱吃薯片的人天塌了",
+      "author": "",
+      "published_date": "2026-03-16T17:56:41.989551",
+      "tags": [
+        "weibo",
+        "hot-search",
+        "chinese"
+      ],
+      "metrics": {
+        "heat": 0,
+        "rank": 5,
+        "flag": 1
+      },
+      "summary": "",
+      "content_hash": "7f160e36aba5"
+    },
+    {
+      "title": "F1海外账号发合影把吴艳妮裁掉",
+      "url": "https://s.weibo.com/weibo?q=%23F1海外账号发合影把吴艳妮裁掉%23",
+      "source": "weibo",
+      "source_type": "trending",
+      "agent_target": "creator",
+      "description": "F1海外账号发合影把吴艳妮裁掉",
+      "author": "",
+      "published_date": "2026-03-16T17:56:41.989568",
+      "tags": [
+        "weibo",
+        "hot-search",
+        "chinese"
+      ],
+      "metrics": {
+        "heat": 0,
+        "rank": 6,
+        "flag": 1
+      },
+      "summary": "",
+      "content_hash": "581280a0284e"
+    },
+    {
+      "title": "埃文凯尔官宣定居中国",
+      "url": "https://s.weibo.com/weibo?q=%23埃文凯尔官宣定居中国%23",
+      "source": "weibo",
+      "source_type": "trending",
+      "agent_target": "creator",
+      "description": "埃文凯尔官宣定居中国",
+      "author": "",
+      "published_date": "2026-03-16T17:56:41.989584",
+      "tags": [
+        "weibo",
+        "hot-search",
+        "chinese"
+      ],
+      "metrics": {
+        "heat": 0,
+        "rank": 7,
+        "flag": 0
+      },
+      "summary": "",
+      "content_hash": "c0d7564252b3"
+    },
+    {
+      "title": "卧底老K收入暴涨315总导演1天1电话",
+      "url": "https://s.weibo.com/weibo?q=%23卧底老K收入暴涨315总导演1天1电话%23",
+      "source": "weibo",
+      "source_type": "trending",
+      "agent_target": "creator",
+      "description": "卧底老K收入暴涨315总导演1天1电话",
+      "author": "",
+      "published_date": "2026-03-16T17:56:41.989601",
+      "tags": [
+        "weibo",
+        "hot-search",
+        "chinese"
+      ],
+      "metrics": {
+        "heat": 0,
+        "rank": 8,
+        "flag": 0
+      },
+      "summary": "",
+      "content_hash": "b7d5cd9cfe08"
+    }
+  ]
+}

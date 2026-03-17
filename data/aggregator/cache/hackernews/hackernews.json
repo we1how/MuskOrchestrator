@@ -1,0 +1,202 @@
+[
+  {
+    "title": "Canada's bill C-22 mandates mass metadata surveillance",
+    "url": "https://www.michaelgeist.ca/2026/03/a-tale-of-two-bills-lawful-access-returns-with-changes-to-warrantless-access-but-dangerous-backdoor-surveillance-risks-remains/",
+    "source": "hackernews",
+    "source_type": "discussion",
+    "agent_target": "engineer",
+    "description": "HN Discussion with 199 comments",
+    "author": "opengrass",
+    "published_date": "2026-03-16T05:22:16",
+    "tags": [
+      "hackernews",
+      "tech-news"
+    ],
+    "metrics": {
+      "score": 696,
+      "comments": 199
+    },
+    "summary": "",
+    "content_hash": "c909e1f9c997"
+  },
+  {
+    "title": "Starlink Mini as a Failover",
+    "url": "https://www.jackpearce.co.uk/posts/starlink-failover/",
+    "source": "hackernews",
+    "source_type": "discussion",
+    "agent_target": "engineer",
+    "description": "HN Discussion with 18 comments",
+    "author": "jkpe",
+    "published_date": "2026-03-16T16:07:29",
+    "tags": [
+      "hackernews",
+      "tech-news"
+    ],
+    "metrics": {
+      "score": 30,
+      "comments": 18
+    },
+    "summary": "",
+    "content_hash": "076be00d68d4"
+  },
+  {
+    "title": "How I write software with LLMs",
+    "url": "https://www.stavros.io/posts/how-i-write-software-with-llms/",
+    "source": "hackernews",
+    "source_type": "discussion",
+    "agent_target": "engineer",
+    "description": "HN Discussion with 134 comments",
+    "author": "indigodaddy",
+    "published_date": "2026-03-16T09:24:09",
+    "tags": [
+      "hackernews",
+      "tech-news"
+    ],
+    "metrics": {
+      "score": 190,
+      "comments": 134
+    },
+    "summary": "",
+    "content_hash": "bba2333145ee"
+  },
+  {
+    "title": "The 49MB web page",
+    "url": "https://thatshubham.com/blog/news-audit",
+    "source": "hackernews",
+    "source_type": "discussion",
+    "agent_target": "engineer",
+    "description": "HN Discussion with 249 comments",
+    "author": "kermatt",
+    "published_date": "2026-03-16T03:25:18",
+    "tags": [
+      "hackernews",
+      "tech-news"
+    ],
+    "metrics": {
+      "score": 554,
+      "comments": 249
+    },
+    "summary": "",
+    "content_hash": "9774a5b02126"
+  },
+  {
+    "title": "Chrome DevTools MCP (2025)",
+    "url": "https://developer.chrome.com/blog/chrome-devtools-mcp-debug-your-browser-session",
+    "source": "hackernews",
+    "source_type": "discussion",
+    "agent_target": "engineer",
+    "description": "HN Discussion with 198 comments",
+    "author": "xnx",
+    "published_date": "2026-03-16T03:12:53",
+    "tags": [
+      "hackernews",
+      "tech-news"
+    ],
+    "metrics": {
+      "score": 472,
+      "comments": 198
+    },
+    "summary": "",
+    "content_hash": "cc0767e16bd6"
+  },
+  {
+    "title": "Home Assistant waters my plants",
+    "url": "https://finnian.io/blog/home-assistant-waters-my-plants/",
+    "source": "hackernews",
+    "source_type": "discussion",
+    "agent_target": "engineer",
+    "description": "HN Discussion with 2 comments",
+    "author": "finniananderson",
+    "published_date": "2026-03-12T18:19:14",
+    "tags": [
+      "hackernews",
+      "tech-news"
+    ],
+    "metrics": {
+      "score": 20,
+      "comments": 2
+    },
+    "summary": "",
+    "content_hash": "6fd813746de9"
+  },
+  {
+    "title": "Kona EV Hacking",
+    "url": "http://techno-fandom.org/~hobbit/cars/ev/",
+    "source": "hackernews",
+    "source_type": "discussion",
+    "agent_target": "engineer",
+    "description": "HN Discussion with 13 comments",
+    "author": "AnnikaL",
+    "published_date": "2026-03-12T05:26:16",
+    "tags": [
+      "hackernews",
+      "tech-news"
+    ],
+    "metrics": {
+      "score": 44,
+      "comments": 13
+    },
+    "summary": "",
+    "content_hash": "7a48d48188ff"
+  },
+  {
+    "title": "Electric motor scaling laws and inertia in robot actuators",
+    "url": "https://robot-daycare.com/posts/actuation_series_1/",
+    "source": "hackernews",
+    "source_type": "discussion",
+    "agent_target": "engineer",
+    "description": "HN Discussion with 16 comments",
+    "author": "o4c",
+    "published_date": "2026-03-12T21:04:35",
+    "tags": [
+      "hackernews",
+      "tech-news"
+    ],
+    "metrics": {
+      "score": 82,
+      "comments": 16
+    },
+    "summary": "",
+    "content_hash": "c2733f2acfba"
+  },
+  {
+    "title": "What every computer scientist should know about floating-point arithmetic (1991) [pdf]",
+    "url": "https://www.itu.dk/~sestoft/bachelor/IEEE754_article.pdf",
+    "source": "hackernews",
+    "source_type": "discussion",
+    "agent_target": "engineer",
+    "description": "HN Discussion with 5 comments",
+    "author": "jbarrow",
+    "published_date": "2026-03-12T07:24:22",
+    "tags": [
+      "hackernews",
+      "tech-news"
+    ],
+    "metrics": {
+      "score": 65,
+      "comments": 5
+    },
+    "summary": "",
+    "content_hash": "7bb3876a7ea5"
+  },
+  {
+    "title": "LLM Architecture Gallery",
+    "url": "https://sebastianraschka.com/llm-architecture-gallery/",
+    "source": "hackernews",
+    "source_type": "discussion",
+    "agent_target": "engineer",
+    "description": "HN Discussion with 31 comments",
+    "author": "tzury",
+    "published_date": "2026-03-16T00:01:09",
+    "tags": [
+      "hackernews",
+      "tech-news"
+    ],
+    "metrics": {
+      "score": 402,
+      "comments": 31
+    },
+    "summary": "",
+    "content_hash": "d16e698d43e2"
+  }
+]

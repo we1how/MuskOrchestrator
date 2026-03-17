@@ -43,13 +43,15 @@ class DailyUpdater:
         self.log_path = self.base_path / "logs"
         self.db_path = self.base_path / "stock.duckdb"
         self.update_log = self.meta_path / "daily_update_log.json"
-        
+        self.progress_file = self.meta_path / "daily_update_progress.json"
+
         # 创建目录
         for path in [self.parquet_path, self.meta_path, self.log_path]:
             path.mkdir(parents=True, exist_ok=True)
-        
-        # 加载更新记录
+
+        # 加载更新记录和进度
         self.update_history = self._load_update_history()
+        self.progress = self._load_progress()
         
         # 初始化数据源
         self._init_data_sources()
@@ -144,19 +146,69 @@ class DailyUpdater:
         self.update_log.parent.mkdir(parents=True, exist_ok=True)
         with open(self.update_log, 'w') as f:
             json.dump(self.update_history, f, indent=2, default=str)
-    
+
+    def _load_progress(self) -> Dict:
+        """加载断点续传进度"""
+        if self.progress_file.exists():
+            with open(self.progress_file) as f:
+                return json.load(f)
+        return {
+            "in_progress": False,
+            "processed_codes": [],
+            "failed_codes": [],
+            "start_time": None,
+            "total": 0
+        }
+
+    def _save_progress(self):
+        """保存断点续传进度"""
+        self.progress_file.parent.mkdir(parents=True, exist_ok=True)
+        with open(self.progress_file, 'w') as f:
+            json.dump(self.progress, f, indent=2, default=str)
+
+    def _clear_progress(self):
+        """清除进度（完成时调用）"""
+        self.progress = {
+            "in_progress": False,
+            "processed_codes": [],
+            "failed_codes": [],
+            "start_time": None,
+            "total": 0
+        }
+        self._save_progress()
+        if self.progress_file.exists():
+            self.progress_file.unlink()
+
     def _smart_sleep(self, base_delay: float = 0.3):
         """智能延时"""
         import random
         delay = base_delay + random.uniform(0, 0.2)
         time.sleep(delay)
     
+    def _get_last_trading_day(self, max_lookback: int = 5) -> str:
+        """获取最近交易日（处理周末/节假日）"""
+        for days_back in range(max_lookback + 1):
+            date = (datetime.now() - timedelta(days=days_back)).strftime("%Y-%m-%d")
+            if self.bs is not None and self.bs_logged_in:
+                try:
+                    rs = self.bs.query_all_stock(day=date)
+                    stock_list = []
+                    while rs.error_code == '0' and rs.next():
+                        stock_list.append(rs.get_row_data())
+                    if len(stock_list) > 100:  # 确认有数据（至少100只股票）
+                        if days_back > 0:
+                            logger.info(f"📅 回退到最近交易日: {date} (今天为非交易日)")
+                        return date
+                except:
+                    continue
+        return datetime.now().strftime("%Y-%m-%d")  # 默认返回今天
+
     def update_stock_basic(self):
         """更新股票基本信息（akshare为主，baostock备用）"""
         logger.info("📊 更新股票基本信息...")
-        
+
         df = None
-        
+
         # 尝试 akshare
         if self.ak is not None:
             try:
@@ -164,12 +216,13 @@ class DailyUpdater:
                 logger.info("✅ 使用 akshare 获取股票列表")
             except Exception as e:
                 logger.warning(f"⚠️ akshare 获取失败: {e}，尝试备用源...")
-        
-        # 尝试 baostock 备用（使用已登录的session）
+
+        # 尝试 baostock 备用（使用已登录的session，自动回退到最近交易日）
         if df is None and self.bs is not None and self.bs_logged_in:
             try:
                 self._ensure_bs_login()
-                rs = self.bs.query_all_stock(day=datetime.now().strftime("%Y-%m-%d"))
+                trading_day = self._get_last_trading_day()
+                rs = self.bs.query_all_stock(day=trading_day)
                 stock_list = []
                 while (rs.error_code == '0') & rs.next():
                     stock_list.append(rs.get_row_data())
@@ -223,58 +276,91 @@ class DailyUpdater:
     
     def update_daily_data(self, lookback_days: int = 5):
         """
-        更新日线数据（支持akshare和baostock双源）
-        
+        更新日线数据（支持akshare和baostock双源，支持断点续传）
+
         Args:
             lookback_days: 回溯天数，用于补全可能缺失的数据
         """
         today = datetime.now()
         start_date = (today - timedelta(days=lookback_days)).strftime("%Y%m%d")
         end_date = today.strftime("%Y%m%d")
-        
+
         logger.info(f"📈 更新日线数据 ({start_date} ~ {end_date})...")
-        
+
         # 获取股票列表
         stock_codes = self._get_stock_list()
         if not stock_codes:
             logger.error("❌ 无法获取股票列表")
             return 0
-        
+
         total = len(stock_codes)
+
+        # 检查是否有未完成的进度
+        processed_set = set(self.progress.get("processed_codes", []))
+        failed_codes = list(self.progress.get("failed_codes", []))
+
+        if self.progress.get("in_progress") and len(processed_set) > 0:
+            logger.info(f"🔄 发现未完成的更新，已处理 {len(processed_set)}/{total} 只股票，继续...")
+            # 过滤掉已处理的股票
+            stock_codes = [c for c in stock_codes if c not in processed_set]
+        else:
+            # 新开始，重置进度
+            self.progress = {
+                "in_progress": True,
+                "processed_codes": [],
+                "failed_codes": [],
+                "start_time": datetime.now().isoformat(),
+                "total": total
+            }
+            failed_codes = []
+
         new_records = 0
         updated_stocks = 0
-        failed_codes = []
-        
+        current_processed = []
+        save_interval = 50  # 每50只股票保存一次进度
+
         for i, code in enumerate(stock_codes):
             try:
                 # 尝试 akshare
                 df = self._fetch_daily_akshare(code, start_date, end_date)
-                
+
                 # 如果 akshare 失败且 baostock 可用，尝试备用
                 if df is None and self.bs is not None:
                     df = self._fetch_daily_baostock(code, start_date, end_date)
-                
+
                 if df is not None and len(df) > 0:
                     df['ts_code'] = code
                     df['trade_date'] = pd.to_datetime(df['trade_date'])
-                    
+
                     # 按日期分区保存
                     self._save_daily_partition(df, code)
-                    
+
                     new_records += len(df)
                     updated_stocks += 1
-                
+
+                current_processed.append(code)
+
                 self._smart_sleep(0.03)  # 降低延时，提高速度
-                
-                # 每100只报告一次进度
-                if (i + 1) % 100 == 0:
-                    logger.info(f"进度: {i+1}/{total}，已更新 {updated_stocks} 只股票")
-                
+
+                # 定期保存进度
+                if (i + 1) % save_interval == 0:
+                    self.progress["processed_codes"].extend(current_processed)
+                    self.progress["failed_codes"] = failed_codes
+                    self._save_progress()
+                    current_processed = []
+                    logger.info(f"进度: {len(processed_set) + i + 1}/{total}，已更新 {updated_stocks} 只股票")
+
             except Exception as e:
                 logger.error(f"更新 {code} 失败: {e}")
                 failed_codes.append(code)
                 continue
-        
+
+        # 保存最终进度
+        if current_processed:
+            self.progress["processed_codes"].extend(current_processed)
+        self.progress["failed_codes"] = failed_codes
+        self._save_progress()
+
         if failed_codes:
             logger.warning(f"⚠️ {len(failed_codes)} 只股票更新失败")
         
@@ -303,11 +389,12 @@ class DailyUpdater:
             except Exception as e:
                 logger.warning(f"akshare 获取股票列表失败: {e}")
 
-        # 尝试 baostock（使用已登录的session）
+        # 尝试 baostock（使用已登录的session，自动回退到最近交易日）
         if not all_codes and self.bs is not None and self.bs_logged_in:
             try:
                 self._ensure_bs_login()
-                rs = self.bs.query_all_stock(day=datetime.now().strftime("%Y-%m-%d"))
+                trading_day = self._get_last_trading_day()
+                rs = self.bs.query_all_stock(day=trading_day)
                 codes = []
                 while (rs.error_code == '0') & rs.next():
                     code = rs.get_row_data()[0]
@@ -670,26 +757,38 @@ class DailyUpdater:
         logger.info("=" * 60)
         logger.info("🚀 开始每日数据更新")
         logger.info("=" * 60)
-        
+
         start_time = time.time()
-        
-        # 1. 更新股票基本信息
-        stock_count = self.update_stock_basic()
-        
-        # 2. 更新日线数据（回溯5天，补全可能缺失的）
-        new_records = self.update_daily_data(lookback_days=5)
-        
-        # 3. 更新基本面数据
-        fundamentals_count = self.update_fundamentals()
-        
-        # 4. 刷新 DuckDB 视图
-        self.refresh_duckdb_views()
-        
-        # 5. 生成报告
+        stock_count = 0
+        new_records = 0
+
+        try:
+            # 1. 更新股票基本信息
+            stock_count = self.update_stock_basic()
+
+            # 2. 更新日线数据（回溯5天，补全可能缺失的，支持断点续传）
+            new_records = self.update_daily_data(lookback_days=5)
+
+            # 3. 更新基本面数据
+            fundamentals_count = self.update_fundamentals()
+
+            # 4. 刷新 DuckDB 视图
+            self.refresh_duckdb_views()
+
+            # 5. 成功完成，清除进度
+            self._clear_progress()
+            logger.info("✅ 更新成功完成，清除进度记录")
+
+        except Exception as e:
+            logger.error(f"❌ 更新过程中断: {e}")
+            logger.info("💾 进度已保存，下次运行将继续")
+            raise
+
+        # 6. 生成报告
         report = self.generate_report()
         report["stocks_updated"] = stock_count
         report["new_records"] = new_records
-        
+
         elapsed = time.time() - start_time
         
         # 保存报告

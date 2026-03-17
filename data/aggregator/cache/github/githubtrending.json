@@ -1,0 +1,737 @@
+[
+  {
+    "title": "lightpanda-io/browser",
+    "url": "https://github.com/lightpanda-io/browser",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "engineer",
+    "description": "Lightpanda: the headless browser designed for AI and automation",
+    "author": "",
+    "published_date": "2026-03-16T17:56:17.107838",
+    "tags": [
+      "Zig",
+      "daily"
+    ],
+    "metrics": {
+      "stars": 19567,
+      "language": "Zig",
+      "period": "daily"
+    },
+    "summary": "",
+    "content_hash": "9a9bc03b672f"
+  },
+  {
+    "title": "Crosstalk-Solutions/project-nomad",
+    "url": "https://github.com/Crosstalk-Solutions/project-nomad",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "engineer",
+    "description": "Project N.O.M.A.D, is a self-contained, offline survival computer packed with critical tools, knowledge, and AI to keep you informed and empowered—anytime, anywhere.",
+    "author": "",
+    "published_date": "2026-03-16T17:56:17.107956",
+    "tags": [
+      "TypeScript",
+      "daily"
+    ],
+    "metrics": {
+      "stars": 1401,
+      "language": "TypeScript",
+      "period": "daily"
+    },
+    "summary": "",
+    "content_hash": "e98e7bdc487a"
+  },
+  {
+    "title": "volcengine/OpenViking",
+    "url": "https://github.com/volcengine/OpenViking",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "planner",
+    "description": "OpenViking is an open-source context database designed specifically for AI Agents(such as openclaw). OpenViking unifies the management of context (memory, resources, and skills) that Agents need through a file system paradigm, enabling hierarchical context delivery and self-evolving.",
+    "author": "",
+    "published_date": "2026-03-16T17:56:17.108042",
+    "tags": [
+      "Python",
+      "daily"
+    ],
+    "metrics": {
+      "stars": 13267,
+      "language": "Python",
+      "period": "daily"
+    },
+    "summary": "",
+    "content_hash": "68461bb9e4b3"
+  },
+  {
+    "title": "shareAI-lab/learn-claude-code",
+    "url": "https://github.com/shareAI-lab/learn-claude-code",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "planner",
+    "description": "Bash is all you need - A nano Claude Code–like agent, built from 0 to 1",
+    "author": "",
+    "published_date": "2026-03-16T17:56:17.108125",
+    "tags": [
+      "TypeScript",
+      "daily"
+    ],
+    "metrics": {
+      "stars": 28822,
+      "language": "TypeScript",
+      "period": "daily"
+    },
+    "summary": "",
+    "content_hash": "161e47a10e07"
+  },
+  {
+    "title": "obra/superpowers",
+    "url": "https://github.com/obra/superpowers",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "engineer",
+    "description": "An agentic skills framework & software development methodology that works.",
+    "author": "",
+    "published_date": "2026-03-16T17:56:17.108228",
+    "tags": [
+      "Shell",
+      "daily"
+    ],
+    "metrics": {
+      "stars": 87210,
+      "language": "Shell",
+      "period": "daily"
+    },
+    "summary": "",
+    "content_hash": "e7b6b0454faa"
+  },
+  {
+    "title": "p-e-w/heretic",
+    "url": "https://github.com/p-e-w/heretic",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "engineer",
+    "description": "Fully automatic censorship removal for language models",
+    "author": "",
+    "published_date": "2026-03-16T17:56:17.108308",
+    "tags": [
+      "Python",
+      "daily"
+    ],
+    "metrics": {
+      "stars": 14963,
+      "language": "Python",
+      "period": "daily"
+    },
+    "summary": "",
+    "content_hash": "9c8b592382df"
+  },
+  {
+    "title": "666ghj/MiroFish",
+    "url": "https://github.com/666ghj/MiroFish",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "engineer",
+    "description": "A Simple and Universal Swarm Intelligence Engine, Predicting Anything. 简洁通用的群体智能引擎，预测万物",
+    "author": "",
+    "published_date": "2026-03-16T17:56:17.108412",
+    "tags": [
+      "Python",
+      "daily"
+    ],
+    "metrics": {
+      "stars": 28504,
+      "language": "Python",
+      "period": "daily"
+    },
+    "summary": "",
+    "content_hash": "bedaa96ac838"
+  },
+  {
+    "title": "abhigyanpatwari/GitNexus",
+    "url": "https://github.com/abhigyanpatwari/GitNexus",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "engineer",
+    "description": "GitNexus: The Zero-Server Code Intelligence Engine - GitNexus is a client-side knowledge graph creator that runs entirely in your browser. Drop in a GitHub repo or ZIP file, and get an interactive knowledge graph wit a built in Graph RAG Agent. Perfect for code exploration",
+    "author": "",
+    "published_date": "2026-03-16T17:56:17.108516",
+    "tags": [
+      "TypeScript",
+      "daily"
+    ],
+    "metrics": {
+      "stars": 14942,
+      "language": "TypeScript",
+      "period": "daily"
+    },
+    "summary": "",
+    "content_hash": "2de88fb816f7"
+  },
+  {
+    "title": "topoteretes/cognee",
+    "url": "https://github.com/topoteretes/cognee",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "engineer",
+    "description": "Knowledge Engine for AI Agent Memory in 6 lines of code",
+    "author": "",
+    "published_date": "2026-03-16T17:56:17.108618",
+    "tags": [
+      "Python",
+      "daily"
+    ],
+    "metrics": {
+      "stars": 14113,
+      "language": "Python",
+      "period": "daily"
+    },
+    "summary": "",
+    "content_hash": "bcd298bb1533"
+  },
+  {
+    "title": "InsForge/InsForge",
+    "url": "https://github.com/InsForge/InsForge",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "planner",
+    "description": "Give agents everything they need to ship fullstack apps. The backend built for agentic development.",
+    "author": "",
+    "published_date": "2026-03-16T17:56:17.108720",
+    "tags": [
+      "TypeScript",
+      "daily"
+    ],
+    "metrics": {
+      "stars": 4718,
+      "language": "TypeScript",
+      "period": "daily"
+    },
+    "summary": "",
+    "content_hash": "df2ba9639303"
+  },
+  {
+    "title": "666ghj/MiroFish",
+    "url": "https://github.com/666ghj/MiroFish",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "engineer",
+    "description": "A Simple and Universal Swarm Intelligence Engine, Predicting Anything. 简洁通用的群体智能引擎，预测万物",
+    "author": "",
+    "published_date": "2026-03-16T17:56:18.814146",
+    "tags": [
+      "Python",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 28504,
+      "language": "Python",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "bedaa96ac838"
+  },
+  {
+    "title": "msitarzewski/agency-agents",
+    "url": "https://github.com/msitarzewski/agency-agents",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "engineer",
+    "description": "A complete AI agency at your fingertips - From frontend wizards to Reddit community ninjas, from whimsy injectors to reality checkers. Each agent is a specialized expert with personality, processes, and proven deliverables.",
+    "author": "",
+    "published_date": "2026-03-16T17:56:18.814282",
+    "tags": [
+      "Shell",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 47833,
+      "language": "Shell",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "7a2d2c977248"
+  },
+  {
+    "title": "microsoft/BitNet",
+    "url": "https://github.com/microsoft/BitNet",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "engineer",
+    "description": "Official inference framework for 1-bit LLMs",
+    "author": "",
+    "published_date": "2026-03-16T17:56:18.814365",
+    "tags": [
+      "Python",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 34794,
+      "language": "Python",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "736c11d8bc8a"
+  },
+  {
+    "title": "NousResearch/hermes-agent",
+    "url": "https://github.com/NousResearch/hermes-agent",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "engineer",
+    "description": "The agent that grows with you",
+    "author": "",
+    "published_date": "2026-03-16T17:56:18.814445",
+    "tags": [
+      "Python",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 7772,
+      "language": "Python",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "1fd7071303d9"
+  },
+  {
+    "title": "promptfoo/promptfoo",
+    "url": "https://github.com/promptfoo/promptfoo",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "planner",
+    "description": "Test your prompts, agents, and RAGs. Red teaming/pentesting/vulnerability scanning for AI. Compare performance of GPT, Claude, Gemini, Llama, and more. Simple declarative configs with command line and CI/CD integration.",
+    "author": "",
+    "published_date": "2026-03-16T17:56:18.814526",
+    "tags": [
+      "TypeScript",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 16598,
+      "language": "TypeScript",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "66b57d212291"
+  },
+  {
+    "title": "666ghj/BettaFish",
+    "url": "https://github.com/666ghj/BettaFish",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "engineer",
+    "description": "微舆：人人可用的多Agent舆情分析助手，打破信息茧房，还原舆情原貌，预测未来走向，辅助决策！从0实现，不依赖任何框架。",
+    "author": "",
+    "published_date": "2026-03-16T17:56:18.814608",
+    "tags": [
+      "Python",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 39045,
+      "language": "Python",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "a2fc6884cc14"
+  },
+  {
+    "title": "virattt/ai-hedge-fund",
+    "url": "https://github.com/virattt/ai-hedge-fund",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "engineer",
+    "description": "An AI Hedge Fund Team",
+    "author": "",
+    "published_date": "2026-03-16T17:56:18.814689",
+    "tags": [
+      "Python",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 49085,
+      "language": "Python",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "30b6453ec1d2"
+  },
+  {
+    "title": "fishaudio/fish-speech",
+    "url": "https://github.com/fishaudio/fish-speech",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "engineer",
+    "description": "SOTA Open Source TTS",
+    "author": "",
+    "published_date": "2026-03-16T17:56:18.814770",
+    "tags": [
+      "Python",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 27723,
+      "language": "Python",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "21e89526977a"
+  },
+  {
+    "title": "volcengine/OpenViking",
+    "url": "https://github.com/volcengine/OpenViking",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "planner",
+    "description": "OpenViking is an open-source context database designed specifically for AI Agents(such as openclaw). OpenViking unifies the management of context (memory, resources, and skills) that Agents need through a file system paradigm, enabling hierarchical context delivery and self-evolving.",
+    "author": "",
+    "published_date": "2026-03-16T17:56:18.814849",
+    "tags": [
+      "Python",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 13267,
+      "language": "Python",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "68461bb9e4b3"
+  },
+  {
+    "title": "GoogleCloudPlatform/generative-ai",
+    "url": "https://github.com/GoogleCloudPlatform/generative-ai",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "engineer",
+    "description": "Sample code and notebooks for Generative AI on Google Cloud, with Gemini on Vertex AI",
+    "author": "",
+    "published_date": "2026-03-16T17:56:18.814929",
+    "tags": [
+      "Jupyter Notebook",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 16246,
+      "language": "Jupyter Notebook",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "708c91b6fefb"
+  },
+  {
+    "title": "666ghj/MiroFish",
+    "url": "https://github.com/666ghj/MiroFish",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "engineer",
+    "description": "A Simple and Universal Swarm Intelligence Engine, Predicting Anything. 简洁通用的群体智能引擎，预测万物",
+    "author": "",
+    "published_date": "2026-03-16T17:56:21.041489",
+    "tags": [
+      "Python",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 28504,
+      "language": "Python",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "bedaa96ac838"
+  },
+  {
+    "title": "microsoft/BitNet",
+    "url": "https://github.com/microsoft/BitNet",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "engineer",
+    "description": "Official inference framework for 1-bit LLMs",
+    "author": "",
+    "published_date": "2026-03-16T17:56:21.041601",
+    "tags": [
+      "Python",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 34794,
+      "language": "Python",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "736c11d8bc8a"
+  },
+  {
+    "title": "NousResearch/hermes-agent",
+    "url": "https://github.com/NousResearch/hermes-agent",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "engineer",
+    "description": "The agent that grows with you",
+    "author": "",
+    "published_date": "2026-03-16T17:56:21.041688",
+    "tags": [
+      "Python",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 7772,
+      "language": "Python",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "1fd7071303d9"
+  },
+  {
+    "title": "666ghj/BettaFish",
+    "url": "https://github.com/666ghj/BettaFish",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "engineer",
+    "description": "微舆：人人可用的多Agent舆情分析助手，打破信息茧房，还原舆情原貌，预测未来走向，辅助决策！从0实现，不依赖任何框架。",
+    "author": "",
+    "published_date": "2026-03-16T17:56:21.041773",
+    "tags": [
+      "Python",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 39045,
+      "language": "Python",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "a2fc6884cc14"
+  },
+  {
+    "title": "virattt/ai-hedge-fund",
+    "url": "https://github.com/virattt/ai-hedge-fund",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "engineer",
+    "description": "An AI Hedge Fund Team",
+    "author": "",
+    "published_date": "2026-03-16T17:56:21.041855",
+    "tags": [
+      "Python",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 49085,
+      "language": "Python",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "30b6453ec1d2"
+  },
+  {
+    "title": "promptfoo/promptfoo",
+    "url": "https://github.com/promptfoo/promptfoo",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "planner",
+    "description": "Test your prompts, agents, and RAGs. Red teaming/pentesting/vulnerability scanning for AI. Compare performance of GPT, Claude, Gemini, Llama, and more. Simple declarative configs with command line and CI/CD integration.",
+    "author": "",
+    "published_date": "2026-03-16T17:56:22.788117",
+    "tags": [
+      "TypeScript",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 16598,
+      "language": "TypeScript",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "66b57d212291"
+  },
+  {
+    "title": "FlorianBruniaux/claude-code-ultimate-guide",
+    "url": "https://github.com/FlorianBruniaux/claude-code-ultimate-guide",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "planner",
+    "description": "A tremendous feat of documentation, this guide covers Claude Code from beginner to power user, with production-ready templates for Claude Code features, guides on agentic workflows, and a lot of great learning materials, including quizzes and a handy \"cheatsheet\". Whether it's the \"ultimate\" guide to Claude Code will be up to the reader :)",
+    "author": "",
+    "published_date": "2026-03-16T17:56:22.788287",
+    "tags": [
+      "TypeScript",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 1574,
+      "language": "TypeScript",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "f2537db881a6"
+  },
+  {
+    "title": "shareAI-lab/learn-claude-code",
+    "url": "https://github.com/shareAI-lab/learn-claude-code",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "planner",
+    "description": "Bash is all you need - A nano Claude Code–like agent, built from 0 to 1",
+    "author": "",
+    "published_date": "2026-03-16T17:56:22.788389",
+    "tags": [
+      "TypeScript",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 28822,
+      "language": "TypeScript",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "161e47a10e07"
+  },
+  {
+    "title": "openclaw/clawhub",
+    "url": "https://github.com/openclaw/clawhub",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "planner",
+    "description": "Skill Directory for OpenClaw",
+    "author": "",
+    "published_date": "2026-03-16T17:56:22.788506",
+    "tags": [
+      "TypeScript",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 6065,
+      "language": "TypeScript",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "5e2ffe9d4b6f"
+  },
+  {
+    "title": "shadcn-ui/ui",
+    "url": "https://github.com/shadcn-ui/ui",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "engineer",
+    "description": "A set of beautifully-designed, accessible components and a code distribution platform. Works with your favorite frameworks. Open Source. Open Code.",
+    "author": "",
+    "published_date": "2026-03-16T17:56:22.788590",
+    "tags": [
+      "TypeScript",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 109700,
+      "language": "TypeScript",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "5832b29ea8c6"
+  },
+  {
+    "title": "louis-e/arnis",
+    "url": "https://github.com/louis-e/arnis",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "planner",
+    "description": "Generate any location from the real world in Minecraft with a high level of detail.",
+    "author": "",
+    "published_date": "2026-03-16T17:56:24.657288",
+    "tags": [
+      "Rust",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 8864,
+      "language": "Rust",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "d060a2dfa8ff"
+  },
+  {
+    "title": "ruvnet/RuView",
+    "url": "https://github.com/ruvnet/RuView",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "planner",
+    "description": "π RuView: WiFi DensePose turns commodity WiFi signals into real-time human pose estimation, vital sign monitoring, and presence detection — all without a single pixel of video.",
+    "author": "",
+    "published_date": "2026-03-16T17:56:24.657397",
+    "tags": [
+      "Rust",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 37230,
+      "language": "Rust",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "490a19ee9ad7"
+  },
+  {
+    "title": "EFForg/rayhunter",
+    "url": "https://github.com/EFForg/rayhunter",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "engineer",
+    "description": "Rust tool to detect cell site simulators on an orbic mobile hotspot",
+    "author": "",
+    "published_date": "2026-03-16T17:56:24.657483",
+    "tags": [
+      "Rust",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 4981,
+      "language": "Rust",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "1a39bd013d5b"
+  },
+  {
+    "title": "tursodatabase/agentfs",
+    "url": "https://github.com/tursodatabase/agentfs",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "planner",
+    "description": "The filesystem for agents.",
+    "author": "",
+    "published_date": "2026-03-16T17:56:24.657565",
+    "tags": [
+      "Rust",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 2664,
+      "language": "Rust",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "164fb970d1c3"
+  },
+  {
+    "title": "openai/codex",
+    "url": "https://github.com/openai/codex",
+    "source": "github",
+    "source_type": "trending",
+    "agent_target": "planner",
+    "description": "Lightweight coding agent that runs in your terminal",
+    "author": "",
+    "published_date": "2026-03-16T17:56:24.657647",
+    "tags": [
+      "Rust",
+      "weekly"
+    ],
+    "metrics": {
+      "stars": 65554,
+      "language": "Rust",
+      "period": "weekly"
+    },
+    "summary": "",
+    "content_hash": "b338c827a83b"
+  }
+]

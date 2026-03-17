@@ -1,0 +1,61 @@
+# Creator Agent 学习历史记录
+# 内容创作、营销、增长策略
+
+agent: creator
+last_updated: "2026-03-17T10:00:00Z"
+version: "1.0"
+
+---
+
+sources:
+  indie_hackers:
+    name: "Indie Hackers"
+    base_url: "https://www.indiehackers.com"
+    learned_stories: []
+
+  hackernews_show:
+    name: "Hacker News - Show HN"
+    base_url: "https://news.ycombinator.com/show"
+    learned_projects:
+      - url: "https://github.com/simpler-conversation/godogen"
+        name: "Godogen"
+        date: "2026-03-17"
+        concepts: ["AI游戏生成", "Claude Code Skills", "视觉QA循环"]
+        fingerprint: "ai|claude|game|generation|godot|visual|qa"
+        status: "completed"
+
+  indie_hackers:
+    name: "Indie Hackers"
+    base_url: "https://www.indiehackers.com"
+    learned_stories:
+      - url: "https://www.indiehackers.com/post/from-1k-to-12k-visits-all-it-took-was-one-move-32a309b4f3"
+        name: "Textideo - 视频优先内容策略"
+        date: "2026-03-18"
+        concepts: ["视频优先", "AI视频营销", "内容策略", "流量增长"]
+        fingerprint: "video|ai|content|marketing|traffic|growth|kling"
+        status: "completed"
+
+  reddit:
+    name: "Reddit - 创业/营销相关"
+    base_url: "https://reddit.com"
+    learned_posts: []
+
+---
+
+concept_window_days: 30
+
+learned_concepts:
+  active:
+    "Godogen": "2026-03-17"
+    "AI游戏生成": "2026-03-17"
+    "视频优先内容策略": "2026-03-18"
+    "AI视频营销": "2026-03-18"
+
+  expired: []
+
+---
+
+total_learned: 2
+unique_sources: 3
+repeated_attempts: 0
+last_learning_date: "2026-03-18"

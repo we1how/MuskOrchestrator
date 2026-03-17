@@ -21,3 +21,4 @@ __pycache__/
 # Data
 data/stock/raw/
 data/stock/cache/
+config/reddit_config.json

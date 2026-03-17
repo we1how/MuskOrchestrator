@@ -3,8 +3,8 @@
 > **维护原则**：每次增加、修改、删除文件/文件夹时，必须同步更新本清单
 > **自动更新**：定时任务执行后自动更新
 > **手动更新**：其他变更需用户确认后更新
-> **最后更新**：2026-03-11
-> **版本**：v2.0 (迁移完成)
+> **最后更新**：2026-03-16
+> **版本**：v2.1 (Daily Learning 2026-03-16)
 
 ---
 
@@ -49,13 +49,26 @@
 
 | 路径 | 描述 | 修改时间 |
 |------|------|----------|
-| `memory/agents/engineer/LEARNING.md` | 产品工程师学习记录（每日更新） | 2026-03-11 |
-| `memory/agents/analyst/LEARNING.md` | 量化分析师学习记录（每日更新） | 2026-03-11 |
-| `memory/agents/mentor/LEARNING.md` | 成长导师学习记录（每日更新） | 2026-03-11 |
-| `memory/agents/creator/LEARNING.md` | 内容创作者学习记录（每日更新） | 2026-03-11 |
+| `memory/agents/engineer/LEARNING.md` | 产品工程师学习记录（每日更新） | 2026-03-16 |
+| `memory/agents/analyst/LEARNING.md` | 量化分析师学习记录（每日更新） | 2026-03-16 |
+| `memory/agents/planner/LEARNING.md` | 规划专家学习记录（每日更新） | 2026-03-16 |
+| `memory/agents/mentor/LEARNING.md` | 成长导师学习记录（每日更新） | 2026-03-16 |
+| `memory/agents/creator/LEARNING.md` | 内容创作者学习记录（每日更新） | 2026-03-16 |
+| `memory/agents/reviewer/LEARNING.md` | 审查员学习记录（每日更新） | 2026-03-16 |
+| `memory/agents/planner/DAILY_FEED.md` | 规划专家每日信息流（聚合） | 2026-03-16 |
+| `memory/agents/engineer/DAILY_FEED.md` | 产品工程师每日信息流（聚合） | 2026-03-16 |
+| `memory/agents/analyst/DAILY_FEED.md` | 量化分析师每日信息流（聚合） | 2026-03-16 |
+| `memory/agents/mentor/DAILY_FEED.md` | 成长导师每日信息流（聚合） | 2026-03-16 |
+| `memory/agents/creator/DAILY_FEED.md` | 内容创作者每日信息流（聚合） | 2026-03-16 |
 | `memory/conversations/` | 每日学习执行记录存档 | 2026-03-11 |
-| `memory/reports/weekly/` | 周报存档目录 | 2026-03-08 |
+| `memory/reports/weekly/` | 周报存档目录 | 2026-03-14 |
 | `memory/reports/daily/` | 日报存档目录 | 2026-03-08 |
+
+### /knowledge/reports/ - 报告存档
+
+| 路径 | 描述 | 修改时间 |
+|------|------|----------|
+| `knowledge/reports/weekly/2026-03-14.md` | 第11周综合报告（5Agent学习+项目进展） | 2026-03-14 |
 
 ---
 
@@ -96,6 +109,19 @@
 | `scripts/monthly_evolution.py` | 月度人格进化脚本 | 2026-03-08 |
 | `scripts/git_auto_commit.sh` | Git自动提交脚本 | 2026-03-08 |
 | `scripts/archive_agent_outputs.py` | Agent输出归档脚本（路径已适配） | 2026-03-08 |
+| `scripts/daily_aggregator.py` | 每日信息聚合主脚本 | 2026-03-16 |
+| `scripts/sources/__init__.py` | 信息源模块包初始化 | 2026-03-16 |
+| `scripts/sources/base.py` | 信息源基类定义 | 2026-03-16 |
+| `scripts/sources/github_trending.py` | GitHub Trending信息源 | 2026-03-16 |
+| `scripts/sources/hacker_news.py` | Hacker News信息源 | 2026-03-16 |
+| `scripts/sources/arxiv_fetcher.py` | ArXiv论文信息源 | 2026-03-16 |
+| `scripts/sources/farnam_street.py` | Farnam Street信息源 | 2026-03-16 |
+| `scripts/sources/indie_hackers.py` | Indie Hackers信息源 | 2026-03-16 |
+| `scripts/sources/reddit_fetcher.py` | Reddit信息源 | 2026-03-16 |
+| `scripts/sources/zhihu_hot.py` | 知乎热榜信息源 | 2026-03-16 |
+| `scripts/sources/product_hunt.py` | Product Hunt信息源 | 2026-03-16 |
+| `scripts/sources/rsshub_fetcher.py` | RSSHub统一抓取器 | 2026-03-16 |
+| `scripts/sources/weibo_hot.py` | 微博热搜信息源 | 2026-03-16 |
 
 ---
 
@@ -120,12 +146,17 @@
 | `skills/analysis/a-share-multi-agent-framework.md` | A股多Agent量化框架技能 | 2026-03-11 |
 | `skills/analysis/fractional-kelly-position-sizing.md` | Fractional Kelly仓位管理技能 | 2026-03-12 |
 | `skills/analysis/disagreement-position-sizing.md` | 分歧加权仓位管理技能 | 2026-03-13 |
-| `skills/planning/ooda-decision-framework.md` | OODA快速决策框架技能 | 2026-03-11 |
-| `skills/planning/chesterton-fence-principle.md` | Chesterton's Fence原则技能 | 2026-03-12 |
-| `skills/planning/calculated-confidence-framework.md` | Calculated Confidence决策技能 | 2026-03-13 |
+| `skills/planning/ooda-decision-framework.md` | OODA快速决策框架技能 | 2026-03-14 |
+| `skills/planning/chesterton-fence-principle.md` | Chesterton's Fence原则技能 | 2026-03-14 |
+| `skills/planning/calculated-confidence-framework.md` | Calculated Confidence决策技能 | 2026-03-14 |
 | `skills/communication/reddit-precision-marketing.md` | Reddit精准获客技能 | 2026-03-11 |
 | `skills/communication/habit-app-launch-sop.md` | 习惯类App冷启动SOP技能 | 2026-03-12 |
 | `skills/communication/reddit-contrarian-launch.md` | Reddit反直觉发布策略技能 | 2026-03-13 |
+| `skills/everything-claude-code/.agents/skills/tdd-workflow/SKILL.md` | TDD测试驱动开发工作流 | 2026-03-16 |
+| `skills/everything-claude-code/.agents/skills/security-review/SKILL.md` | 代码安全审查技能 | 2026-03-16 |
+| `skills/everything-claude-code/.agents/skills/backend-patterns/SKILL.md` | 后端架构设计模式 | 2026-03-16 |
+| `skills/everything-claude-code/.agents/skills/api-design/SKILL.md` | REST API设计规范 | 2026-03-16 |
+| `skills/last30days/SKILL.md` | 过去30天信息聚合Skill | 2026-03-16 |
 
 ---
 
@@ -180,10 +211,12 @@
 | Agent定义 | 12 (6个Agent × 2文件) |
 | 一级目录 | 9 |
 | 已迁移项目 | 1 (stock-platform) |
-| Skills | 25 (673个文件) |
+| Skills | 26 (673个文件) |
 | 定时任务 | 8 (7启用, 1禁用) |
-| 脚本工具 | 9 |
+| 脚本工具 | 10 |
+| 信息源模块 | 6 |
 | 知识文档 | 40+ |
+| 已学习技能 | 37 (8个新增于2026-03-16，6个Agent全覆盖) |
 
 ---
 
@@ -216,6 +249,10 @@
 | 2026-03-08 | **Migration** | P2: 迁移脚本+配置+Agent工作区 | scripts/, FUSION-WORKFLOW/ |
 | 2026-03-08 | **Adaptation** | 格式适配: OpenClaw → Claude Code | SKILL.md, jobs.json, Python脚本 |
 | 2026-03-08 | **Automation** | 创建launchd定时任务配置 | 3个plist + 3个sh |
+| 2026-03-14 | **Daily Learning** | 周末版Daily Micro Learning - 3个技能内化 | planner/LEARNING.md更新 |
+| 2026-03-14 | **Weekly Report** | 生成第11周综合报告 | knowledge/reports/weekly/2026-03-14.md |
+| 2026-03-16 | **Daily Learning** | 工作日版Daily Micro Learning - 8个技能内化，6个Agent全覆盖 | 所有Agent LEARNING.md更新 |
+| 2026-03-16 | **Info Aggregation** | 设计并实现过去30天信息聚合系统 | daily_aggregator.py + 6个信息源模块 + DAILY_FEED.md |
 
 ---
 
@@ -248,6 +285,7 @@
 
 _维护本清单是项目管理的必要工作，是冷酷法则的延伸_ 🚀
 
-**版本**: v1.0
+**版本**: v2.2
+**最后更新**: 2026-03-16
 **创建**: 2026-03-08
 **迁移源**: /Users/linweihao/.openclaw/

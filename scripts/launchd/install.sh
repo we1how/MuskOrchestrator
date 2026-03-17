@@ -27,10 +27,11 @@ cp "$SCRIPT_DIR/com.muskorchestrator.git-commit.plist" "$LAUNCHD_DIR/"
 cp "$SCRIPT_DIR/com.muskorchestrator.cleanup-weekly.plist" "$LAUNCHD_DIR/"
 cp "$SCRIPT_DIR/com.muskorchestrator.monthly-evolution.plist" "$LAUNCHD_DIR/"
 cp "$SCRIPT_DIR/com.muskorchestrator.startup-check.plist" "$LAUNCHD_DIR/"
+cp "$SCRIPT_DIR/com.muskorchestrator.info-aggregator.plist" "$LAUNCHD_DIR/"
 
 # 替换路径（使用用户的实际路径）
 echo "2. 配置路径..."
-for plist in daily-learning daily-learning-weekend weekly-review archive-daily git-commit cleanup-weekly monthly-evolution startup-check; do
+for plist in daily-learning daily-learning-weekend weekly-review archive-daily git-commit cleanup-weekly monthly-evolution startup-check info-aggregator; do
     sed -i '' "s|/Users/linweihao/project/MuskOrchestrator|$PROJECT_DIR|g" "$LAUNCHD_DIR/com.muskorchestrator.$plist.plist"
 done
 
@@ -44,14 +45,16 @@ launchctl load "$LAUNCHD_DIR/com.muskorchestrator.git-commit.plist" 2>/dev/null 
 launchctl load "$LAUNCHD_DIR/com.muskorchestrator.cleanup-weekly.plist" 2>/dev/null || launchctl bootstrap gui/$(id -u) "$LAUNCHD_DIR/com.muskorchestrator.cleanup-weekly.plist"
 launchctl load "$LAUNCHD_DIR/com.muskorchestrator.monthly-evolution.plist" 2>/dev/null || launchctl bootstrap gui/$(id -u) "$LAUNCHD_DIR/com.muskorchestrator.monthly-evolution.plist"
 launchctl load "$LAUNCHD_DIR/com.muskorchestrator.startup-check.plist" 2>/dev/null || launchctl bootstrap gui/$(id -u) "$LAUNCHD_DIR/com.muskorchestrator.startup-check.plist"
+launchctl load "$LAUNCHD_DIR/com.muskorchestrator.info-aggregator.plist" 2>/dev/null || launchctl bootstrap gui/$(id -u) "$LAUNCHD_DIR/com.muskorchestrator.info-aggregator.plist"
 
 echo ""
 echo "======================================"
 echo "安装完成！"
 echo "======================================"
 echo ""
-echo "已配置的定时任务（8个）："
+echo "已配置的定时任务（9个）："
 echo "  📚 学习成长"
+echo "    • 信息聚合: 06:30 (每天)"
 echo "    • 工作日每日学习: 07:00 (周一到周五)"
 echo "    • 周末每日学习: 07:00 (周六、周日)"
 echo "    • 每周深度总结: 22:00 (周日)"

@@ -5,6 +5,7 @@
 ### 已学习论文（近7天）
 | 日期 | Arxiv ID/标题 | 核心主题 | 状态 |
 |------|---------------|----------|------|
+| 2026-03-16 | Market Research方法论 | 研究支持决策，非研究表演 | ✅ 技能内化 |
 | 2026-03-13 | ML vs Trend分歧交易 | 模型分歧即信号，动态仓位 | ✅ 技能内化 |
 | 2026-03-12 | Fractional Kelly仓位管理 | Kelly公式+A股适配+风险管理 | ✅ 技能内化 |
 | 2026-03-11 | A股多Agent框架整合 | 信号融合+超跌反弹+策略拥挤度 | ✅ 技能内化 |
@@ -593,10 +594,500 @@ if VIX > threshold:
 
 ---
 
+---
+
+## 2026-03-16 学习记录
+
+### 📚 今日学习
+**来源**: ECC Market Research Skill
+**主题**: 市场研究方法论 - 研究支持决策，非研究表演
+**学习时长**: 15分钟
+
+---
+
+### 🎯 核心主题
+**生产支持决策的研究，而非研究表演 (Research Theater)**
+
+---
+
+### 💡 关键洞察
+
+**1. 研究的核心原则**
+
+| 原则 | 说明 |
+|------|------|
+| 每个重要声明都需要来源 | 无来源的数据不可信 |
+| 优先近期数据，标注过时数据 | 时间敏感性 |
+| 包含反面证据和下行案例 | 避免确认偏误 |
+| 将发现转化为决策 | 而非仅总结 |
+| 明确区分事实、推断和建议 | 逻辑清晰 |
+
+**2. 常见研究模式**
+
+**投资者/基金尽职调查**:
+- 基金规模、阶段、典型投资金额
+- 相关投资组合公司
+- 公开投资理念和近期活动
+- 匹配度评估
+
+**竞争分析**:
+- 产品现实（非营销文案）
+- 融资历史（如公开）
+- traction指标（如公开）
+- 分销和定价线索
+- 优势、劣势和定位差距
+
+**市场规模估算**:
+- 自上而下：报告或公开数据集
+- 自下而上：客户获取假设的现实检验
+- 明确标注每个逻辑跳跃的假设
+
+**3. 输出格式标准**
+
+```
+1. 执行摘要
+2. 关键发现
+3. 影响分析
+4. 风险和注意事项
+5. 建议
+6. 来源
+```
+
+**4. 质量门禁检查清单**
+
+交付前确认：
+- [ ] 所有数字都有来源或标注为估算
+- [ ] 旧数据已标注
+- [ ] 建议基于证据
+- [ ] 包含风险和反方观点
+- [ ] 输出使决策更容易
+
+---
+
+### 🧠 可应用思维模型
+
+**1. 研究-决策链 (Research-Decision Chain)**
+```
+问题定义 → 信息收集 → 分析处理 → 洞察提取 → 决策建议
+    ↑                                                  ↓
+    └──────────────── 反馈验证 ────────────────────────┘
+```
+
+**2. 来源可信度评估矩阵**
+| 来源类型 | 可信度 | 使用场景 |
+|----------|--------|----------|
+| 一手数据 | 最高 | 核心决策依据 |
+| 权威机构 | 高 | 市场规模、行业趋势 |
+| 行业报告 | 中 | 竞争格局、技术趋势 |
+| 媒体文章 | 中低 | 初步了解、线索收集 |
+| 社交媒体 | 低 | 情绪感知、趋势发现 |
+
+---
+
+### 📊 信息差价值评估
+- **可应用性**: ⭐⭐⭐⭐⭐ 极高 (适用于所有研究任务)
+- **时效性**: ⭐⭐⭐⭐⭐ 极高 (研究质量直接影响决策)
+- **决策质量提升**: ⭐⭐⭐⭐⭐ 极高 (从"信息收集"到"决策支持")
+
+---
+
+### 🎯 立即行动
+1. **建立研究模板** - 为常见研究类型创建标准化格式
+2. **来源管理系统** - 追踪关键数据的来源和时效性
+3. **质量门禁检查** - 每次研究输出前通过检查清单
+
+---
+
+### 🔖 相关资源
+- 技能文件: `skills/everything-claude-code/.agents/skills/market-research/SKILL.md`
+
+---
+
+### 📋 技能内化
+- **技能文件**: `skills/everything-claude-code/.agents/skills/market-research/SKILL.md`
+- **触发条件**: 市场研究、竞争分析、投资决策、技术评估
+- **核心输出**: 决策导向的研究报告
+
+---
+
+*Learning Date: 2026-03-16*
+
 *Learning Date: 2026-03-13*
 
 *Learning Date: 2026-03-12*
 
 *Learning Date: 2026-03-11*
+
+---
+
+## 2026-03-17 学习记录
+
+### 📚 今日学习
+**来源**: GitHub
+**标题/项目**: TradingAgents: Multi-Agents LLM Financial Trading Framework
+**链接**: https://github.com/TauricResearch/TradingAgents
+**学习时长**: 25分钟
+
+---
+
+### 🎯 核心主题
+**多智能体LLM金融交易框架：模拟真实交易公司组织架构的AI交易系统**
+
+---
+
+### 💡 关键洞察（5点）
+
+**1. 真实交易公司架构的AI映射**
+该项目将真实交易公司的组织架构完整映射到AI系统：
+- **分析师团队**：基本面/情绪/新闻/技术四位分析师并行工作
+- **研究团队**：看涨与看跌研究员通过结构化辩论平衡风险收益
+- **交易员智能体**：综合报告决定交易时机与规模
+- **风控与组合经理**：评估波动率、流动性等风险因素，最终审批交易
+
+**核心价值**：不是简单的多Agent投票，而是模拟真实金融机构的决策流程和制衡机制。
+
+**2. LangGraph驱动的状态机工作流**
+- **底层框架**: LangGraph构建，确保灵活性与模块化
+- **配置区分**: "deep_think_llm"用于复杂推理，"quick_think_llm"用于快速任务
+- **多模型支持**: OpenAI (GPT-5.x)、Google (Gemini 3.x)、Anthropic (Claude 4.x)、xAI (Grok 4.x)、OpenRouter、Ollama本地模型
+
+**关键洞察**：通过区分"深度思考"和"快速思考"模型，在成本和性能之间取得平衡。
+
+**3. 细粒度任务设计原则**
+- 粗粒度指令导致LLM推理中断
+- 细粒度任务（基于预计算的8周期RoC、Bollinger Z-score）显著提升夏普比率
+- **关键公式**: 归一化MACD = (EMA₁₂ - EMA₂₆) / Pₜ
+
+**工程启示**：把计算工作从LLM转移到确定性代码是提升可靠性的关键。
+
+**4. 32.4K Stars的社区验证**
+- 极高社区认可度（32.4k stars）
+- 活跃Discord与GitHub社区
+- 持续更新：v0.2.1 (2026-03)支持GPT-5.4、Gemini 3.1、Claude 4.6
+- 配套论文：arXiv:2412.20138
+
+**信息差价值**：国外量化圈热点，国内讨论较少，存在明显信息差。
+
+**5. 与Stock Platform的战略契合**
+该项目架构与我们的"Agent成长系统"和"Stock Platform"战略高度契合：
+- 分层决策架构可直接借鉴
+- 多Agent信号融合机制已验证有效
+- 归一化指标设计可直接复用
+
+---
+
+### 🔧 技术实现/执行步骤
+
+**1. 快速体验**
+```python
+from tradingagents.graph.trading_graph import TradingAgentsGraph
+from tradingagents.default_config import DEFAULT_CONFIG
+
+ta = TradingAgentsGraph(debug=True, config=DEFAULT_CONFIG.copy())
+_, decision = ta.propagate("NVDA", "2026-01-15")
+```
+
+**2. A股适配路径**
+```python
+# 分层架构映射
+A股TradingAgents适配
+│
+├─ 分析师团队
+│  ├─ 基本面分析师: PE/PB/ROE分析 (AkShare数据源)
+│  ├─ 情绪分析师: 东方财富情绪指数 + 雪球热股
+│  ├─ 新闻分析师: 财联社/华尔街见闻新闻情感分析
+│  └─ 技术分析师: 归一化MACD + Bollinger Z-score
+│
+├─ 研究团队
+│  ├─ 看涨研究员: 多头逻辑论证
+│  └─ 看跌研究员: 空头逻辑论证
+│
+├─ 交易员智能体: 信号综合 + 时机选择
+│
+└─ 风控经理: 波动率检查 + 仓位控制 + 最终审批
+```
+
+**3. 模型配置策略**
+```python
+# deep_think_llm用于复杂推理
+# quick_think_llm用于快速任务
+CONFIG = {
+    "deep_think_llm": "gpt-5.4",  # 研究员辩论、风控评估
+    "quick_think_llm": "gpt-4o-mini",  # 信号提取、数据预处理
+}
+```
+
+---
+
+### 📊 信息差价值
+- **国外热度**: ⭐⭐⭐⭐⭐ (32.4k stars，社区极活跃)
+- **国内讨论度**: ⭐⭐ (国内量化圈讨论较少)
+- **可复刻性**: ⭐⭐⭐⭐⭐ (开源Python代码，架构清晰)
+- **对项目价值**: **极高** (直接契合Stock Platform + Agent成长系统战略)
+
+---
+
+### 🎯 可应用性路径
+
+**短期（本周）**:
+- [ ] 克隆TradingAgents仓库，深度研究架构实现
+- [ ] 提取核心模块设计，适配A股数据源(AkShare/Tushare)
+- [ ] 设计"deep_think_llm"和"quick_think_llm"的配置策略
+
+**中期（本月）**:
+- [ ] 实现A股版多Agent交易系统原型
+- [ ] 集成归一化技术指标(MACD/Bollinger Z-score)
+- [ ] 设计研究员辩论机制(看涨vs看跌)
+
+**长期（本季度）**:
+- [ ] 完整Stock Platform多Agent模块上线
+- [ ] 实现风控经理自动审批流程
+- [ ] 策略回测与实盘模拟
+
+---
+
+### 🔖 相关资源
+- 项目: https://github.com/TauricResearch/TradingAgents
+- 论文: arXiv:2412.20138
+- 技能文件: `skills/analysis/trading-agents-framework.md`
+
+---
+
+### 📋 技能内化
+- **技能文件**: `skills/analysis/trading-agents-framework.md`
+- **触发条件**: 多Agent交易系统设计/量化策略开发
+- **核心架构**: 分析师团队 → 研究团队 → 交易员 → 风控经理
+
+---
+
+---
+
+## 2026-03-18 学习记录
+
+### 📚 今日学习
+**来源**: GitHub
+**标题/项目**: MiroThinker - Deep Research Agent for Complex Research and Prediction
+**链接**: https://github.com/MiroMindAI/MiroThinker
+**学习时长**: 20分钟
+
+---
+
+### 🎯 核心主题
+**深度研究Agent框架：针对复杂研究和预测任务的AI系统，v1.5版本专门针对金融预测优化**
+
+---
+
+### 💡 关键洞察（5点）
+
+**1. 金融预测专项优化（v1.5版本）**
+MiroThinker-v1.5明确针对金融预测场景进行了优化：
+- 在BrowseComp-ZH基准上超越Kimi-K2-Thinking，成本更低
+- 性能指标：39.2% HLE-Text, 69.8% BrowseComp, 71.5% BrowseComp-ZH, 80.8% GAIA-Val-165
+- **关键发现**: 金融预测需要"长视野推理"（long-horizon reasoning）和深度多步分析
+
+**工程启示**: 金融预测Agent需要专门优化，而非通用LLM直接应用。
+
+**2. 交互式扩展机制（Interactive Scaling）**
+- 训练Agent处理更深、更频繁的Agent-环境交互
+- 支持每任务最多300次工具调用（v1.0支持600次）
+- 256K上下文窗口，支持长文档和时序数据分析
+
+**与TradingAgents对比**:
+| 特性 | MiroThinker | TradingAgents |
+|------|-------------|---------------|
+| 定位 | 深度研究Agent | 多Agent交易框架 |
+| 工具调用 | 300次/任务 | 分层架构限制 |
+| 上下文 | 256K tokens | 依赖模型本身 |
+| 金融优化 | v1.5专项优化 | 原生交易架构 |
+
+**3. FutureX基准：预测未知未来**
+MiroThinker团队设计了专门的**FutureX基准**，用于评估模型预测未知未来事件的能力：
+- 这与金融预测的核心挑战高度契合
+- 传统NLP基准测试的是知识检索，FutureX测试的是推理和预测能力
+- **关键洞察**: 金融预测不是知识问答，而是基于有限信息的概率推断
+
+**4. 工具增强推理（Tool-Augmented Reasoning）**
+- 与外部工具和API的无缝集成
+- 核心库`miroflow-tools`提供标准化工具接口
+- Trace Collection功能：完整的Agent交互日志，包含耗时和预估完成时间
+
+**对Stock Platform的价值**:
+```python
+# 可借鉴的架构模式
+class FinancialResearchAgent:
+    def __init__(self):
+        self.tools = [MarketDataAPI, NewsAPI, FinancialReportParser]
+        self.max_tool_calls = 300  # 深度研究需要更多工具调用
+        self.context_window = 256000
+
+    def predict(self, query, historical_data):
+        # 1. 多源数据收集（工具调用）
+        # 2. 长文档分析（财报、研报）
+        # 3. 时序模式识别
+        # 4. 概率预测输出
+        pass
+```
+
+**5. 训练方法：SFT + DPO**
+- **SFT（监督微调）**: 基础能力训练
+- **DPO（直接偏好优化）**: 对齐人类偏好，提升输出质量
+- 基础模型：Qwen3系列（8B/30B/235B参数）
+
+**关键洞察**: 金融预测Agent的训练需要结合领域数据（SFT）和人类专家反馈（DPO）。
+
+---
+
+### 🔧 技术实现/执行步骤
+
+**1. 快速体验**
+```python
+# MiroThinker架构可借鉴的模式
+from miroflow_tools import ToolRegistry, TraceCollector
+
+# 注册金融分析工具
+registry = ToolRegistry()
+registry.register("market_data", MarketDataTool())
+registry.register("news_sentiment", NewsSentimentTool())
+registry.register("financial_report", ReportParserTool())
+
+# 启用Trace收集（用于审计和优化）
+tracer = TraceCollector()
+```
+
+**2. A股研究Agent适配路径**
+```python
+# 基于MiroThinker思想的A股深度研究Agent
+class AShareResearchAgent:
+    """
+    专门针对A股市场的深度研究Agent
+    借鉴MiroThinker的交互式扩展和长上下文能力
+    """
+
+    def __init__(self):
+        self.max_iterations = 50  # 限制研究深度，避免过度拟合
+        self.tools = {
+            "akshare": AkShareDataTool(),      # A股数据
+            "tushare": TushareProTool(),       # 财务数据
+            "eastmoney": EastMoneyTool(),      # 情绪数据
+            "news": FinancialNewsTool(),       # 财联社/华尔街见闻
+        }
+
+    def deep_research(self, stock_code, research_question):
+        """
+        深度研究流程：
+        1. 收集基础数据（价格、财务、新闻）
+        2. 识别关键驱动因素
+        3. 多维度交叉验证
+        4. 概率化预测输出
+        """
+        context = {"stock": stock_code, "question": research_question}
+
+        # Phase 1: 数据收集（多工具并行调用）
+        market_data = self.tools["akshare"].get_price_data(stock_code)
+        financial_data = self.tools["tushare"].get_financials(stock_code)
+        sentiment = self.tools["eastmoney"].get_sentiment(stock_code)
+
+        # Phase 2: 深度分析（迭代推理）
+        for iteration in range(self.max_iterations):
+            analysis = self._analyze(context)
+            if analysis["confidence"] > 0.85 or iteration >= self.max_iterations - 1:
+                break
+            context = self._refine_context(context, analysis)
+
+        return self._generate_prediction(context)
+```
+
+**3. 与TradingAgents的整合思路**
+```python
+# 将MiroThinker作为TradingAgents的"研究团队"增强
+class EnhancedTradingSystem:
+    """
+    整合两个框架的优势：
+    - TradingAgents: 成熟的多Agent交易架构
+    - MiroThinker: 深度研究能力
+    """
+
+    def __init__(self):
+        # TradingAgents核心架构
+        self.analysts = [FundamentalAnalyst(), TechnicalAnalyst(), SentimentAnalyst()]
+        self.traders = TradingAgent()
+        self.risk_manager = RiskManager()
+
+        # MiroThinker增强：深度研究模块
+        self.deep_researcher = AShareResearchAgent(max_iterations=30)
+
+    def make_decision(self, stock_code):
+        # 1. 快速信号（TradingAgents模式）
+        signals = [a.analyze(stock_code) for a in self.analysts]
+
+        # 2. 深度研究（MiroThinker模式）- 用于高置信度场景
+        if self._needs_deep_research(signals):
+            deep_insight = self.deep_researcher.deep_research(
+                stock_code,
+                research_question="未来7天价格走势预测"
+            )
+            signals.append(deep_insight)
+
+        # 3. 综合决策
+        return self.traders.decide(signals)
+```
+
+---
+
+### 📊 信息差价值
+
+**GitHub项目信息**:
+| 维度 | 评估 | 说明 |
+|------|------|------|
+| 国外热度 | ⭐⭐⭐⭐ | 新兴项目，增长迅速 |
+| 国内讨论度 | ⭐⭐ | 国内量化圈尚未关注 |
+| 可复刻性 | ⭐⭐⭐⭐ | 开源架构，需自研金融模块 |
+| A股适用性 | ⭐⭐⭐⭐ | 架构通用，需适配A股数据源 |
+| 技术深度 | ⭐⭐⭐⭐⭐ | 交互式扩展机制先进 |
+
+**核心信息差**:
+1. **交互式扩展**: 大多数Agent系统固定推理深度，MiroThinker支持动态扩展
+2. **FutureX基准**: 专门针对预测任务设计的评估体系
+3. **金融优化v1.5**: 明确针对金融场景的模型优化路径
+
+---
+
+### 🎯 可应用性路径
+
+**短期（本周）**:
+- [ ] 研究MiroThinker的交互式扩展机制实现
+- [ ] 设计A股研究Agent的工具调用接口
+- [ ] 实现基础的Trace Collection功能
+
+**中期（本月）**:
+- [ ] 构建A股深度研究Agent原型（30次工具调用限制）
+- [ ] 设计FutureX风格的金融预测评估基准
+- [ ] 整合MiroThinker思想到TradingAgents架构
+
+**长期（本季度）**:
+- [ ] 实现完整的深度研究+交易决策闭环
+- [ ] 构建A股专用的预测评估基准
+- [ ] 训练/微调专门的金融预测模型
+
+---
+
+### 🔖 相关资源
+- 项目: https://github.com/MiroMindAI/MiroThinker
+- 核心洞察: 交互式扩展 + 长上下文 + 工具增强推理
+- 技能文件: `skills/analysis/mirothinker-deep-research.md`
+
+---
+
+### 📋 技能内化
+- **技能文件**: `skills/analysis/mirothinker-deep-research.md`
+- **触发条件**: 深度研究任务/复杂预测场景
+- **核心架构**: 交互式扩展 + 多工具调用 + 长上下文推理
+- **关键参数**: max_iterations=30-50, context_window=256K
+
+---
+
+*Learning Date: 2026-03-18*
+
+*Learning Date: 2026-03-17*
 
 *Learning Date: 2026-03-09*

@@ -1,0 +1,60 @@
+# Analyst Agent 学习历史记录
+# 量化分析、金融市场、数据科学
+
+agent: analyst
+last_updated: "2026-03-17T10:00:00Z"
+version: "1.0"
+
+---
+
+sources:
+  arxiv_qfin:
+    name: "ArXiv Quantitative Finance"
+    base_url: "https://arxiv.org/list/q-fin/recent"
+    learned_articles:
+      - url: "https://arxiv.org/abs/2501.12345"
+        title: "示例论文"
+        date: "2026-03-17"
+        concepts: ["量化策略", "机器学习"]
+        fingerprint: "arxiv|example|paper"
+        status: "completed"
+
+  github_trending:
+    name: "GitHub Trending - Quant"
+    base_url: "https://github.com/trending/python"
+    learned_projects:
+      - url: "https://github.com/tradingagents-ai/trading-agents"
+        name: "TradingAgents"
+        date: "2026-03-17"
+        concepts: ["多Agent交易", "LangGraph", "LLM交易框架"]
+        fingerprint: "trading|agents|langgraph|llm|multi"
+        stars: "32000+"
+        status: "completed"
+      - url: "https://github.com/MiroMindAI/MiroThinker"
+        name: "MiroThinker"
+        date: "2026-03-18"
+        concepts: ["深度研究Agent", "交互式扩展", "金融预测", "工具增强推理"]
+        fingerprint: "deep|research|agent|prediction|tool|augmented"
+        stars: "新兴项目"
+        status: "completed"
+
+---
+
+concept_window_days: 30
+
+learned_concepts:
+  active:
+    "TradingAgents": "2026-03-17"
+    "多Agent架构": "2026-03-17"
+    "MiroThinker": "2026-03-18"
+    "深度研究Agent": "2026-03-18"
+    "交互式扩展": "2026-03-18"
+
+  expired: []
+
+---
+
+total_learned: 2
+unique_sources: 2
+repeated_attempts: 0
+last_learning_date: "2026-03-18"
