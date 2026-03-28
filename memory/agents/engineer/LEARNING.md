@@ -5,6 +5,14 @@
 ### 已学习项目（近7天）
 | 日期 | 项目名称 | 来源 | 核心洞察 |
 |------|----------|------|----------|
+| 2026-03-27 | Mastra Observational Memory | GitHub Trending TS | 22K+ stars、观测记忆系统、4-10x成本削减、SOTA基准94.87% |
+| 2026-03-26 | VoltAgent - TypeScript AI Agent框架 | GitHub Trending TS | 7K+ stars、端到端Agent工程平台、VoltOps可观测性、工作流引擎 |
+| 2026-03-25 | Browser Use - AI浏览器自动化 | GitHub Trending Python #1 | 81K+ stars、LLM驱动浏览器控制、结构化输出、Session持久化 |
+| 2026-03-23 | Agentic AI Factor Investing | arXiv:2603.14288 | 闭环验证框架、经济理论约束、自进化因子库、Sharpe 3.11 |
+| 2026-03-21 | OpenCode - 开源AI编码Agent | Hacker News #1 + GitHub Trending TS #1 | 多模型统一接口、隐私优先架构、LSP自动加载 |
+| 2026-03-20 | Open SWE - LangChain异步编码Agent | GitHub Trending Python | 企业级异步Agent、子Agent+中间件架构、精选工具哲学 |
+| 2026-03-20 | Microsoft Qlib - AI量化平台 | GitHub Trending | 三层架构、RD-Agent自动因子、A股原生支持 |
+| 2026-03-19 | learn-claude-code - Agent Harness | GitHub Trending TS #1 | Harness公式，12阶段架构，Worktree隔离 |
 | 2026-03-18 | GitNexus - Zero-Server Code Intelligence | GitHub Trending TS #1 | 客户端知识图谱，Graph RAG Agent，MCP Tools |
 | 2026-03-17 | TradingAgents - Multi-Agent Trading | GitHub Trending Python | 多空辩论机制，六层Agent架构，双模型策略 |
 | 2026-03-13 | Hindsight - Agent Memory | GitHub Trending | 仿生记忆系统，retain/recall/reflect |
@@ -15,6 +23,1836 @@
 | 2026-03-08 | Ki Editor - AST-based code editor | Hacker News | 基于AST的结构化编辑器，多光标语义操作 |
 | 2026-03-05 | Security boundaries in agentic architectures | Vercel Blog | Agent安全的四层架构与隔离策略 |
 | 2026-03-05 | Alibaba OpenSandbox | GitHub Trending | AI应用通用沙盒平台，支持多语言SDK |
+
+---
+
+## 2026-03-27 学习记录
+
+### 📚 今日学习
+**来源**: GitHub Trending TypeScript + Mastra官方博客
+**标题/项目**: Mastra Observational Memory - 观测记忆系统
+**链接**: https://github.com/mastra-ai/mastra
+**文档**: https://mastra.ai/docs/memory/observational-memory
+**学习时长**: 30分钟
+
+---
+
+### 🎯 核心主题
+**观测记忆系统：从RAG检索到压缩记忆的范式转变，实现4-10倍成本削减与SOTA性能**
+
+Mastra是一个22K+ stars的TypeScript-first AI框架，由Gatsby团队创建。其Observational Memory（OM）系统代表了Agent记忆架构的重大突破——通过双Agent后台压缩机制，在LongMemEval基准上达到94.87%的SOTA成绩，同时实现4-10倍的token成本削减。
+
+---
+
+### 💡 关键洞察（5点）
+
+**1. 观测记忆 vs RAG：两种记忆范式的本质区别**
+
+| 维度 | 传统RAG | Mastra Observational Memory |
+|------|---------|----------------------------|
+| 核心机制 | 向量检索 | 文本压缩 |
+| 架构依赖 | 向量数据库 | 纯文本，无外部依赖 |
+| 检索方式 | 动态相似度搜索 | 静态前缀缓存 |
+| Prompt缓存 | 不稳定（动态检索破坏缓存） | 稳定（append-only） |
+| 成本影响 | 高（无法利用缓存折扣） | 低（4-10x成本削减） |
+| 长程精度 | 80.05% (RAG基准) | **94.87% (SOTA)** |
+
+**核心洞察**：RAG适合知识检索，OM适合对话记忆——两者互补而非替代。
+
+---
+
+**2. 双Agent后台架构：Observer + Reflector**
+
+```
+用户对话流
+    │
+    ▼
+┌─────────────────────────────────────────┐
+│           上下文窗口 (70K tokens)        │
+│  ┌─────────────────────────────────┐   │
+│  │  Observation Block (~40K)       │   │
+│  │  - 压缩的历史观测 (文本格式)      │   │
+│  │  - 🔴🟡🟢 优先级标记             │   │
+│  │  - 日期戳 + 结构化摘要           │   │
+│  └─────────────────────────────────┘   │
+│  ┌─────────────────────────────────┐   │
+│  │  Raw Message Block (~30K)       │   │
+│  │  - 原始对话消息                  │   │
+│  │  - 触发阈值时压缩为观测           │   │
+│  └─────────────────────────────────┘   │
+└─────────────────────────────────────────┘
+         │
+    ┌────┴────┐
+    ▼         ▼
+┌────────┐  ┌──────────┐
+│Observer│  │Reflector │
+│(观察者) │  │(反思者)  │
+└────────┘  └──────────┘
+```
+
+**Observer Agent**：
+- 实时监听对话流
+- 将原始消息压缩为带优先级标记的观测（🔴关键/🟡重要/🟢信息）
+- 触发条件：原始消息达到30K tokens阈值
+
+**Reflector Agent**：
+- 定期"垃圾回收"记忆
+- 重组观测、合并相关项、删除过时信息
+- 触发条件：观测达到60K tokens阈值
+
+---
+
+**3. 成本削减机制：Prompt缓存的充分利用**
+
+```typescript
+// Mastra OM配置示例
+const agent = new Agent({
+  name: 'my-agent',
+  model: 'openai/gpt-5-mini',
+  memory: new Memory({
+    options: {
+      observationalMemory: {
+        model: 'google/gemini-2.5-flash',
+        observation: {
+          messageTokens: 30_000,      // 触发观测压缩阈值
+          bufferTokens: 5_000,         // 后台缓冲区间隔
+          bufferActivation: 0.7,       // 保留70%后激活
+        },
+        reflection: {
+          observationTokens: 60_000,   // 触发反思阈值
+          bufferActivation: 0.5,       // 50%时开始后台反思
+        },
+      },
+    },
+  }),
+})
+```
+
+**成本削减原理**：
+1. **Append-only观测**：观测日志只追加不修改，前缀稳定可缓存
+2. **异步缓冲**：后台处理不阻塞对话，默认启用
+3. **压缩率**：文本3-6x，工具密集型工作负载5-40x
+4. **缓存命中率**：稳定前缀使缓存折扣（通常50-90% off）可持续应用
+
+---
+
+**4. SOTA基准性能：LongMemEval 94.87%**
+
+| 系统 | 模型 | LongMemEval分数 |
+|------|------|----------------|
+| **Mastra OM** | **GPT-5-mini** | **94.87%** ⭐ SOTA |
+| **Mastra OM** | **Gemini-3-pro-preview** | **93.27%** |
+| Hindsight | Gemini-3-pro-preview | 91.40% |
+| **Mastra OM** | **GPT-4o** | **84.23%** |
+| Oracle (理想配置) | GPT-4o | 82.40% |
+| Supermemory | GPT-4o | 81.60% |
+| **Mastra RAG** | GPT-4o | **80.05%** |
+
+**关键发现**：
+- OM在GPT-4o上（84.23%）已超越RAG的Oracle理想配置（82.40%）
+- 使用轻量级模型（GPT-5-mini）即可达到SOTA，成本效益极高
+- 压缩记忆在长程依赖任务上表现优于向量检索
+
+---
+
+**5. Mastra完整框架架构：不只是记忆**
+
+```
+Mastra TypeScript AI Framework
+│
+├─ Agents (智能体)
+│  └─ 统一LLM抽象 + 工具访问 + 指令系统
+│
+├─ Workflows (工作流)
+│  └─ 状态机编排 + DAG支持 + 内置状态管理
+│
+├─ RAG (检索增强)
+│  └─ 分块 + 嵌入 + 向量搜索
+│
+├─ Memory (记忆系统)
+│  ├─ 基础记忆：跨对话持久化
+│  └─ Observational Memory：压缩观测记忆 ⭐
+│
+├─ Tools (工具)
+│  └─ TypeScript结构化接口 + MCP支持
+│
+├─ MCP Support
+│  └─ Model Context Protocol原生集成
+│
+└─ Observability (可观测性)
+   └─ 内置追踪 + 日志 + 监控
+```
+
+**生产用户**：Replit (Agent 3)、Marsh McLennan (75K员工)、SoftBank、PayPal、Sanity
+
+---
+
+### 🔧 技术实现/执行步骤
+
+**1. 快速安装**
+```bash
+npm install @mastra/core @mastra/memory
+```
+
+**2. 基础Agent配置**
+```typescript
+import { Agent } from '@mastra/core/agent'
+import { Memory } from '@mastra/memory'
+
+const agent = new Agent({
+  name: 'research-assistant',
+  instructions: 'You are a helpful research assistant.',
+  model: 'openai/gpt-4o',
+  memory: new Memory(),  // 启用基础记忆
+})
+```
+
+**3. 启用Observational Memory**
+```typescript
+import { Agent } from '@mastra/core/agent'
+import { Memory } from '@mastra/memory'
+
+const agent = new Agent({
+  name: 'long-context-agent',
+  instructions: 'You maintain context across long conversations.',
+  model: 'openai/gpt-4o',
+  memory: new Memory({
+    options: {
+      observationalMemory: {
+        model: 'google/gemini-2.5-flash',  // 轻量级模型处理压缩
+        observation: {
+          messageTokens: 30_000,
+          bufferTokens: 5_000,
+          bufferActivation: 0.7,
+          blockAfter: 1.5,
+        },
+        reflection: {
+          observationTokens: 60_000,
+          bufferActivation: 0.5,
+          blockAfter: 1.2,
+        },
+      },
+    },
+  }),
+})
+```
+
+**4. 与Stock Platform整合方案**
+```typescript
+// 量化研究Agent的长程记忆系统
+class QuantResearchAgent {
+  constructor() {
+    this.agent = new Agent({
+      name: 'quant-researcher',
+      instructions: `你是一个量化研究助手，需要记住：
+        - 用户的研究偏好和关注领域
+        - 历史因子挖掘的假设和结果
+        - 策略回测的参数和结论`,
+      model: 'anthropic/claude-3-7-sonnet',
+      memory: new Memory({
+        options: {
+          observationalMemory: {
+            model: 'google/gemini-2.5-flash',
+            observation: {
+              messageTokens: 20_000,
+              bufferTokens: 3_000,
+            },
+            reflection: {
+              observationTokens: 40_000,
+            },
+          },
+        },
+      }),
+    })
+  }
+
+  async research(factorIdea: string) {
+    // Agent能回忆之前的相关研究
+    return await this.agent.generate(
+      `研究因子假设: ${factorIdea}\n` +
+      `请参考之前关于类似因子的研究结论。`
+    )
+  }
+}
+```
+
+**5. 何时使用Observational Memory**
+
+| ✅ 推荐使用 | ❌ 不推荐使用 |
+|-----------|-------------|
+| 多轮长程对话Agent | 开放式知识发现 |
+| 需要维持人设/任务状态 | 合规性要求严格的场景 |
+| 工具密集型Agent（浏览器、编码、研究） | 简单搜索引擎式任务 |
+| 成本敏感的生产部署 | 仅需情景记忆 |
+
+---
+
+### 📊 信息差价值
+
+| 维度 | 评估 | 说明 |
+|------|------|------|
+| **国外热度** | ⭐⭐⭐⭐⭐ | 22K+ stars，Gatsby团队背书，Replit/PayPal生产使用 |
+| **国内讨论度** | ⭐⭐ | 中文社区几乎无讨论，信息差明显 |
+| **技术成熟度** | ⭐⭐⭐⭐⭐ | 生产级框架，SOTA基准验证 |
+| **工程可复刻性** | ⭐⭐⭐⭐⭐ | TypeScript开源，npm install即用 |
+| **成本影响** | ⭐⭐⭐⭐⭐ | 4-10x成本削减，生产部署关键优势 |
+
+**核心信息差**：
+1. **压缩优于检索**：OM证明在长程记忆任务上，压缩记忆优于向量检索
+2. **双Agent架构**：Observer+Reflector的后台处理模式是创新设计
+3. **成本效益**：通过prompt缓存实现大幅成本削减，这是RAG无法做到的
+4. **轻量模型SOTA**：使用GPT-5-mini即可达到94.87%，打破"大模型更好"的迷思
+
+---
+
+### 🎯 可应用性路径
+
+**短期（本周）**:
+- [ ] 安装Mastra并测试Observational Memory
+- [ ] 对比OM vs RAG在量化研究场景的表现
+- [ ] 测试token成本削减效果
+- [ ] 评估与现有6-Agent系统的集成方案
+
+**中期（本月）**:
+- [ ] 为MuskOrchestrator Agent系统添加OM支持
+- [ ] 实现量化研究Agent的长程记忆能力
+- [ ] 建立记忆压缩与检索的混合策略
+- [ ] 开发记忆可视化工具
+
+**长期（本季度）**:
+- [ ] 构建具备长期学习能力的Agent系统
+- [ ] 实现跨会话的策略优化记忆
+- [ ] 研究Observer/Reflector的自定义实现
+- [ ] 探索OM在多空辩论Agent中的应用
+
+---
+
+### 🔖 相关资源
+
+- **GitHub**: https://github.com/mastra-ai/mastra
+- **文档**: https://mastra.ai/docs/memory/observational-memory
+- **博客**: https://mastra.ai/blog/observational-memory
+- **基准**: https://supergok.com/mastra-observational-memory/
+- **对比项目**:
+  - Hindsight (仿生记忆系统)
+  - Supermemory (AI记忆API)
+  - Mem0 (AI记忆层)
+- **相关学习**:
+  - 2026-03-26 VoltAgent (TypeScript Agent框架)
+  - 2026-03-13 Hindsight (Agent记忆系统)
+  - 2026-03-19 learn-claude-code (Agent Harness)
+
+---
+
+### 📋 技能内化
+
+- **技能文件**: `skills/coding/mastra-observational-memory.md`
+- **触发条件**: Agent长程记忆、成本优化、多轮对话系统
+- **核心架构**: Observer+Reflector双Agent + 压缩记忆 + Prompt缓存优化
+- **关键指标**: LongMemEval 94.87%, 4-10x成本削减
+
+---
+
+### 🧠 与已有知识的整合
+
+**与Hindsight的对比**:
+| 维度 | Hindsight | Mastra OM |
+|------|-----------|-----------|
+| 核心操作 | retain/recall/reflect | observe/reflect |
+| 存储格式 | 知识图谱 | 压缩文本 |
+| 检索策略 | 多策略融合 | 静态前缀 |
+| 最佳场景 | 知识关联 | 对话记忆 |
+
+**与VoltAgent的互补**:
+- VoltAgent: 端到端工程平台 + 可观测性
+- Mastra: 观测记忆系统 + 成本优化
+- **整合价值**: 工程平台 + 高效记忆 = 生产级Agent系统
+
+**与TradingAgents的整合**:
+- TradingAgents: 多空辩论决策
+- Mastra OM: 辩论历史记忆
+- **整合价值**: 辩论Agent能记住历史辩论结论，优化未来决策
+
+---
+
+*Learning Date: 2026-03-27*
+
+---
+
+## 2026-03-26 学习记录
+
+### 📚 今日学习
+**来源**: GitHub Trending TypeScript
+**标题/项目**: VoltAgent - End-to-End AI Agent Engineering Platform
+**链接**: https://github.com/VoltAgent/voltagent
+**学习时长**: 30分钟
+
+---
+
+### 🎯 核心主题
+**端到端TypeScript AI Agent工程平台：从开发到部署运维的完整闭环**
+
+VoltAgent是一个开源TypeScript AI Agent框架 + VoltOps可观测性控制台的端到端工程平台。7K+ stars，MIT协议，由VoltAgent团队开发。核心亮点：声明式工作流引擎、Supervisor多Agent编排、Zod类型安全工具、内置MCP支持、可恢复流式响应、VoltOps可视化运维。
+
+---
+
+### 💡 关键洞察（5点）
+
+**1. 端到端工程平台架构：框架 + 可观测性控制台**
+
+```
+VoltAgent平台架构
+│
+├─ 开源框架层 (@voltagent/core)
+│  ├─ Agent: LLM + Tools + Memory + Instructions
+│  ├─ 工作流引擎: 声明式多步骤自动化
+│  ├─ 多Agent系统: Supervisor协调子Agent
+│  ├─ 工具注册表: Zod类型安全 + MCP支持
+│  ├─ 持久化内存: 跨运行上下文保留
+│  ├─ RAG检索: Knowledge Base集成
+│  └─ 语音能力: TTS/STT支持
+│
+└─ VoltOps控制台 (Cloud/Self-Hosted)
+   ├─ 实时执行追踪: Agent调用链可视化
+   ├─ 性能指标: 延迟、token消耗、成功率
+   ├─ 日志与追踪: 详细执行日志分析
+   ├─ 内存管理: 对话历史检查
+   └─ Prompt构建器: 可视化提示词工程
+```
+
+**关键学习点**：真正的生产级Agent平台必须包含可观测性，开发→部署→运维是完整闭环。
+
+---
+
+**2. 声明式工作流引擎：暂停/恢复/人工审批**
+
+| 工作流操作 | 说明 | 场景 |
+|------------|------|------|
+| `andThen` | 顺序执行 | 标准流程 |
+| `andAgent` | 委托Agent | 专业任务分发 |
+| `andAll` | 并行执行 | 批量处理 |
+| `andRace` | 竞速执行 | 最快响应优先 |
+| `andWhen` | 条件分支 | 动态决策 |
+| **暂停/恢复** | 人机协作 | 等待人工确认 |
+
+**代码示例**:
+```typescript
+const expenseApprovalWorkflow = new Workflow({
+  name: "expense-approval",
+})
+  .step("extract", async ({ input }) => { /* 解析发票 */ })
+  .step("validate", async ({ context }) => { /* 验证金额 */ })
+  .step("manager-approval", async () => {
+    // 暂停等待人工审批
+    return { status: "pending_approval" };
+  })
+  .step("process", async ({ context }) => { /* 执行报销 */ });
+```
+
+**工程启示**：复杂业务流程需要原生支持人机协作，而非简单的自动执行。
+
+---
+
+**3. Zod类型安全 + MCP生态整合**
+
+```typescript
+// Zod类型定义工具
+const weatherTool = tool({
+  name: "get_weather",
+  description: "获取指定城市的天气",
+  parameters: z.object({
+    city: z.string().describe("城市名称"),
+    unit: z.enum(["celsius", "fahrenheit"]).default("celsius"),
+  }),
+  execute: async ({ city, unit }) => {
+    // 类型安全的执行
+    return await fetchWeather(city, unit);
+  },
+});
+
+// MCP工具集成
+const mcpTools = await mcpClient.tools();
+```
+
+**关键洞察**：
+- Zod全程类型约束：参数定义→验证→执行→返回，类型安全贯穿始终
+- MCP(Model Context Protocol)标准化工具接口，工具生态可插拔
+- 对比Python的Pydantic，TypeScript的Zod更适合前端/全栈开发者
+
+---
+
+**4. 多Agent编排：Supervisor模式**
+
+```
+Supervisor Agent架构
+│
+├─ Supervisor (协调者)
+│  └─ 任务分解 → Agent选择 → 结果聚合
+│
+├─ Research Agent (研究)
+│  └─ 信息收集、数据分析
+│
+├─ Code Agent (编码)
+│  └─ 代码生成、重构、审查
+│
+└─ Review Agent (审查)
+   └─ 质量检查、合规验证
+```
+
+**与单Agent对比**:
+| 维度 | 单Agent | 多Agent(Supervisor) |
+|------|---------|---------------------|
+| 职责 | 全能但浅 | 专业且深 |
+| Prompt | 冗长复杂 | 简洁聚焦 |
+| 可维护 | 困难 | 模块化 |
+| 扩展性 | 有限 | 水平扩展 |
+
+**工程启示**：复杂系统应该分解为专业Agent，而非堆砌Prompt。
+
+---
+
+**5. 可恢复流式响应：客户端断线重连**
+
+**问题场景**：
+- 用户关闭浏览器后重新打开
+- 移动端App切换到后台再回来
+- 网络不稳定导致连接中断
+
+**VoltAgent解决方案**:
+```typescript
+// 服务端：支持可恢复的流式响应
+const stream = await agent.stream(input, {
+  resumable: true,
+  streamId: "unique-session-id",
+});
+
+// 客户端：断线后重新连接
+const stream = await agent.resumeStream("unique-session-id");
+```
+
+**关键洞察**：生产级Agent必须考虑真实世界的网络状况，优雅处理中断和恢复。
+
+---
+
+### 🔧 技术实现要点
+
+**快速开始**:
+```bash
+npm create voltagent-app@latest
+```
+
+**核心依赖**:
+```json
+{
+  "@voltagent/core": "^0.x",
+  "@voltagent/voice": "^0.x",  // 语音能力
+  "zod": "^3.x"                // 类型安全
+}
+```
+
+**部署选项**:
+- Cloud: 托管VoltOps控制台
+- Self-Hosted: 自有基础设施
+- Serverless: Vercel/Netlify适配
+
+---
+
+### 📊 信息差评估
+
+| 维度 | 评分 | 说明 |
+|------|------|------|
+| 国外热度 | ⭐⭐⭐⭐ | 7K+ stars，TypeScript Agent框架中增长迅速 |
+| 国内讨论度 | ⭐⭐⭐ | 中文文档完善，但社区讨论较少 |
+| 可复刻性 | ⭐⭐⭐⭐⭐ | MIT协议，完整开源，文档详尽 |
+| 生产就绪 | ⭐⭐⭐⭐ | 可观测性内置，但企业案例待验证 |
+
+**对标分析**:
+| 特性 | VoltAgent | Mastra | LangChain.js |
+|------|-----------|--------|--------------|
+| 工作流引擎 | ✅ 声明式 | ✅ 图状态机 | ⚠️ 基础链 |
+| 可观测性 | ✅ VoltOps | ⚠️ OpenTelemetry | ❌ 第三方 |
+| 类型安全 | ✅ Zod | ✅ Zod | ⚠️ 部分 |
+| 语音能力 | ✅ 内置 | ❌ | ❌ |
+| MCP支持 | ✅ 原生 | ✅ 原生 | ✅ 社区 |
+
+---
+
+### 🎯 行动建议
+
+**短期（本周）**:
+1. 使用`npm create voltagent-app`创建测试项目
+2. 实现一个简单的工作流（如：数据提取→分析→报告生成）
+3. 体验VoltOps控制台的追踪功能
+
+**中期（本月）**:
+1. 将现有MuskOrchestrator的Agent迁移到VoltAgent架构
+2. 设计Supervisor多Agent编排（Planner→Engineer→Reviewer）
+3. 集成MCP工具生态（如：股票数据MCP Server）
+
+**长期（本季度）**:
+1. 构建生产级Agent系统，部署VoltOps自托管版本
+2. 开发自定义MCP Server（量化分析、股票数据）
+3. 评估与Claude Code的集成可能性
+
+---
+
+### 📝 关联知识
+
+- **相关学习**: 2026-03-21 OpenCode（多模型统一接口）、2026-03-19 learn-claude-code（Agent Harness）
+- **技术栈**: TypeScript, Zod, Hono, MCP
+- **应用场景**: 自动化工作流、多Agent系统、生产级AI应用
+
+---
+
+## 2026-03-20 学习记录
+
+### 📚 今日学习
+**来源**: GitHub Trending Python
+**标题/项目**: Microsoft Qlib - AI-oriented Quant Investment Platform
+**链接**: https://github.com/microsoft/qlib
+**学习时长**: 25分钟
+
+---
+
+### 🎯 核心主题
+**微软开源AI量化投资平台：从研究到生产的完整量化基础设施**
+
+Qlib是微软开源的AI驱动量化投资平台，39K+ stars，支持从想法探索到生产部署的全流程。核心亮点：三层松耦合架构、30+ ML/DL模型、RD-Agent自动因子挖掘、强化学习订单执行、原生A股数据支持。
+
+---
+
+### 💡 关键洞察（5点）
+
+**1. 三层松耦合架构设计**
+
+```
+Qlib架构
+│
+├─ 基础设施层 (Infrastructure)
+│  ├─ DataServer: 数据存储与访问
+│  ├─ Trainer: 模型训练接口
+│  └─ Point-in-Time数据库: 避免未来函数
+│
+├─ 工作流层 (Workflow)
+│  ├─ Information Extractor: 特征工程
+│  ├─ Forecast Model: 预测模型
+│  ├─ Decision Generator: 决策生成
+│  └─ Backtester: 回测引擎
+│
+└─ 接口层 (Interface)
+   ├─ 分析报告
+   └─ 可视化
+```
+
+**关键学习点**：松耦合设计让每个组件可独立使用、替换、测试，这是工程化的核心。
+
+---
+
+**2. 30+ ML模型生态：从基线到前沿**
+
+| 类别 | 模型 | 适用场景 |
+|------|------|----------|
+| 传统ML | LightGBM, XGBoost | 快速基线验证 |
+| 深度学习 | LSTM, GRU, TCN | 时序预测 |
+| 注意力机制 | Transformer, Localformer | 长程依赖捕捉 |
+| 图神经网络 | GATs | 股票关系建模 |
+| 强化学习 | PPO | 订单执行优化 |
+| 元学习 | DDG-DA | 市场动态适应 |
+
+**工程启示**：提供完整的模型谱系，从简单基线到复杂模型渐进式迭代。
+
+---
+
+**3. RD-Agent：LLM驱动的自动量化研究（2025新特性）**
+
+- **核心能力**: 自动因子挖掘 + 模型优化
+- **技术基础**: Multi-Agent框架
+- **论文**: arXiv:2505.15155
+- **工作流程**:
+  ```
+  用户需求 → 因子假设生成 → 数据验证 → 模型训练 → 结果评估 → 迭代优化
+  ```
+
+**关键洞察**：RD-Agent代表了量化研究的未来方向——从人工因子挖掘到AI自动发现。
+
+---
+
+**4. A股数据原生支持**
+
+```python
+# 下载A股日线数据
+python scripts/get_data.py qlib_data \
+    --target_dir ~/.qlib/qlib_data/cn_data \
+    --region cn
+
+# 下载1分钟高频数据
+python scripts/get_data.py qlib_data \
+    --target_dir ~/.qlib/qlib_data/cn_data_1min \
+    --region cn \
+    --interval 1min
+```
+
+**数据源**:
+- Yahoo Finance (内置爬虫)
+- 社区数据源: chenditc/investment_data
+- 支持1d和1min粒度
+- Arctic Provider后端支持订单簿数据
+
+---
+
+**5. 强化学习框架：订单执行优化**
+
+- **发布**: 2022年11月
+- **应用**: 连续决策建模
+- **算法**: PPO等
+- **价值**: 优化大单执行，降低市场冲击成本
+
+**独特价值**：大多数量化框架忽略订单执行优化，Qlib将其作为一等公民。
+
+---
+
+### 🔧 技术实现/执行步骤
+
+**1. 快速安装**
+```bash
+# 创建环境
+conda create -n qlib python=3.12
+pip install pyqlib
+
+# 或源码安装
+git clone https://github.com/microsoft/qlib
+cd qlib
+python setup.py install
+```
+
+**2. 运行首个工作流**
+```bash
+cd examples
+qrun benchmarks/LightGBM/workflow_config_lightgbm_Alpha158.yaml
+```
+
+**3. A股自定义数据接入**
+```python
+from qlib.data import D
+from qlib.config import REG_CN
+
+# 配置A股
+qlib.init(provider_uri='~/.qlib/qlib_data/cn_data', region=REG_CN)
+
+# 获取数据
+instruments = D.instruments(market='csi300')
+df = D.features(instruments, ['$close', '$volume'], start_time='2020-01-01', end_time='2024-12-31')
+```
+
+**4. 自定义模型训练**
+```python
+from qlib.model.trainer import Trainer
+from qlib.workflow import R
+from qlib.contrib.model.pytorch_alstm import ALSTM
+
+# 定义模型
+model = ALSTM(d_feat=158, hidden_size=64, num_layers=2)
+
+# 训练
+with R.start(experiment_name='alstm_test'):
+    trainer = Trainer(model=model, dataset=dataset)
+    trainer.fit()
+```
+
+**5. 与TradingAgents/MiroThinker整合思路**
+```python
+# Qlib作为数据+回测基础设施
+# TradingAgents作为多Agent决策层
+# MiroThinker作为深度研究模块
+
+class AShareQuantSystem:
+    def __init__(self):
+        # Qlib基础设施
+        self.data_handler = QlibDataHandler(region='cn')
+        self.backtester = QlibBacktester()
+
+        # TradingAgents决策层
+        self.analysts = [TechnicalAnalyst(), FundamentalAnalyst()]
+        self.trader = TradingAgent()
+
+        # MiroThinker深度研究
+        self.deep_researcher = DeepResearchAgent()
+
+    def run_strategy(self, strategy_config):
+        # 1. Qlib数据准备
+        dataset = self.data_handler.load(strategy_config.symbols)
+
+        # 2. 多Agent决策
+        signals = [a.analyze(dataset) for a in self.analysts]
+        decision = self.trader.decide(signals)
+
+        # 3. Qlib回测
+        results = self.backtester.run(decision)
+
+        return results
+```
+
+---
+
+### 📊 信息差价值
+
+| 维度 | 评估 | 说明 |
+|------|------|------|
+| **国外热度** | ⭐⭐⭐⭐⭐ | 39K+ stars，微软官方维护 |
+| **国内应用** | ⭐⭐⭐⭐ | 有中文教程（扫地僧系列），但深度应用较少 |
+| **技术成熟度** | ⭐⭐⭐⭐⭐ | 生产级平台，支持在线服务 |
+| **A股适用性** | ⭐⭐⭐⭐⭐ | 原生支持A股数据 |
+| **与项目契合度** | ⭐⭐⭐⭐⭐ | 完美契合Stock Platform需求 |
+
+**核心信息差**:
+1. **RD-Agent自动因子挖掘**: 2025年新特性，国内讨论极少
+2. **强化学习订单执行**: 大多数量化框架忽略订单执行优化
+3. **Point-in-Time数据库**: 避免未来函数的数据库设计
+
+---
+
+### 🎯 可应用性路径
+
+**短期（本周）**:
+- [ ] 安装Qlib并下载A股数据
+- [ ] 运行LightGBM基线模型
+- [ ] 研究RD-Agent自动因子挖掘机制
+
+**中期（本月）**:
+- [ ] 将Qlib作为Stock Platform的数据基础设施
+- [ ] 实现自定义因子库
+- [ ] 集成TradingAgents决策层到Qlib工作流
+
+**长期（本季度）**:
+- [ ] 基于Qlib构建完整A股量化平台
+- [ ] 实现RD-Agent风格的自动因子发现
+- [ ] 强化学习订单执行优化
+
+---
+
+### 🔖 相关资源
+
+- **项目**: https://github.com/microsoft/qlib
+- **文档**: https://qlib.readthedocs.io
+- **RD-Agent论文**: arXiv:2505.15155
+- **中文教程**: 扫地僧系列 (Python 3.12新版)
+- **技能文件**: `skills/analysis/microsoft-qlib-platform.md`
+
+---
+
+### 📋 技能内化
+
+- **技能文件**: `skills/analysis/microsoft-qlib-platform.md`
+- **触发条件**: A股量化研究/模型训练/回测需求
+- **核心架构**: 三层松耦合设计
+- **关键模型**: LightGBM基线 → 深度学习 → 强化学习
+- **2025重点**: RD-Agent自动因子挖掘
+
+---
+
+### 🧠 与已有知识的整合
+
+**与TradingAgents的互补**:
+- TradingAgents: 多Agent决策架构
+- Qlib: 数据基础设施 + 回测引擎
+- **整合价值**: 决策层 + 执行层的完整闭环
+
+**与MiroThinker的互补**:
+- MiroThinker: 深度研究能力
+- Qlib: 标准化量化流程
+- **整合价值**: 研究洞察 → 量化验证的快速通道
+
+**与ai-hedge-fund的互补**:
+- ai-hedge-fund: 分层Agent架构理念
+- Qlib: 工程化实现框架
+- **整合价值**: 理念 → 落地的工程路径
+
+---
+
+*Learning Date: 2026-03-21*
+
+---
+
+## 2026-03-23 学习记录
+
+### 📚 今日学习
+**来源**: arXiv:2603.14288 (ICLR 2026 FinAI Workshop相关)
+**标题/项目**: Agentic AI Factor Investing - Beyond Prompting
+**链接**: https://arxiv.org/abs/2603.14288
+**作者**: Allen Yikuan Huang, Zheqi Fan
+**学习时长**: 20分钟
+
+---
+
+### 🎯 核心主题
+**Agentic AI因子投资框架：从Prompting工具到自主决策引擎的范式转变**
+
+Agentic AI Factor Investing是一个突破性的量化研究框架，通过闭环验证系统（样本外验证+经济理论约束）实现因子投资的自动化。核心创新在于将AI从"被动执行提示词的工具"转化为"主动提出假设并验证的自主引擎"。
+
+---
+
+### 💡 关键洞察（5点）
+
+**1. 闭环验证框架：四层严格实证纪律**
+
+```
+Agentic AI因子投资系统
+│
+├─ 因子假设生成层
+│  └─ AI基于市场观察自主提出因子假设
+│  └─ 要求: 必须有经济理论支撑
+│
+├─ 经济理论验证层
+│  └─ 验证因子假设的经济学合理性
+│  └─ 要求: 理论分数 > 0.7
+│
+├─ 样本内验证层
+│  └─ 历史数据回测验证
+│  └─ 统计显著性检验 (t-statistic > 2.0)
+│
+├─ 样本外验证层 (关键)
+│  └─ 完全未参与训练的数据集测试
+│  └─ 性能衰减 < 30%
+│
+└─ 自进化循环
+   ├─ 验证通过 → 纳入因子库
+   ├─ 验证失败 → 返回重新假设
+   └─ 定期淘汰失效因子
+```
+
+**关键学习点**：样本外验证是防止过拟合的关键，性能衰减<30%是硬性门槛。
+
+---
+
+**2. 经济理论约束：防止数据挖掘的防火墙**
+
+| 理论类别 | 包含因子 | 验证权重 |
+|----------|----------|----------|
+| risk_premium | size, value, momentum, quality, volatility | 60% |
+| behavioral | overreaction, underreaction, anchoring, herding | 60% |
+| microstructure | liquidity, price_impact, information_asymmetry | 60% |
+| information | earnings_surprise, analyst_coverage, insider_trading | 60% |
+
+**A股特有理论类别**：
+```python
+self.a_share_theories = {
+    'policy_driven': ['policy_cycle', 'regulatory_change', 'state_owned_enterprise'],
+    'retail_sentiment': ['retail_herding', 'limit_up_down', 'turnover_sentiment'],
+    'liquidity_premium': ['small_cap_premium', 'turnover_illiquidity'],
+    'behavioral_a_share': ['earnings_gaming', 'concept_rotation']
+}
+```
+
+**工程启示**：任何因子假设必须有经济理论支撑，纯数据挖掘的因子会被过滤。
+
+---
+
+**3. 自进化因子库：动态适应市场变化**
+
+```python
+def self_evolution_cycle(self):
+    """自进化循环"""
+    # 1. 观察市场状态
+    market_state = self.observe_market()
+
+    # 2. 生成新因子假设
+    new_hypotheses = self.generate_factor_hypothesis(market_state)
+
+    # 3. 验证新因子
+    validated_factors = []
+    for hypothesis in new_hypotheses:
+        if self.closed_loop_validation(hypothesis, self.data):
+            validated_factors.append(hypothesis)
+
+    # 4. 更新因子库
+    self.factor_library.extend(validated_factors)
+
+    # 5. 淘汰失效因子
+    self.factor_library = self.prune_obsolete_factors(self.factor_library)
+
+    return len(validated_factors)
+```
+
+**关键机制**：
+- 新因子必须经过完整验证流程才能入库
+- 定期回测库中因子，淘汰失效者
+- 因子库动态适应市场状态变化
+
+---
+
+**4. 严格的样本外验证框架**
+
+```python
+class StatisticalValidator:
+    """严格样本外验证框架"""
+
+    def __init__(self, in_sample_ratio=0.6):
+        self.in_sample_ratio = in_sample_ratio
+
+    def closed_loop_validation(self, factor: Dict, data: pd.DataFrame) -> bool:
+        """闭环验证"""
+        in_sample, out_sample = self.split_data(data)
+
+        # 样本内验证
+        in_result = self.in_sample_test(factor, in_sample)
+        if in_result['t_stat'] < 2.0:
+            return False
+
+        # 样本外验证 (关键)
+        out_result = self.out_sample_test(factor, out_sample)
+        performance_decay = (in_result['sharpe'] - out_result['sharpe']) / in_result['sharpe']
+
+        return performance_decay < 0.3  # 性能衰减必须<30%
+```
+
+**验证标准**：
+- t-statistic > 2.0（统计显著性）
+- 样本外性能衰减 < 30%（防止过拟合）
+- 经济理论分数 > 0.7（理论合理性）
+
+---
+
+**5. 卓越的性能表现：Sharpe 3.11**
+
+| 指标 | 数值 | 说明 |
+|------|------|------|
+| 年化夏普比率 | **3.11** | 多空组合，风险调整后收益极高 |
+| 年化收益率 | **59.53%** | 简单线性组合信号 |
+| 策略类型 | 多空组合 | 市场中性 |
+| 信号构建 | 简单线性组合 | 非复杂黑盒模型 |
+
+**关键洞察**：简单线性组合+严格验证 > 复杂模型+松散验证
+
+---
+
+### 🔧 技术实现/执行步骤
+
+**1. 经济理论验证器实现**
+
+```python
+class EconomicRationaleValidator:
+    """验证因子假设的经济理论合理性"""
+
+    VALID_THEORIES = {
+        'risk_premium': ['size', 'value', 'momentum', 'quality', 'volatility'],
+        'behavioral': ['overreaction', 'underreaction', 'anchoring', 'herding'],
+        'microstructure': ['liquidity', 'price_impact', 'information_asymmetry'],
+        'information': ['earnings_surprise', 'analyst_coverage', 'insider_trading']
+    }
+
+    def validate(self, factor_hypothesis: Dict) -> Tuple[bool, float]:
+        """验证经济理论合理性"""
+        theory_category = factor_hypothesis.get('theoretical_basis')
+        if theory_category not in self.VALID_THEORIES:
+            return False, 0.0
+
+        mechanism = factor_hypothesis.get('mechanism_description', '')
+        rationale_score = self.evaluate_mechanism(mechanism, theory_category)
+
+        literature = factor_hypothesis.get('supporting_literature', [])
+        literature_score = min(len(literature) / 2, 1.0)
+
+        final_score = 0.6 * rationale_score + 0.4 * literature_score
+        return final_score > 0.7, final_score
+```
+
+**2. 与现有系统的整合方案**
+
+```python
+class IntegratedQuantSystem:
+    """整合Agentic因子投资与现有系统"""
+
+    def __init__(self):
+        # 数据基础设施 (Microsoft Qlib)
+        self.data_handler = QlibDataHandler()
+
+        # 多Agent决策 (TradingAgents)
+        self.trading_agents = TradingAgentsGraph()
+
+        # Agentic因子生成
+        self.factor_system = AShareAgenticFactorSystem()
+
+        # 深度研究 (MiroThinker)
+        self.deep_researcher = DeepResearchAgent()
+
+        # 匿名化验证 (BlindTrade)
+        self.anonymizer = AShareAnonymizer()
+```
+
+**3. A股适配方案**
+
+```python
+class AShareAgenticFactorSystem(AgenticFactorInvestingSystem):
+    """A股适配的Agentic因子投资系统"""
+
+    def __init__(self):
+        super().__init__(config={})
+
+        # A股特有的经济理论约束
+        self.a_share_theories = {
+            'policy_driven': ['policy_cycle', 'regulatory_change', 'state_owned_enterprise'],
+            'retail_sentiment': ['retail_herding', 'limit_up_down', 'turnover_sentiment'],
+            'liquidity_premium': ['small_cap_premium', 'turnover_illiquidity'],
+            'behavioral_a_share': ['earnings_gaming', 'concept_rotation']
+        }
+
+        self.economic_validator.VALID_THEORIES.update(self.a_share_theories)
+```
+
+**4. 可立即应用的SOP**
+
+| 步骤 | 行动 | 产出 |
+|------|------|------|
+| 1 | 实现经济理论验证器 | 因子假设过滤机制 |
+| 2 | 建立样本外验证框架 | 过拟合防护系统 |
+| 3 | 构建自进化因子库 | 动态适应市场的因子集合 |
+| 4 | 集成到TradingAgents | 多Agent决策+自主因子生成 |
+| 5 | 添加A股特有理论类别 | 本土化因子验证 |
+
+---
+
+### 📊 信息差价值
+
+| 维度 | 评估 | 说明 |
+|------|------|------|
+| **国外热度** | ⭐⭐⭐⭐⭐ | arXiv论文，ICLR 2026 FinAI Workshop |
+| **国内讨论度** | ⭐⭐ | 中文社区几乎无讨论，信息差明显 |
+| **技术成熟度** | ⭐⭐⭐⭐⭐ | 论文提供完整实现框架 |
+| **工程可复刻性** | ⭐⭐⭐⭐⭐ | Python伪代码清晰，可直接实现 |
+| **与项目契合度** | ⭐⭐⭐⭐⭐ | 完美契合Stock Platform的因子研究需求 |
+
+**核心信息差**:
+1. **闭环验证框架**：样本外验证+经济理论约束的双重防护
+2. **自进化机制**：因子库动态适应市场变化
+3. **A股本土化**：政策驱动、散户情绪等A股特有理论类别
+4. **简单优于复杂**：线性组合+严格验证 > 复杂黑盒模型
+
+---
+
+### 🎯 可应用性路径
+
+**短期（本周）**:
+- [ ] 实现EconomicRationaleValidator类
+- [ ] 建立样本内/样本外数据划分机制
+- [ ] 设计因子假设生成Prompt模板
+- [ ] 研究A股特有经济理论类别
+
+**中期（本月）**:
+- [ ] 构建自进化因子库系统
+- [ ] 集成到TradingAgents框架
+- [ ] 实现因子失效检测机制
+- [ ] 建立因子性能监控仪表盘
+
+**长期（本季度）**:
+- [ ] 实现完整的Agentic因子投资系统
+- [ ] 与Qlib数据基础设施深度整合
+- [ ] 开发可视化因子研究工作台
+- [ ] 探索多因子组合优化策略
+
+---
+
+### 🔖 相关资源
+
+- **论文**: https://arxiv.org/abs/2603.14288
+- **技能文件**: `skills/analysis/agentic-ai-factor-investing.md`
+- **相关学习**:
+  - 2026-03-21 Microsoft Qlib（数据基础设施）
+  - 2026-03-17 TradingAgents（多Agent决策）
+  - 2026-03-20 BlindTrade（匿名化验证）
+
+---
+
+### 📋 技能内化
+
+- **技能文件**: `skills/analysis/agentic-ai-factor-investing.md`
+- **触发条件**: 因子投资研究、自动化量化研究、策略自进化需求
+- **核心架构**: 四层闭环验证 + 经济理论约束 + 自进化因子库
+- **关键指标**: Sharpe 3.11, 样本外性能衰减<30%, 理论分数>0.7
+
+---
+
+### 🧠 与已有知识的整合
+
+**与Microsoft Qlib的互补**:
+- Qlib: 数据基础设施 + 回测引擎
+- Agentic AI: 自主因子生成 + 验证框架
+- **整合价值**: 数据+算法+验证的完整量化研究闭环
+
+**与TradingAgents的互补**:
+- TradingAgents: 多Agent分层决策
+- Agentic AI: 自主因子发现与验证
+- **整合价值**: 决策层+研究层的双轮驱动
+
+**与BlindTrade的互补**:
+- BlindTrade: 匿名化验证信号真实性
+- Agentic AI: 经济理论约束防止数据挖掘
+- **整合价值**: 双重验证机制确保因子质量
+
+---
+
+*Learning Date: 2026-03-23*
+
+---
+
+## 2026-03-21 学习记录
+
+### 📚 今日学习
+**来源**: Hacker News #1 (230 pts / 102 comments) + GitHub Trending TypeScript #1
+**标题/项目**: OpenCode - The Open Source AI Coding Agent
+**链接**: https://github.com/anomalyco/opencode
+**官网**: https://opencode.ai/
+**学习时长**: 25分钟
+
+---
+
+### 🎯 核心主题
+**开源AI编码Agent的新范式：多模型统一接口 + 隐私优先架构 + LSP智能加载**
+
+OpenCode是一个全新的开源AI编码Agent，今日同时登顶Hacker News和GitHub Trending TypeScript榜单。与Claude Code不同，OpenCode主打"模型自由"——支持75+ LLM提供商（包括本地模型），同时提供GitHub Copilot和ChatGPT Plus/Pro账号集成。核心创新在于"LSP自动加载"机制，Agent能自动识别项目语言并加载对应LSP，为LLM提供精准的代码上下文。
+
+---
+
+### 💡 关键洞察（5点）
+
+**1. 多模型统一接口：打破单一模型锁定**
+
+| 特性 | OpenCode | Claude Code |
+|------|----------|-------------|
+| 模型选择 | 75+ 提供商任意切换 | 固定Anthropic模型 |
+| 本地模型 | 完全支持 | 不支持 |
+| Copilot集成 | 可直接使用GitHub Copilot账号 | 无 |
+| ChatGPT集成 | 支持Plus/Pro账号 | 无 |
+| 成本策略 | 免费模型 + 自有API key | 固定成本 |
+
+**核心机制**：
+```
+用户请求 → 模型路由层 → 选择最优模型 → 执行 → 结果返回
+                ↓
+        ┌───────┴───────┐
+        ↓               ↓
+   本地模型(Ollama)   云端API
+   Claude/GPT/Gemini  Models.dev聚合
+```
+
+**关键学习点**：多模型策略不仅降低成本，更重要的是不同任务可用不同模型——简单任务用轻量模型，复杂任务用强模型。
+
+---
+
+**2. LSP自动加载：为LLM提供精准上下文**
+
+传统编码Agent的问题：
+- 无法准确理解代码符号关系
+- 跨文件引用解析困难
+- 类型信息缺失导致错误建议
+
+**OpenCode解决方案**：
+```
+项目检测 → 识别语言栈 → 自动启动LSP → 实时符号索引
+    ↓
+Python项目 → pyright/pylsp → 类型推断
+TypeScript → tsserver → 类型定义追踪
+Rust → rust-analyzer → 模块解析
+```
+
+**技术价值**：
+- LSP提供结构化代码理解（而非纯文本）
+- 实时类型信息辅助LLM生成正确代码
+- 跨文件符号跳转支持重构建议
+
+---
+
+**3. 隐私优先架构：代码不上云**
+
+| 数据类型 | OpenCode | 传统云端Agent |
+|----------|----------|---------------|
+| 源代码 | 本地处理 | 上传云端 |
+| 上下文 | 本地存储 | 云端存储 |
+| 对话历史 | 本地加密 | 服务端存储 |
+| 遥测数据 | 可选关闭 | 通常强制 |
+
+**架构设计**：
+```
+┌─────────────────────────────────────┐
+│           用户设备                   │
+│  ┌─────────┐    ┌───────────────┐  │
+│  │ OpenCode │ ←→ │ 本地LSP服务器  │  │
+│  │  Agent   │    │ (类型/符号)   │  │
+│  └────┬────┘    └───────────────┘  │
+│       │                             │
+│       ↓ (仅API调用，无代码上传)      │
+│  ┌─────────┐                       │
+│  │ LLM API │ (Claude/GPT/本地)     │
+│  └─────────┘                       │
+└─────────────────────────────────────┘
+```
+
+**关键洞察**：企业级应用必须考虑代码隐私，本地化处理是重要差异化优势。
+
+---
+
+**4. 多会话并行：真正的多任务处理**
+
+OpenCode支持"Start multiple agents in parallel on the same project"：
+
+```
+项目根目录
+    ├── Agent A: 重构用户模块
+    ├── Agent B: 编写测试用例
+    ├── Agent C: 优化数据库查询
+    └── Agent D: 更新API文档
+```
+
+**与Open SWE的对比**：
+- Open SWE: 异步执行 + 消息队列（单Agent多任务）
+- OpenCode: 多会话并行（多Agent同时工作）
+
+**应用场景**：
+- 大型项目多模块并行开发
+- 代码审查与功能开发同时进行
+- 技术债务修复与功能迭代并行
+
+---
+
+**5. Zen服务：模型质量筛选层**
+
+OpenCode提供"Zen"服务—— curated validated models：
+
+```
+Model Marketplace (Models.dev)
+    ├── 未经筛选的模型 (质量参差不齐)
+    │
+    └── Zen筛选层
+        ├── 性能测试通过
+        ├── 代码生成质量验证
+        ├── 上下文窗口稳定性测试
+        └── 推荐模型列表
+```
+
+**价值主张**：
+- 节省用户模型选择成本
+- 避免"模型抽奖"问题
+- 确保生产环境稳定性
+
+---
+
+### 🔧 技术实现/执行步骤
+
+**1. 快速安装**
+```bash
+# 官方安装脚本
+curl -fsSL https://opencode.ai/install | bash
+
+# 或选择包管理器
+npm install -g opencode
+bun install -g opencode
+brew install opencode
+```
+
+**2. 多模型配置**
+```yaml
+# ~/.opencode/config.yaml
+models:
+  default: claude-3-7-sonnet
+
+  providers:
+    anthropic:
+      api_key: ${ANTHROPIC_API_KEY}
+      models:
+        - claude-3-7-sonnet
+        - claude-3-5-haiku
+
+    openai:
+      api_key: ${OPENAI_API_KEY}
+      models:
+        - gpt-4o
+        - gpt-4o-mini
+
+    ollama:
+      base_url: http://localhost:11434
+      models:
+        - codellama:13b
+        - deepseek-coder:33b
+
+    github_copilot:
+      enabled: true
+      # 使用GitHub账号登录
+```
+
+**3. LSP自动检测配置**
+```json
+{
+  "lsp": {
+    "auto_detect": true,
+    "servers": {
+      "python": ["pyright", "pylsp"],
+      "typescript": ["typescript-language-server"],
+      "rust": ["rust-analyzer"],
+      "go": ["gopls"]
+    },
+    "indexing": {
+      "on_startup": true,
+      "watch_files": true
+    }
+  }
+}
+```
+
+**4. 多会话启动模式**
+```bash
+# 会话1: 重构任务
+opencode --session refactor --task "重构用户认证模块"
+
+# 会话2: 测试任务（并行）
+opencode --session testing --task "为订单模块编写单元测试"
+
+# 查看所有会话
+opencode sessions list
+
+# 合并会话结果
+opencode sessions merge refactor testing
+```
+
+**5. 隐私模式配置**
+```yaml
+privacy:
+  mode: strict  # strict | balanced | relaxed
+
+  strict_mode:
+    cloud_upload: false      # 禁止代码上传
+    local_only: true         # 仅本地处理
+    telemetry: false         # 关闭遥测
+
+  balanced_mode:
+    cloud_upload: selective  # 仅上传必要上下文
+    anonymization: true      # 匿名化处理
+```
+
+---
+
+### 📊 信息差价值
+
+| 维度 | 评估 | 说明 |
+|------|------|------|
+| **国外热度** | ⭐⭐⭐⭐⭐ | Hacker News #1 (230 pts) + GitHub TS #1 (825 stars今日) |
+| **国内讨论度** | ⭐⭐ | 中文社区几乎无讨论，信息差明显 |
+| **技术成熟度** | ⭐⭐⭐⭐ | 已有Desktop App，但刚发布需观察 |
+| **工程可复刻性** | ⭐⭐⭐⭐⭐ | 开源TypeScript，架构清晰 |
+| **与项目契合度** | ⭐⭐⭐⭐⭐ | 编码Agent架构设计直接相关 |
+
+**核心信息差**:
+1. **LSP自动加载机制**：国内讨论Agent时很少涉及LSP集成，这是代码理解的关键
+2. **多模型路由策略**：不同于单一模型，OpenCode展示如何优雅支持多提供商
+3. **隐私优先架构**：企业级部署必须考虑的架构设计
+4. **Zen筛选服务**：模型质量管控的创新思路
+
+---
+
+### 🎯 可应用性路径
+
+**短期（本周）**:
+- [ ] 研究OpenCode源码，理解LSP集成实现
+- [ ] 分析多模型路由层设计
+- [ ] 评估隐私优先架构对MuskOrchestrator的启示
+- [ ] 对比OpenCode与Claude Code的架构差异
+
+**中期（本月）**:
+- [ ] 为6-Agent系统设计LSP集成能力
+- [ ] 实现多模型 fallback 机制
+- [ ] 设计Agent会话隔离机制
+- [ ] 评估本地模型（Ollama）与云端模型混合策略
+
+**长期（本季度）**:
+- [ ] 构建模型质量评估体系（类似Zen服务）
+- [ ] 实现多Agent并行工作流
+- [ ] 设计企业级隐私保护方案
+- [ ] 开发模型路由智能调度算法
+
+---
+
+### 🔖 相关资源
+
+- **GitHub**: https://github.com/anomalyco/opencode
+- **官网**: https://opencode.ai/
+- **Models.dev**: https://models.dev/ (75+模型聚合)
+- **对比项目**:
+  - Claude Code (Anthropic闭源)
+  - Open SWE (LangChain异步Agent)
+  - learn-claude-code (教育性质Agent Harness)
+
+---
+
+### 📋 技能内化
+
+- **技能文件**: `skills/coding/opencode-multi-model-agent.md`
+- **触发条件**: 编码Agent架构设计、多模型策略、LSP集成
+- **核心架构**: 多模型路由 + LSP自动加载 + 隐私优先
+- **关键创新**: Zen服务模型筛选、多会话并行
+
+---
+
+### 🧠 与已有知识的整合
+
+**与Open SWE的互补**:
+- Open SWE: 异步执行 + 子Agent + 中间件（企业级工作流）
+- OpenCode: 多模型 + LSP + 多会话（开发体验优化）
+- **整合价值**: 异步工作流 + 多模型策略 + LSP上下文
+
+**与learn-claude-code的互补**:
+- learn-claude-code: Agent Harness教育（从零构建）
+- OpenCode: 生产级开源实现（直接使用）
+- **整合价值**: 理论+实践，学习+应用
+
+**与GitNexus的互补**:
+- GitNexus: 知识图谱 + Graph RAG（代码理解）
+- OpenCode: LSP + 多模型（代码生成）
+- **整合价值**: 代码理解 + 代码生成的完整闭环
+
+---
+
+*Learning Date: 2026-03-21*
+
+---
+
+## 2026-03-20 学习记录 #2
+
+### 📚 今日学习
+**来源**: GitHub Trending Python
+**标题/项目**: Open SWE - Open-Source Asynchronous Coding Agent
+**链接**: https://github.com/langchain-ai/open-swe
+**学习时长**: 25分钟
+
+---
+
+### 🎯 核心主题
+**企业级异步编码Agent框架：LangChain官方开源的内部编码Agent解决方案**
+
+Open SWE是LangChain官方开源的异步编码Agent框架，旨在帮助企业构建类似Stripe、Ramp、Coinbase内部使用的编码Agent。955+ stars今日增长，核心创新是"异步+子Agent+中间件"架构，以及"精选工具而非堆砌"的哲学。
+
+---
+
+### 💡 关键洞察（5点）
+
+**1. 异步Agent架构：从同步到异步的范式转变**
+
+| 传统Agent | Open SWE异步Agent |
+|-----------|-------------------|
+| 即时响应 | 收到消息后👀确认，后台执行 |
+| 单次交互 | 支持执行中跟进消息 |
+| 同步阻塞 | 异步非阻塞，长时任务友好 |
+| 无状态 | 线程级持久化沙箱 |
+
+**核心机制**：
+```python
+# 中间件实现运行中消息注入
+check_message_queue_before_model  # 每次模型调用前检查消息队列
+```
+
+**关键学习点**：异步架构让Agent能处理耗时任务（大型重构、复杂分析），同时保持用户交互能力。
+
+---
+
+**2. 子Agent + 中间件架构（Subagents + Middleware）**
+
+```
+Open SWE架构
+│
+├─ Deep Agent (主Agent)
+│  ├─ 工具调用
+│  ├─ 子Agent派生 (并行子任务)
+│  └─ 中间件链
+│     ├─ ToolErrorMiddleware (工具错误处理)
+│     ├─ check_message_queue_before_model (消息注入)
+│     └─ SafetyNetMiddleware (安全网)
+│
+└─ Sandbox (隔离云环境)
+   ├─ Modal
+   ├─ Daytona
+   ├─ Runloop
+   └─ LangSmith
+```
+
+**子Agent使用场景**：
+- 并行分析多个文件
+- 独立执行子任务（测试、lint、文档生成）
+- 复杂任务的分解与委派
+
+---
+
+**3. 精选工具哲学（Curated, Not Accumulated）**
+
+Open SWE只精选约15个工具，而非堆砌大量工具：
+
+| 工具类别 | 工具示例 | 用途 |
+|----------|----------|------|
+| 代码操作 | read, edit, bash | 文件读写、命令执行 |
+| 协作沟通 | linear_comment, slack_thread_reply | 进度更新 |
+| 版本控制 | commit_and_open_pr | 自动提交PR |
+| 网络请求 | http_request, fetch_url | 外部API调用 |
+
+**设计原则**：
+- 每个工具必须有明确用途
+- 工具之间职责不重叠
+- 通过组合而非数量解决问题
+
+**与MCP对比**：
+- MCP: 标准化工具暴露协议
+- Open SWE: 精选工具集 + 深度集成
+
+---
+
+**4. 多平台触发机制（Multi-Platform Invocation）**
+
+```
+用户触发
+    ├── Slack @openswe "重构用户模块"
+    ├── Linear issue 分配给 @openswe
+    └── GitHub PR comment @openswe
+                ↓
+        Open SWE Agent
+                ↓
+    ┌───────────┼───────────┐
+    ↓           ↓           ↓
+ 即时确认    后台执行    自动PR
+ (👀表情)   (沙箱运行)   (草稿PR)
+```
+
+**上下文来源**：
+- `AGENTS.md` - 项目级Agent配置
+- Linear issue - 任务描述
+- Slack thread - 讨论上下文
+- GitHub PR - 代码上下文
+
+---
+
+**5. 基于Deep Agents的组合架构**
+
+Open SWE不是从零构建，而是基于Deep Agents组合：
+
+```python
+from langgraph_deep_agents import create_deep_agent
+
+create_deep_agent(
+    model="anthropic:claude-opus-4-6",
+    system_prompt=construct_system_prompt(repo_dir, ...),
+    tools=[http_request, fetch_url, commit_and_open_pr, ...],
+    backend=sandbox_backend,  # Modal/Daytona/Runloop/LangSmith
+    middleware=[
+        ToolErrorMiddleware(),
+        check_message_queue_before_model,
+        ...
+    ],
+)
+```
+
+**架构优势**：
+- 复用Deep Agents的成熟能力
+- 专注业务逻辑而非基础设施
+- 易于扩展和定制
+
+---
+
+### 🔧 技术实现/执行步骤
+
+**1. 快速启动**
+```bash
+# 克隆项目
+git clone https://github.com/langchain-ai/open-swe
+cd open-swe
+
+# 安装依赖
+pip install -e ".[dev]"
+
+# 配置环境变量
+cp .env.example .env
+# 编辑 .env 添加 API keys
+```
+
+**2. 配置多平台集成**
+```yaml
+# config.yaml
+integrations:
+  slack:
+    bot_token: ${SLACK_BOT_TOKEN}
+    signing_secret: ${SLACK_SIGNING_SECRET}
+
+  linear:
+    api_key: ${LINEAR_API_KEY}
+    webhook_secret: ${LINEAR_WEBHOOK_SECRET}
+
+  github:
+    app_id: ${GITHUB_APP_ID}
+    private_key: ${GITHUB_PRIVATE_KEY}
+
+sandbox:
+  provider: modal  # 或 daytona, runloop, langsmith
+  image: python:3.11-slim
+```
+
+**3. 自定义工具实现模板**
+```python
+from open_swe.tools import Tool
+
+class CustomAnalysisTool(Tool):
+    """自定义代码分析工具"""
+
+    name = "analyze_code_complexity"
+    description = "分析代码复杂度并返回报告"
+
+    async def run(self, file_path: str) -> dict:
+        # 1. 读取文件
+        content = await self.read_file(file_path)
+
+        # 2. 分析复杂度
+        complexity = self._calculate_complexity(content)
+
+        # 3. 返回结构化结果
+        return {
+            "file": file_path,
+            "complexity_score": complexity.score,
+            "recommendations": complexity.suggestions
+        }
+```
+
+**4. 子Agent派生模式**
+```python
+async def parallel_analysis(self, files: list[str]) -> list[AnalysisResult]:
+    """并行分析多个文件"""
+
+    # 为每个文件派生子Agent
+    subagents = [
+        self.spawn_subagent(
+            task=f"分析文件: {file}",
+            context={"file": file, "analysis_type": "complexity"}
+        )
+        for file in files
+    ]
+
+    # 并行执行
+    results = await asyncio.gather(*[
+        subagent.run() for subagent in subagents
+    ])
+
+    return results
+```
+
+**5. 中间件实现模板**
+```python
+from open_swe.middleware import Middleware
+
+class SafetyNetMiddleware(Middleware):
+    """安全网中间件：防止危险操作"""
+
+    DANGEROUS_PATTERNS = [
+        r"rm\s+-rf\s+/",
+        r"DROP\s+DATABASE",
+        # ...
+    ]
+
+    async def before_tool_call(self, tool_name: str, params: dict) -> dict:
+        # 检查危险模式
+        if tool_name == "bash":
+            command = params.get("command", "")
+            for pattern in self.DANGEROUS_PATTERNS:
+                if re.search(pattern, command, re.IGNORECASE):
+                    raise SecurityError(f"危险命令被拦截: {command}")
+
+        return params
+
+    async def after_tool_call(self, tool_name: str, result: dict) -> dict:
+        # 检查结果是否包含敏感信息泄露
+        if self._contains_secrets(result):
+            result = self._redact_secrets(result)
+
+        return result
+```
+
+---
+
+### 📊 信息差价值
+
+| 维度 | 评估 | 说明 |
+|------|------|------|
+| **国外热度** | ⭐⭐⭐⭐⭐ | LangChain官方项目，今日955+ stars增长 |
+| **国内讨论度** | ⭐⭐ | 中文社区几乎无讨论，信息差明显 |
+| **技术成熟度** | ⭐⭐⭐⭐⭐ | 对标Stripe/Ramp/Coinbase内部Agent |
+| **工程可复刻性** | ⭐⭐⭐⭐⭐ | Python开源，架构清晰 |
+| **与项目契合度** | ⭐⭐⭐⭐⭐ | 直接相关6-Agent系统架构 |
+
+**核心信息差**:
+1. **异步Agent设计模式**：国内讨论集中在同步Agent，异步架构认知不足
+2. **子Agent+中间件架构**：比单Agent复杂任务处理能力更强
+3. **精选工具哲学**：与"堆砌工具"相反的设计思路
+4. **多平台触发机制**：Slack/Linear/GitHub统一集成方案
+
+---
+
+### 🎯 可应用性路径
+
+**短期（本周）**:
+- [ ] 研究Open SWE源码，理解异步Agent架构
+- [ ] 提取子Agent派生和中间件实现模式
+- [ ] 设计MuskOrchestrator的异步任务执行机制
+- [ ] 评估与现有6-Agent系统的集成方案
+
+**中期（本月）**:
+- [ ] 实现子Agent+中间件架构的Agent Harness
+- [ ] 建立精选工具集（15-20个核心工具）
+- [ ] 集成异步消息队列机制
+- [ ] 为Stock Platform实现异步分析Agent
+
+**长期（本季度）**:
+- [ ] 构建多平台触发能力（Slack/Discord/GitHub）
+- [ ] 实现线程级持久化沙箱
+- [ ] 建立Agent间协作协议
+- [ ] 开发可视化Agent工作流监控
+
+---
+
+### 🔖 相关资源
+
+- **项目**: https://github.com/langchain-ai/open-swe
+- **Deep Agents**: https://github.com/langchain-ai/deep-agents
+- **LangGraph**: https://langchain-ai.github.io/langgraph/
+- **对比项目**:
+  - learn-claude-code (教育性质，渐进式教程)
+  - GitNexus (知识图谱+Graph RAG)
+  - TradingAgents (多Agent辩论)
+
+---
+
+### 📋 技能内化
+
+- **技能文件**: `skills/coding/open-swe-async-agent.md`
+- **触发条件**: 企业级Agent开发、异步任务处理、多Agent协作
+- **核心架构**: 子Agent+中间件 + 异步消息队列 + 精选工具集
+- **关键模型**: Deep Agents + LangGraph
+
+---
+
+### 🧠 与已有知识的整合
+
+**与learn-claude-code的互补**:
+- learn-claude-code: 教育性质，从零构建Agent Harness
+- Open SWE: 生产级，企业级异步Agent框架
+- **整合价值**: 理论+实践，教育+生产
+
+**与TradingAgents的互补**:
+- TradingAgents: 多Agent分层决策（金融场景）
+- Open SWE: 子Agent+中间件架构（编码场景）
+- **整合价值**: 不同场景的Agent架构设计模式
+
+**与GitNexus的互补**:
+- GitNexus: 知识图谱+Graph RAG（代码理解）
+- Open SWE: 异步编码Agent（代码生成）
+- **整合价值**: 代码理解+代码生成的完整闭环
+
+---
+
+*Learning Date: 2026-03-20*
+
+---
+
+## 历史学习记录
 
 ---
 
@@ -729,14 +2567,6 @@ jest.mock('@/lib/supabase', () => ({
 
 ---
 
-*Learning Date: 2026-03-16*
-
-*Learning Date: 2026-03-13*
-
-*Learning Date: 2026-03-12*
-
-*Learning Date: 2026-03-11*
-
 ---
 
 ## 2026-03-17 学习记录
@@ -1307,6 +3137,756 @@ class SkillGenerator {
 - **核心输出**: 六阶段索引流水线 + Precomputed Relational Intelligence + MCP Tools
 
 ---
+
+---
+
+## 2026-03-19 学习记录
+
+### 📚 今日学习
+**来源**: GitHub Trending TypeScript
+**标题/项目**: learn-claude-code - Zero-to-One Agent Harness Engineering
+**链接**: https://github.com/shareAI-lab/learn-claude-code
+**学习时长**: 25分钟
+
+---
+
+### 🎯 核心主题
+**Agent Harness工程：从零构建Claude Code-like Agent的完整教程**
+
+learn-claude-code是一个革命性的开源项目（33K+ stars），通过12个渐进式Session教授如何从零构建一个完整的Agent Harness。核心哲学是"Bash is all you need"和"the model is the agent"——模型本身就是Agent，代码只提供环境。
+
+---
+
+### 💡 关键洞察（5点）
+
+**1. Harness Formula（Harness公式）**
+
+```
+Harness = Tools + Knowledge + Observation + Action Interfaces + Permissions
+```
+
+这是Agent工程的第一性原理。与复杂框架不同，Harness只提供：
+- **Tools**: Agent可调用的能力
+- **Knowledge**: 技能文件的按需加载
+- **Observation**: 环境状态的读取能力
+- **Action Interfaces**: 执行动作的统一接口
+- **Permissions**: 安全边界控制
+
+**关键学习点**：Agent不是框架，不是提示链，而是"模型+环境"。
+
+---
+
+**2. 十二阶段渐进式架构（12-Session Architecture）**
+
+| Session | 机制 | 核心洞察 |
+|---------|------|----------|
+| s01 | Agent Loop | "One loop & Bash is all you need" |
+| s02 | Tool Use | Dispatch map: name→handler 模式 |
+| s03 | TodoWrite | Planning with nag reminders（催促提醒） |
+| s04 | Subagents | 独立messages[]实现真正的上下文隔离 |
+| s05 | Skills | 按需加载，而非塞入system prompt |
+| s06 | Context Compact | 三层压缩策略 |
+| s07 | Tasks | 文件CRUD + 依赖图 |
+| s08 | Background Tasks | Daemon threads + notify queue |
+| s09 | Agent Teams | Teammates + JSONL mailboxes |
+| s10 | Team Protocols | Request-response FSM |
+| s11 | Autonomous Agents | Idle cycle + auto-claim |
+| s12 | Worktree Isolation | Task-directory绑定 |
+
+**渐进式学习价值**：每个Session都是可运行的独立单元，从简单循环到复杂多Agent系统。
+
+---
+
+**3. 最小Agent循环（The Minimal Agent Loop）**
+
+```python
+def agent_loop(messages):
+    while True:
+        response = client.messages.create(
+            model=MODEL,
+            system=SYSTEM,
+            messages=messages,
+            tools=TOOLS,
+        )
+        messages.append({
+            "role": "assistant",
+            "content": response.content
+        })
+
+        if response.stop_reason != "tool_use":
+            return  # 完成，返回结果
+
+        # 执行工具，追加结果，继续循环
+        tool_results = execute_tools(response.content)
+        messages.append({
+            "role": "user",
+            "content": tool_results
+        })
+```
+
+**核心洞察**：整个Agent系统可以简化为一个循环——接收消息、调用模型、执行工具、追加结果。
+
+---
+
+**4. 三层上下文压缩策略（Three-Layer Context Compression）**
+
+```
+Layer 1: System Prompt (固定)
+Layer 2: Conversation History (动态，需压缩)
+Layer 3: Tool Results (临时，可摘要)
+```
+
+**压缩策略**：
+- **Summarization**: 长对话历史摘要
+- **Truncation**: 保留最近N轮，丢弃早期
+- **Hierarchical**: 重要消息标记，优先保留
+
+**与Hindsight记忆系统的对比**：
+- Hindsight: retain/recall/reflect三操作
+- learn-claude-code: 压缩+按需加载技能
+
+---
+
+**5. Worktree隔离模式（Worktree Isolation Pattern）**
+
+```
+main-repo/
+├── .git/
+├── src/              # 主分支代码
+└── .worktrees/
+    ├── task-001/     # 独立worktree
+    ├── task-002/     # 独立worktree
+    └── task-003/     # 独立worktree
+```
+
+**优势**：
+- 每个任务在独立目录执行
+- Git worktree天然支持并行
+- 任务失败不影响主分支
+- 自动清理机制
+
+**对比Docker隔离**：
+- Worktree: 轻量级，文件系统级
+- Docker: 重量级，进程+网络隔离
+
+---
+
+### 🔧 技术实现/执行步骤
+
+**1. 工具注册模式（Dispatch Map Pattern）**
+
+```python
+# 可扩展的工具注册系统
+class ToolRegistry:
+    def __init__(self):
+        self._tools = {}
+
+    def register(self, name: str, handler: Callable):
+        """注册工具"""
+        self._tools[name] = handler
+
+    def execute(self, name: str, params: dict) -> dict:
+        """执行工具"""
+        if name not in self._tools:
+            return {"error": f"Unknown tool: {name}"}
+        return self._tools[name](**params)
+
+# 使用示例
+registry = ToolRegistry()
+registry.register("bash", bash_handler)
+registry.register("read", read_handler)
+registry.register("TodoWrite", todo_handler)
+
+# Agent循环中调用
+tool_result = registry.execute(tool_name, tool_params)
+```
+
+**2. 技能按需加载（Lazy Skill Loading）**
+
+```python
+# 错误做法：塞入system prompt
+SYSTEM_PROMPT = """
+You are a coding agent.
+Here are 100 skills: [...]  # 太长！
+"""
+
+# 正确做法：通过工具按需加载
+SKILLS_LIBRARY = {
+    "tdd": "skills/tdd-workflow.md",
+    "refactor": "skills/refactoring-patterns.md",
+    "api-design": "skills/api-design.md",
+}
+
+def load_skill(skill_name: str) -> str:
+    """Agent通过工具调用加载技能"""
+    if skill_name in SKILLS_LIBRARY:
+        with open(SKILLS_LIBRARY[skill_name]) as f:
+            return f.read()
+    return f"Skill '{skill_name}' not found"
+
+# Agent决定何时加载
+# Agent: "我需要应用TDD，先加载tdd技能"
+# -> 调用 load_skill("tdd")
+```
+
+**3. 子Agent上下文隔离**
+
+```python
+class SubagentManager:
+    """管理子Agent的独立上下文"""
+
+    def spawn(self, task: str, parent_messages: list) -> str:
+        """创建子Agent，继承父上下文但独立演化"""
+        # 子Agent获得父消息的副本，而非引用
+        child_messages = parent_messages.copy()
+
+        # 添加任务描述
+        child_messages.append({
+            "role": "user",
+            "content": f"New task: {task}"
+        })
+
+        # 在独立线程/进程中运行
+        result = self._run_isolated(child_messages)
+        return result
+
+    def _run_isolated(self, messages: list) -> str:
+        """隔离执行，不影响父Agent"""
+        # 独立的agent_loop实例
+        return agent_loop(messages)
+```
+
+**4. 文件任务系统（File-based Task CRUD）**
+
+```python
+# 任务存储在文件系统，支持依赖图
+TASKS_DIR = ".tasks/"
+
+def create_task(name: str, description: str, depends_on: list = None):
+    """创建新任务"""
+    task = {
+        "id": generate_id(),
+        "name": name,
+        "description": description,
+        "status": "pending",  # pending | in_progress | completed | failed
+        "depends_on": depends_on or [],
+        "created_at": now(),
+        "updated_at": now(),
+    }
+    save_task(task)
+    return task
+
+def get_ready_tasks() -> list:
+    """获取所有依赖已满足的任务"""
+    all_tasks = load_all_tasks()
+    completed = {t["id"] for t in all_tasks if t["status"] == "completed"}
+    return [
+        t for t in all_tasks
+        if t["status"] == "pending"
+        and all(dep in completed for dep in t["depends_on"])
+    ]
+```
+
+**5. 可立即应用的SOP**
+
+| 步骤 | 行动 | 产出 |
+|------|------|------|
+| 1 | 实现最小Agent循环 | 可运行的bash agent |
+| 2 | 建立工具注册系统 | 可扩展的工具生态 |
+| 3 | 迁移技能到按需加载 | 减少token消耗50%+ |
+| 4 | 实现worktree隔离 | 并行任务执行能力 |
+| 5 | 添加任务依赖图 | 复杂工作流编排 |
+
+---
+
+### 📊 信息差价值
+
+| 维度 | 评分 | 说明 |
+|------|------|------|
+| **国外热度** | ⭐⭐⭐⭐⭐ | 33K+ stars，GitHub Trending TypeScript #1 |
+| **国内讨论度** | ⭐⭐ | 中文社区讨论极少，信息差明显 |
+| **可复刻性** | ⭐⭐⭐⭐⭐ | 渐进式教程，每Session可独立运行 |
+| **对Agent系统价值** | **极高** | 从零构建Agent Harness的完整路径 |
+| **对Stock Platform价值** | ⭐⭐⭐⭐ | 量化任务编排、并行回测执行 |
+
+**独特价值点**：
+- 与复杂框架（LangChain/LlamaIndex）相反，强调"简单即美"
+- 12个Session构成完整学习路径，从入门到生产
+- Worktree隔离模式是并行执行的创新方案
+- "模型即Agent"的哲学与我们的6-Agent系统设计一致
+
+---
+
+### 🎯 可应用性路径
+
+**短期（本周）**:
+- [ ] 研究learn-claude-code源码，提取最小Agent循环实现
+- [ ] 设计工具注册系统，统一Agent工具调用接口
+- [ ] 迁移现有技能文件到按需加载模式
+- [ ] 实现简单的worktree隔离原型
+
+**中期（本月）**:
+- [ ] 重构6-Agent系统，采用Harness公式架构
+- [ ] 实现任务依赖图，支持复杂工作流编排
+- [ ] 集成worktree隔离到Stock Platform回测系统
+- [ ] 建立技能库懒加载机制
+
+**长期（本季度）**:
+- [ ] 实现Agent Teams多Agent协作
+- [ ] 开发自主Agent（idle cycle + auto-claim）
+- [ ] 构建可视化Agent工作流编辑器
+- [ ] 研究上下文压缩策略优化token成本
+
+---
+
+### 🔖 相关资源
+
+- **原文**: https://github.com/shareAI-lab/learn-claude-code
+- **文档**: https://github.com/shareAI-lab/learn-claude-code/tree/main/docs
+- **对比项目**: Claude Code（闭源）、Open SWE（LangChain生态）
+- **相关学习**:
+  - 2026-03-18 GitNexus（知识图谱+Graph RAG）
+  - 2026-03-17 TradingAgents（多空辩论机制）
+  - 2026-03-13 Hindsight（Agent记忆系统）
+
+---
+
+### 📋 技能内化
+
+- **技能文件**: `skills/coding/agent-harness-engineering.md`
+- **触发条件**: Agent系统架构设计、工具开发、任务编排
+- **核心输出**: Harness公式 + 12阶段架构 + Worktree隔离模式
+
+---
+
+*Learning Date: 2026-03-25*
+
+---
+
+## 2026-03-25 学习记录
+
+### 📚 今日学习
+**来源**: GitHub Trending Python #1
+**标题/项目**: Browser Use - Make websites accessible for AI agents
+**链接**: https://github.com/browser-use/browser-use
+**文档**: https://docs.browser-use.com
+**学习时长**: 25分钟
+
+---
+
+### 🎯 核心主题
+**让AI Agent像人类一样使用浏览器：开源浏览器自动化框架的新标准**
+
+Browser Use是一个81K+ stars的Python库，使AI Agent能够控制浏览器完成复杂网页任务。它是Manus AI等通用Agent的核心基础设施，支持结构化输出、Session持久化、多LLM提供商，并提供Cloud托管服务。核心创新是"自然语言描述目标，结构化数据返回"的极简API设计。
+
+---
+
+### 💡 关键洞察（5点）
+
+**1. 极简API设计：自然语言到结构化输出**
+
+```python
+from browser_use import Agent, ChatBrowserUse
+
+agent = Agent(
+    task="Find the top 3 trending repos on GitHub",
+    llm=ChatBrowserUse(),
+)
+result = await agent.run()  # 返回结构化数据
+```
+
+**核心设计哲学**：
+- 用户用自然语言描述目标
+- Agent自主规划执行步骤
+- 返回结构化数据（而非原始HTML）
+
+**对比传统爬虫**：
+| 传统爬虫 | Browser Use |
+|---------|-------------|
+| 编写XPath/Selector | 自然语言描述目标 |
+| 处理反爬、验证码 | 内置stealth和CAPTCHA解决 |
+| 返回原始HTML | 返回结构化提取数据 |
+|  brittle（易失效） | 自适应页面变化 |
+
+---
+
+**2. 双模式架构：开源+云端灵活部署**
+
+```
+┌─────────────────────────────────────────────┐
+│           Browser Use Architecture          │
+├─────────────────────┬───────────────────────┤
+│   Open Source       │   Cloud (Managed)     │
+│   (Self-hosted)     │   (SDK/API)           │
+├─────────────────────┼───────────────────────┤
+│ • 本地Playwright    │ • 隐身浏览器          │
+│ • 自带LLM API Key   │ • 代理轮换            │
+│ • 免费开源          │ • CAPTCHA自动解决     │
+│ • Python ≥3.11      │ • 持久化Session       │
+│ • 社区驱动          │ • 按量付费            │
+└─────────────────────┴───────────────────────┘
+```
+
+**Cloud定价**（每1M token）：
+- 输入: $0.20
+- 缓存输入: $0.02
+- 输出: $2.00
+
+---
+
+**3. Session与Profile：状态持久化的关键设计**
+
+```python
+# Session：多步骤工作流保持登录状态
+client = AsyncBrowserUse()
+session = await client.sessions.create(proxy_country_code="us")
+
+# 第一步：登录
+result1 = await client.run(
+    "Log into example.com",
+    session_id=str(session.id),
+    keep_alive=True  # 保持Session活跃
+)
+
+# 第二步：基于已登录状态操作
+result2 = await client.run(
+    "Now click settings",
+    session_id=str(session.id)
+)
+
+await client.sessions.stop(str(session.id))
+```
+
+**Profile：跨Session持久化登录状态**
+```bash
+# 同步本地浏览器cookies到云端
+curl -fsSL https://browser-use.com/profile.sh | sh
+```
+
+```python
+# 使用已保存的Profile（免重新登录）
+result = await client.run(
+    "Go to dashboard",
+    profile_id="your-profile-uuid"
+)
+```
+
+---
+
+**4. 结构化输出：Pydantic/Zod Schema驱动**
+
+```python
+from pydantic import BaseModel
+
+class Product(BaseModel):
+    name: str
+    price: float
+    rating: float
+    reviews: int
+
+# Agent自动提取并验证结构化数据
+result = await client.run(
+    "Extract product info from amazon.com/dp/B08N5WRWNW",
+    output_schema=Product
+)
+
+print(result.output)
+# Product(name="Kindle Paperwhite", price=139.99, rating=4.7, reviews=15234)
+```
+
+**TypeScript版本**：
+```typescript
+import { z } from "zod";
+
+const Product = z.object({
+    name: z.string(),
+    price: z.number(),
+});
+
+const result = await client.run(
+    "Get product info",
+    { schema: Product }
+);
+```
+
+---
+
+**5. Workspace与文件操作：Agent的持久化存储**
+
+```python
+# 创建Workspace
+workspace = await client.workspaces.create(name="research-workspace")
+
+# Agent在Workspace中创建文件
+result = await client.run(
+    "Research Tesla stock and create report.md",
+    workspace_id=str(workspace.id)
+)
+
+# 获取文件列表
+files = await client.workspaces.files(
+    str(workspace.id),
+    include_urls=True
+)
+
+# 下载文件
+for file in files:
+    print(f"{file.name}: {file.download_url}")
+```
+
+**文件上传场景**：
+```python
+from browser_use_sdk.v3 import FileUploadItem
+
+# 上传CSV让Agent分析
+upload_resp = await client.sessions.upload_files(
+    str(session.id),
+    files=[FileUploadItem(name="data.csv", content_type="text/csv")],
+)
+
+# 上传后Agent可直接读取
+result = await client.run(
+    "Read data.csv and create summary report",
+    session_id=str(session.id)
+)
+```
+
+---
+
+### 🔧 技术实现/执行步骤
+
+**1. 快速开始（Open Source）**
+
+```bash
+# 安装
+pip install browser-use
+
+# 设置LLM API Key
+export OPENAI_API_KEY=sk-...
+# 或
+export ANTHROPIC_API_KEY=sk-...
+```
+
+```python
+# 基础用法
+from browser_use import Agent, ChatBrowserUse
+import asyncio
+
+async def main():
+    agent = Agent(
+        task="Find the number of stars of browser-use repo",
+        llm=ChatBrowserUse(),  # 优化模型，比其他模型快3-5倍
+    )
+    result = await agent.run()
+    print(result)
+
+asyncio.run(main())
+```
+
+**2. Cloud SDK使用**
+
+```bash
+pip install browser-use-sdk
+export BROWSER_USE_API_KEY=your_key
+```
+
+```python
+from browser_use_sdk.v3 import AsyncBrowserUse
+
+client = AsyncBrowserUse()
+
+# 基础任务
+result = await client.run("Find top 3 Hacker News posts")
+print(result.output)
+
+# 结构化输出
+from pydantic import BaseModel
+
+class NewsItem(BaseModel):
+    title: str
+    points: int
+    comments: int
+
+class NewsList(BaseModel):
+    items: list[NewsItem]
+
+result = await client.run(
+    "Get top 3 Hacker News posts",
+    output_schema=NewsList
+)
+```
+
+**3. 多LLM提供商支持**
+
+```python
+from browser_use import Agent
+from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
+
+# OpenAI
+agent = Agent(
+    task="...",
+    llm=ChatOpenAI(model="gpt-4o"),
+)
+
+# Anthropic
+agent = Agent(
+    task="...",
+    llm=ChatAnthropic(model="claude-3-5-sonnet-20241022"),
+)
+
+# 本地模型 (Ollama)
+from langchain_ollama import ChatOllama
+agent = Agent(
+    task="...",
+    llm=ChatOllama(model="qwen2.5:14b"),
+)
+```
+
+**4. 自定义工具扩展**
+
+```python
+from browser_use import Tools
+
+tools = Tools()
+
+@tools.action(description='Send notification to Slack')
+def notify_slack(message: str, channel: str = "#alerts") -> str:
+    """Send a notification to Slack channel"""
+    # 实现Slack通知逻辑
+    return f"Sent to {channel}: {message}"
+
+@tools.action(description='Query internal API')
+def query_internal_api(endpoint: str) -> dict:
+    """Query company internal API"""
+    # 实现API查询逻辑
+    return {"data": "..."}
+
+agent = Agent(
+    task="Check stock price and notify team",
+    llm=ChatBrowserUse(),
+    tools=tools,  # 注入自定义工具
+)
+```
+
+**5. 与Stock Platform整合方案**
+
+```python
+class StockDataCollector:
+    """基于Browser Use的A股数据收集器"""
+
+    def __init__(self):
+        self.client = AsyncBrowserUse()
+
+    async def collect_financial_reports(self, stock_code: str):
+        """收集个股财报数据"""
+        from pydantic import BaseModel
+
+        class FinancialData(BaseModel):
+            revenue: float
+            net_profit: float
+            eps: float
+            roe: float
+
+        result = await self.client.run(
+            f"Go to eastmoney.com, search {stock_code}, "
+            "extract latest quarterly financial data",
+            output_schema=FinancialData,
+            proxy_country_code="cn"
+        )
+
+        return result.output
+
+    async def monitor_news(self, stock_code: str):
+        """监控个股新闻"""
+        class NewsItem(BaseModel):
+            title: str
+            source: str
+            time: str
+            sentiment: str  # positive/negative/neutral
+
+        result = await self.client.run(
+            f"Search {stock_code} latest news on 10jqka.com.cn, "
+            "extract top 5 news with sentiment analysis",
+            output_schema=list[NewsItem]
+        )
+
+        return result.output
+```
+
+---
+
+### 📊 信息差价值
+
+| 维度 | 评估 | 说明 |
+|------|------|------|
+| **国外热度** | ⭐⭐⭐⭐⭐ | 81K+ stars，GitHub Python Trending #1 |
+| **国内讨论度** | ⭐⭐⭐ | 中文社区讨论较少，信息差明显 |
+| **技术成熟度** | ⭐⭐⭐⭐⭐ | 生产级，Manus AI等产品的核心基础设施 |
+| **工程可复刻性** | ⭐⭐⭐⭐⭐ | Python开源，API设计简洁 |
+| **与项目契合度** | ⭐⭐⭐⭐⭐ | 完美契合Stock Platform数据采集需求 |
+
+**核心信息差**：
+1. **结构化输出能力**：不仅是浏览器控制，更是数据提取框架
+2. **Session持久化**：多步骤工作流的状态管理设计
+3. **Cloud+开源双模式**：灵活部署选项
+4. **与Manus AI的关系**：开源基础设施 vs 终端产品
+
+---
+
+### 🎯 可应用性路径
+
+**短期（本周）**:
+- [ ] 安装browser-use并运行第一个Agent任务
+- [ ] 测试A股数据网站（东方财富、同花顺）的访问
+- [ ] 设计财报数据提取的Pydantic Schema
+- [ ] 评估Cloud vs 开源模式的成本
+
+**中期（本月）**:
+- [ ] 构建基于Browser Use的A股数据收集Pipeline
+- [ ] 实现财报、新闻、公告的自动化采集
+- [ ] 集成到Stock Platform数据层
+- [ ] 建立Session管理和错误重试机制
+
+**长期（本季度）**:
+- [ ] 开发可视化Agent任务编排界面
+- [ ] 实现多Agent并行数据采集
+- [ ] 构建数据质量验证和清洗流程
+- [ ] 探索与TradingAgents的整合（数据→决策闭环）
+
+---
+
+### 🔖 相关资源
+
+- **GitHub**: https://github.com/browser-use/browser-use
+- **文档**: https://docs.browser-use.com
+- **Cloud**: https://cloud.browser-use.com
+- **对比项目**:
+  - Playwright MCP (Microsoft)
+  - Stagehand (Browserbase)
+  - Skyvern (Vision-based)
+- **相关学习**:
+  - 2026-03-17 TradingAgents（多Agent决策）
+  - 2026-03-20 Microsoft Qlib（数据基础设施）
+
+---
+
+### 📋 技能内化
+
+- **技能文件**: `skills/coding/browser-use-ai-automation.md`
+- **触发条件**: 网页数据采集、自动化测试、AI Agent浏览器控制
+- **核心架构**: Agent + Browser + LLM 三组件模式
+- **关键设计**: Session持久化、结构化输出、Workspace存储
+
+---
+
+*Learning Date: 2026-03-25*
+
+---
+
+*Learning Date: 2026-03-20*
+
+*Learning Date: 2026-03-19*
 
 *Learning Date: 2026-03-18*
 

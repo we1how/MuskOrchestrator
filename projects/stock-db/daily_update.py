@@ -18,6 +18,8 @@ import logging
 from pathlib import Path
 from datetime import datetime, timedelta
 from typing import Optional, List, Dict, Tuple
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from threading import Lock
 import pandas as pd
 import duckdb
 
@@ -52,26 +54,21 @@ class DailyUpdater:
         # 加载更新记录和进度
         self.update_history = self._load_update_history()
         self.progress = self._load_progress()
-        
+
+        # 线程锁（用于并发保存进度）
+        self._progress_lock = Lock()
+
         # 初始化数据源
         self._init_data_sources()
     
     def _init_data_sources(self):
-        """初始化数据源（akshare为主，baostock备用）"""
-        self.ak = None
+        """初始化数据源（仅使用baostock，更稳定可靠）"""
+        self.ak = None  # 不再使用akshare（连接不稳定）
         self.bs = None
         self.ts = None
         self.bs_logged_in = False
 
-        # 1. 尝试 akshare
-        try:
-            import akshare as ak
-            self.ak = ak
-            logger.info("✅ akshare 已加载")
-        except ImportError:
-            logger.warning("⚠️ akshare 未安装")
-
-        # 2. 尝试 baostock（备用）
+        # 只使用 baostock（主数据源，更稳定）
         try:
             import baostock as bs
             self.bs = bs
@@ -83,11 +80,11 @@ class DailyUpdater:
             else:
                 logger.warning(f"⚠️ baostock 登录失败: {lg.error_msg}")
         except ImportError:
-            logger.warning("⚠️ baostock 未安装")
+            logger.warning("⚠️ baostock 未安装，请运行: pip install baostock")
         except Exception as e:
             logger.warning(f"⚠️ baostock 登录异常: {e}")
 
-        # 3. Tushare (可选)
+        # Tushare (可选，作为补充)
         token_path = Path("~/.openclaw/credentials/tushare.json").expanduser()
         if token_path.exists():
             try:
@@ -100,11 +97,11 @@ class DailyUpdater:
                         self.ts = ts.pro_api()
                         logger.info("✅ Tushare 已加载")
             except Exception as e:
-                logger.warning(f"Tushare 加载失败: {e}")
+                logger.debug(f"Tushare 加载失败: {e}")
 
-        # 检查至少有一个数据源可用
-        if self.ak is None and self.bs is None:
-            logger.error("❌ 没有可用的数据源（akshare 或 baostock 至少安装一个）")
+        # 检查baostock是否可用
+        if self.bs is None or not self.bs_logged_in:
+            logger.error("❌ baostock 是必需的数据源，请确保已安装并能正常登录")
             sys.exit(1)
 
     def _ensure_bs_login(self):
@@ -129,6 +126,207 @@ class DailyUpdater:
                 logger.info("✅ baostock 已登出")
             except Exception as e:
                 logger.warning(f"baostock 登出异常: {e}")
+
+    def _fetch_worker_batch(self, codes_batch: List[str], start_date: str, end_date: str) -> Tuple[List[Tuple[str, int]], int]:
+        """
+        工作线程 - 批量获取股票数据
+        批次开始时登录一次，批次结束后登出一次
+
+        Returns:
+            List[Tuple[code, count]]: 每只股票的获取结果
+            int: 批次中的总记录数
+        """
+        results = []
+        batch_records = 0
+
+        try:
+            import baostock as bs
+
+            # 批次开始时登录一次
+            lg = bs.login()
+            if lg.error_code != '0':
+                logger.error(f"批次登录失败: {lg.error_msg}")
+                return [(code, -1) for code in codes_batch], 0
+
+            try:
+                for code in codes_batch:
+                    try:
+                        # 获取数据（使用传入的baostock实例）
+                        df = self._fetch_daily_baostock_with_session(bs, code, start_date, end_date)
+
+                        if df is not None and len(df) > 0:
+                            df['ts_code'] = code
+                            df['trade_date'] = pd.to_datetime(df['trade_date'])
+                            self._save_daily_partition(df, code)
+                            results.append((code, len(df)))
+                            batch_records += len(df)
+                        else:
+                            results.append((code, 0))
+
+                        # 单只延时
+                        time.sleep(0.03)
+
+                    except Exception as e:
+                        logger.debug(f"获取 {code} 失败: {e}")
+                        results.append((code, -1))
+
+            finally:
+                # 批次结束时登出一次
+                bs.logout()
+
+        except Exception as e:
+            logger.error(f"批次处理异常: {e}")
+            # 如果整个批次失败，标记所有股票为失败
+            if not results:
+                results = [(code, -1) for code in codes_batch]
+
+        return results, batch_records
+
+    def _fetch_daily_baostock_with_session(self, bs, code: str, start_date: str, end_date: str) -> Optional[pd.DataFrame]:
+        """使用传入的baostock session获取数据"""
+        try:
+            # 转换代码格式
+            if code.startswith(('6', '688', '689')):
+                bs_code = f"sh.{code}"
+            elif code.startswith(('8', '4')):
+                bs_code = f"bj.{code}"
+            else:
+                bs_code = f"sz.{code}"
+
+            # 转换日期格式
+            start = f"{start_date[:4]}-{start_date[4:6]}-{start_date[6:]}"
+            end = f"{end_date[:4]}-{end_date[4:6]}-{end_date[6:]}"
+
+            rs = bs.query_history_k_data_plus(
+                bs_code,
+                "date,open,high,low,close,preclose,volume,amount,turn,pctChg",
+                start_date=start, end_date=end, frequency="d", adjustflag="2"
+            )
+
+            data_list = []
+            while (rs.error_code == '0') & rs.next():
+                data_list.append(rs.get_row_data())
+
+            if not data_list:
+                return None
+
+            df = pd.DataFrame(data_list, columns=rs.fields)
+            df = df.rename(columns={
+                'date': 'trade_date', 'open': 'open', 'high': 'high', 'low': 'low',
+                'close': 'close', 'preclose': 'pre_close', 'volume': 'vol',
+                'amount': 'amount', 'turn': 'turnover_rate', 'pctChg': 'pct_chg',
+            })
+            for col in ['open', 'high', 'low', 'close', 'pre_close', 'vol', 'amount', 'turnover_rate', 'pct_chg']:
+                df[col] = pd.to_numeric(df[col], errors='coerce')
+            return df
+
+        except Exception as e:
+            logger.debug(f"baostock获取 {code} 失败: {e}")
+        return None
+
+    def update_daily_data_multithread(self, lookback_days: int = 5, max_workers: int = 4, batch_size: int = 100):
+        """
+        多线程版本 - 用于快速填充历史数据
+        每个线程批量处理多只股票，批次内复用baostock连接
+
+        Args:
+            lookback_days: 回溯天数
+            max_workers: 线程数（建议4-8）
+            batch_size: 每批处理的股票数（默认100）
+        """
+        today = datetime.now()
+        start_date = (today - timedelta(days=lookback_days)).strftime("%Y%m%d")
+        end_date = today.strftime("%Y%m%d")
+
+        logger.info(f"📈 [多线程] 更新日线数据 ({start_date} ~ {end_date}), {max_workers}线程, 每批{batch_size}只...")
+
+        # 获取股票列表
+        stock_codes = self._get_stock_list()
+        if not stock_codes:
+            logger.error("❌ 无法获取股票列表")
+            return 0
+
+        total = len(stock_codes)
+
+        # 检查哪些已有数据
+        target_dates = [(today - timedelta(days=i)).strftime("%Y-%m-%d") for i in range(lookback_days + 1)]
+        processed_set = self._get_completed_for_dates(target_dates)
+        valid_processed = processed_set.intersection(set(stock_codes))
+
+        if len(valid_processed) > 0:
+            logger.info(f"🔄 发现已完成 {len(valid_processed)}/{total}, 补充剩余...")
+            stock_codes = [c for c in stock_codes if c not in valid_processed]
+        else:
+            logger.info(f"🆕 共 {total} 只股票")
+
+        # 将股票列表分成批次
+        batches = [stock_codes[i:i+batch_size] for i in range(0, len(stock_codes), batch_size)]
+        logger.info(f"📦 分成 {len(batches)} 个批次，每批最多{batch_size}只")
+
+        # 多线程获取
+        new_records = 0
+        updated_stocks = 0
+        failed_codes = []
+        start_time = time.time()
+        processed_count = 0
+        lock = Lock()
+
+        def process_batch_with_delay(batch, batch_idx):
+            """处理单个批次，批次间添加延时"""
+            # 批次间延时（除第一个批次外）
+            if batch_idx > 0:
+                time.sleep(2)
+            return self._fetch_worker_batch(batch, start_date, end_date)
+
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            # 提交所有批次任务
+            futures = {executor.submit(process_batch_with_delay, batch, i): batch for i, batch in enumerate(batches)}
+
+            for future in as_completed(futures):
+                batch = futures[future]
+                try:
+                    results, _ = future.result()
+
+                    with lock:
+                        for code, count in results:
+                            processed_count += 1
+                            if count > 0:
+                                updated_stocks += 1
+                                new_records += count
+                            elif count == -1:
+                                failed_codes.append(code)
+
+                        # 每100只报告进度
+                        if processed_count % 100 == 0 or processed_count >= len(stock_codes):
+                            elapsed = time.time() - start_time
+                            speed = processed_count / elapsed * 60
+                            remaining = (len(stock_codes) - processed_count) / (processed_count / elapsed) if processed_count > 0 else 0
+                            logger.info(f"进度: {processed_count}/{len(stock_codes)}, "
+                                      f"成功: {updated_stocks}, 记录: {new_records}, "
+                                      f"速度: {speed:.0f}只/分钟, 剩余: {remaining/60:.1f}分钟")
+
+                except Exception as e:
+                    logger.error(f"处理批次时出错: {e}")
+                    # 标记整个批次为失败
+                    with lock:
+                        for code in batch:
+                            failed_codes.append(code)
+                            processed_count += 1
+
+        if failed_codes:
+            logger.warning(f"⚠️ {len(failed_codes)} 只股票更新失败")
+
+        elapsed = time.time() - start_time
+        speed = updated_stocks / (elapsed/60) if elapsed > 0 else 0
+        logger.info(f"✅ [多线程] 完成: {updated_stocks} 只股票, {new_records} 条记录, "
+                   f"耗时 {elapsed/60:.1f} 分钟, 速度: {speed:.0f}只/分钟")
+
+        # 更新历史
+        self.update_history["daily"]["last_date"] = end_date
+        self.update_history["daily"]["record_count"] += new_records
+        self._save_update_history()
+
+        return new_records
     
     def _load_update_history(self) -> Dict:
         """加载更新历史"""
@@ -204,21 +402,13 @@ class DailyUpdater:
         return datetime.now().strftime("%Y-%m-%d")  # 默认返回今天
 
     def update_stock_basic(self):
-        """更新股票基本信息（akshare为主，baostock备用）"""
+        """更新股票基本信息（仅使用baostock，更稳定）"""
         logger.info("📊 更新股票基本信息...")
 
         df = None
 
-        # 尝试 akshare
-        if self.ak is not None:
-            try:
-                df = self.ak.stock_zh_a_spot_em()
-                logger.info("✅ 使用 akshare 获取股票列表")
-            except Exception as e:
-                logger.warning(f"⚠️ akshare 获取失败: {e}，尝试备用源...")
-
-        # 尝试 baostock 备用（使用已登录的session，自动回退到最近交易日）
-        if df is None and self.bs is not None and self.bs_logged_in:
+        # 只使用 baostock（避免akshare连接不稳定问题）
+        if self.bs is not None and self.bs_logged_in:
             try:
                 self._ensure_bs_login()
                 trading_day = self._get_last_trading_day()
@@ -231,10 +421,12 @@ class DailyUpdater:
                 df = df.rename(columns={'code': 'symbol', 'code_name': 'name'})
                 logger.info(f"✅ 使用 baostock 获取股票列表: {len(df)} 只")
             except Exception as e:
-                logger.error(f"❌ baostock 获取也失败: {e}")
-        
+                logger.error(f"❌ baostock 获取失败: {e}")
+        else:
+            logger.error("❌ baostock 未登录，无法获取股票列表")
+
         if df is None:
-            logger.error("❌ 所有数据源均失败")
+            logger.error("❌ 数据源获取失败")
             return 0
         
         try:
@@ -274,9 +466,9 @@ class DailyUpdater:
             logger.error(f"❌ 处理股票基本信息失败: {e}")
             return 0
     
-    def update_daily_data(self, lookback_days: int = 5):
+    def update_daily_data_singlethread(self, lookback_days: int = 5):
         """
-        更新日线数据（支持akshare和baostock双源，支持断点续传）
+        更新日线数据（单线程+低延时，baostock不支持高并发）
 
         Args:
             lookback_days: 回溯天数，用于补全可能缺失的数据
@@ -285,7 +477,7 @@ class DailyUpdater:
         start_date = (today - timedelta(days=lookback_days)).strftime("%Y%m%d")
         end_date = today.strftime("%Y%m%d")
 
-        logger.info(f"📈 更新日线数据 ({start_date} ~ {end_date})...")
+        logger.info(f"📈 更新日线数据 ({start_date} ~ {end_date})，单线程模式...")
 
         # 获取股票列表
         stock_codes = self._get_stock_list()
@@ -295,102 +487,83 @@ class DailyUpdater:
 
         total = len(stock_codes)
 
-        # 检查是否有未完成的进度
-        processed_set = set(self.progress.get("processed_codes", []))
-        failed_codes = list(self.progress.get("failed_codes", []))
+        # 计算需要检查的目标日期（从start_date到end_date的所有交易日）
+        target_dates = []
+        for i in range(lookback_days + 1):
+            d = (today - timedelta(days=i)).strftime("%Y-%m-%d")
+            target_dates.append(d)
 
-        if self.progress.get("in_progress") and len(processed_set) > 0:
-            logger.info(f"🔄 发现未完成的更新，已处理 {len(processed_set)}/{total} 只股票，继续...")
-            # 过滤掉已处理的股票
-            stock_codes = [c for c in stock_codes if c not in processed_set]
+        # 检查这些日期是否已有数据
+        processed_set = self._get_completed_for_dates(target_dates)
+        # 只保留在当前股票列表中的已完成代码（排除已退市/过滤掉的）
+        valid_processed = processed_set.intersection(set(stock_codes))
+        failed_codes = []
+
+        if len(valid_processed) > 0:
+            progress_pct = len(valid_processed) / total * 100
+            logger.info(f"🔄 发现已完成的股票 {len(valid_processed)}/{total} ({progress_pct:.1f}%)，继续补充剩余...")
+            stock_codes = [c for c in stock_codes if c not in valid_processed]
         else:
-            # 新开始，重置进度
-            self.progress = {
-                "in_progress": True,
-                "processed_codes": [],
-                "failed_codes": [],
-                "start_time": datetime.now().isoformat(),
-                "total": total
-            }
-            failed_codes = []
+            logger.info(f"🆕 新任务，共 {total} 只股票")
+
+        # 只使用baostock（单连接复用）
+        if self.bs is None or not self.bs_logged_in:
+            logger.error("❌ baostock未登录")
+            return 0
 
         new_records = 0
         updated_stocks = 0
-        current_processed = []
-        save_interval = 50  # 每50只股票保存一次进度
+        start_time = time.time()
 
         for i, code in enumerate(stock_codes):
             try:
-                # 尝试 akshare
-                df = self._fetch_daily_akshare(code, start_date, end_date)
-
-                # 如果 akshare 失败且 baostock 可用，尝试备用
-                if df is None and self.bs is not None:
-                    df = self._fetch_daily_baostock(code, start_date, end_date)
+                # 获取数据（只使用baostock，单连接复用）
+                df = self._fetch_daily_baostock(code, start_date, end_date)
 
                 if df is not None and len(df) > 0:
                     df['ts_code'] = code
                     df['trade_date'] = pd.to_datetime(df['trade_date'])
-
-                    # 按日期分区保存
                     self._save_daily_partition(df, code)
-
                     new_records += len(df)
                     updated_stocks += 1
 
-                current_processed.append(code)
+                # 低延时（参考efficient_fill.py的0.05秒）
+                time.sleep(0.03)
 
-                self._smart_sleep(0.03)  # 降低延时，提高速度
-
-                # 定期保存进度
-                if (i + 1) % save_interval == 0:
-                    self.progress["processed_codes"].extend(current_processed)
-                    self.progress["failed_codes"] = failed_codes
-                    self._save_progress()
-                    current_processed = []
-                    logger.info(f"进度: {len(processed_set) + i + 1}/{total}，已更新 {updated_stocks} 只股票")
+                # 每100只报告进度
+                if (i + 1) % 100 == 0:
+                    elapsed = time.time() - start_time
+                    speed = (i + 1) / elapsed * 60  # 只/分钟
+                    logger.info(f"进度: {i+1}/{len(stock_codes)}, 成功: {updated_stocks}, 记录: {new_records}, 速度: {speed:.0f}只/分钟")
 
             except Exception as e:
-                logger.error(f"更新 {code} 失败: {e}")
+                logger.error(f"{code} 失败: {e}")
                 failed_codes.append(code)
-                continue
-
-        # 保存最终进度
-        if current_processed:
-            self.progress["processed_codes"].extend(current_processed)
-        self.progress["failed_codes"] = failed_codes
-        self._save_progress()
 
         if failed_codes:
             logger.warning(f"⚠️ {len(failed_codes)} 只股票更新失败")
-        
-        logger.info(f"✅ 日线数据更新完成: {updated_stocks} 只股票, {new_records} 条新记录")
-        
+
+        elapsed = time.time() - start_time
+        logger.info(f"✅ 日线数据更新完成: {updated_stocks} 只股票, {new_records} 条新记录, 耗时 {elapsed/60:.1f} 分钟")
+
         # 更新历史记录
         self.update_history["daily"]["last_date"] = end_date
         self.update_history["daily"]["record_count"] += new_records
         self._save_update_history()
-        
+
         return new_records
     
     def _get_stock_list(self) -> List[str]:
-        """获取股票代码列表（支持多源，仅A股）"""
-        # A股有效代码前缀（主板、科创板、创业板）
+        """获取股票代码列表（仅使用baostock，更稳定）"""
+        # A股有效代码前缀（主板、科创板、创业板、北交所）
         valid_prefixes = ('600', '601', '603', '605', '688', '689',
-                          '000', '001', '002', '003', '300', '301')
+                          '000', '001', '002', '003', '300', '301',
+                          '430', '830', '870', '889')  # 北交所
 
         all_codes = []
 
-        # 尝试 akshare
-        if self.ak is not None:
-            try:
-                stock_df = self.ak.stock_zh_a_spot_em()
-                all_codes = stock_df['代码'].tolist()
-            except Exception as e:
-                logger.warning(f"akshare 获取股票列表失败: {e}")
-
-        # 尝试 baostock（使用已登录的session，自动回退到最近交易日）
-        if not all_codes and self.bs is not None and self.bs_logged_in:
+        # 只使用 baostock（更稳定，避免akshare连接问题）
+        if self.bs is not None and self.bs_logged_in:
             try:
                 self._ensure_bs_login()
                 trading_day = self._get_last_trading_day()
@@ -403,8 +576,11 @@ class DailyUpdater:
                         code = code.split('.')[1]
                     codes.append(code)
                 all_codes = codes
+                logger.info(f"✅ 从baostock获取股票列表: {len(all_codes)} 只")
             except Exception as e:
-                logger.warning(f"baostock 获取股票列表失败: {e}")
+                logger.error(f"❌ baostock 获取股票列表失败: {e}")
+        else:
+            logger.error("❌ baostock 未登录，无法获取股票列表")
 
         # 过滤只保留A股股票（排除ETF、指数等）
         filtered_codes = [
@@ -412,8 +588,9 @@ class DailyUpdater:
             if len(str(c)) == 6 and str(c).isdigit() and str(c).startswith(valid_prefixes)
         ]
 
-        if len(filtered_codes) < len(all_codes):
-            logger.info(f"过滤后股票数量: {len(filtered_codes)}/{len(all_codes)} (排除ETF和指数)")
+        excluded_count = len(all_codes) - len(filtered_codes)
+        if excluded_count > 0:
+            logger.info(f"📊 过滤后股票数量: {len(filtered_codes)}/{len(all_codes)} (排除 {excluded_count} 只ETF/指数/其他)")
 
         return filtered_codes
     
@@ -505,7 +682,117 @@ class DailyUpdater:
             logger.debug(f"baostock 获取 {code} 失败: {e}")
 
         return None
-    
+
+    def _fetch_daily_baostock_threadsafe(self, code: str, start_date: str, end_date: str) -> Optional[pd.DataFrame]:
+        """线程安全版baostock获取（每个线程独立登录）"""
+        try:
+            import baostock as bs
+
+            # 转换代码格式
+            if code.startswith(('6', '688', '689')):
+                bs_code = f"sh.{code}"
+            elif code.startswith(('8', '4')):
+                bs_code = f"bj.{code}"
+            else:
+                bs_code = f"sz.{code}"
+
+            # 转换日期格式
+            start = f"{start_date[:4]}-{start_date[4:6]}-{start_date[6:]}"
+            end = f"{end_date[:4]}-{end_date[4:6]}-{end_date[6:]}"
+
+            # 每个线程独立登录
+            lg = bs.login()
+            if lg.error_code != '0':
+                return None
+
+            try:
+                rs = bs.query_history_k_data_plus(
+                    bs_code,
+                    "date,open,high,low,close,preclose,volume,amount,turn,pctChg",
+                    start_date=start, end_date=end, frequency="d", adjustflag="2"
+                )
+
+                data_list = []
+                while (rs.error_code == '0') & rs.next():
+                    data_list.append(rs.get_row_data())
+
+                if not data_list:
+                    return None
+
+                df = pd.DataFrame(data_list, columns=rs.fields)
+                df = df.rename(columns={
+                    'date': 'trade_date', 'open': 'open', 'high': 'high', 'low': 'low',
+                    'close': 'close', 'preclose': 'pre_close', 'volume': 'vol',
+                    'amount': 'amount', 'turn': 'turnover_rate', 'pctChg': 'pct_chg',
+                })
+                for col in ['open', 'high', 'low', 'close', 'pre_close', 'vol', 'amount', 'turnover_rate', 'pct_chg']:
+                    df[col] = pd.to_numeric(df[col], errors='coerce')
+                return df
+            finally:
+                bs.logout()
+
+        except Exception as e:
+            logger.debug(f"baostock线程安全获取 {code} 失败: {e}")
+        return None
+
+    def _get_completed_for_dates(self, dates: List[str]) -> set:
+        """
+        检查指定日期中最新一天的数据是否已存在
+        对于增量更新，只关心最新日期是否有数据
+
+        Args:
+            dates: 日期列表，格式 ['2025-03-24', '2025-03-25']
+
+        Returns:
+            在最新日期有数据的股票代码集合
+        """
+        completed = set()
+        if not dates:
+            return completed
+
+        try:
+            # 找出最新的日期
+            target_dates = sorted([pd.to_datetime(d).date() for d in dates])
+            latest_date = target_dates[-1]  # 只检查最新日期
+
+            partition_path = self.parquet_path / f"daily/year={latest_date.year}/month={latest_date.month:02d}/data.parquet"
+            if not partition_path.exists():
+                logger.debug(f"分区不存在: {partition_path}")
+                return set()
+
+            df = pd.read_parquet(partition_path)
+            if 'ts_code' not in df.columns or 'trade_date' not in df.columns:
+                return set()
+
+            # 只检查最新日期的数据
+            df['trade_date'] = pd.to_datetime(df['trade_date']).dt.date
+            day_data = df[df['trade_date'] == latest_date]
+            codes = day_data['ts_code'].unique()
+
+            # 统一格式为无后缀
+            for c in codes:
+                c = str(c)
+                if '.' in c:
+                    completed.add(c.split('.')[0])
+                else:
+                    completed.add(c)
+
+            logger.info(f"📊 最新日期 {latest_date} 已有数据: {len(completed)} 只股票")
+
+        except Exception as e:
+            logger.warning(f"读取已完成股票失败: {e}")
+            return set()
+
+        return completed
+
+    def _get_completed_from_parquet(self, lookback_days: int = 7) -> set:
+        """
+        【已废弃】请使用 _get_completed_for_dates()
+        原方法有Bug：会将最近7天有任何数据的股票都标记为已完成
+        """
+        logger.warning("⚠️ _get_completed_from_parquet() 已废弃，请使用 _get_completed_for_dates()")
+        return set()
+
     def _save_daily_partition(self, df: pd.DataFrame, code: str):
         """保存日线数据到分区"""
         # 确保 ts_code 格式统一（带交易所后缀）
@@ -546,40 +833,24 @@ class DailyUpdater:
                 group.to_parquet(parquet_file, index=False, compression='zstd')
     
     def update_fundamentals(self):
-        """更新基本面数据（支持akshare和baostock双源）"""
+        """更新基本面数据（仅使用baostock，更稳定）"""
         logger.info("📊 更新基本面数据...")
-        
+
         df = None
-        
-        # 尝试 akshare
-        if self.ak is not None:
-            try:
-                df = self.ak.stock_zh_a_spot_em()
-                fundamental_cols = ['代码', '名称', '市盈率-动态', '市净率', '总市值', '流通市值']
-                df = df[fundamental_cols]
-                df = df.rename(columns={
-                    '代码': 'ts_code',
-                    '名称': 'name',
-                    '市盈率-动态': 'pe',
-                    '市净率': 'pb',
-                    '总市值': 'total_mv',
-                    '流通市值': 'circ_mv',
-                })
-                logger.info("✅ 使用 akshare 获取基本面数据")
-            except Exception as e:
-                logger.warning(f"⚠️ akshare 获取基本面失败: {e}，尝试备用源...")
-        
-        # 尝试 baostock 备用（使用已登录的session）
-        if df is None and self.bs is not None and self.bs_logged_in:
+
+        # 只使用 baostock（避免akshare连接问题）
+        if self.bs is not None and self.bs_logged_in:
             try:
                 df = self._fetch_fundamentals_baostock()
                 if df is not None:
                     logger.info(f"✅ 使用 baostock 获取基本面数据: {len(df)} 条")
             except Exception as e:
-                logger.error(f"❌ baostock 获取基本面也失败: {e}")
-        
+                logger.error(f"❌ baostock 获取基本面失败: {e}")
+        else:
+            logger.error("❌ baostock 未登录，无法获取基本面数据")
+
         if df is None:
-            logger.error("❌ 所有数据源均失败")
+            logger.error("❌ 数据源获取失败")
             return 0
         
         try:
@@ -766,8 +1037,8 @@ class DailyUpdater:
             # 1. 更新股票基本信息
             stock_count = self.update_stock_basic()
 
-            # 2. 更新日线数据（回溯5天，补全可能缺失的，支持断点续传）
-            new_records = self.update_daily_data(lookback_days=5)
+            # 2. 更新日线数据（单线程+低延时，避免baostock并发限制）
+            new_records = self.update_daily_data_singlethread(lookback_days=10)
 
             # 3. 更新基本面数据
             fundamentals_count = self.update_fundamentals()
@@ -818,15 +1089,40 @@ def main():
     import argparse
     parser = argparse.ArgumentParser(description='A股本地数据库每日更新')
     parser.add_argument('--base-path', default='~/StockData', help='数据存储路径')
+    parser.add_argument('--multithread', '-m', action='store_true', help='使用多线程模式（更快，适合首次填充）')
+    parser.add_argument('--workers', '-w', type=int, default=4, help='多线程工作数（默认4）')
+    parser.add_argument('--fill-missing', type=str, metavar='DATE', help='补充指定日期的缺失数据（格式: YYYY-MM-DD）')
     args = parser.parse_args()
-    
+
     updater = DailyUpdater(base_path=args.base_path)
-    report = updater.run_daily_update()
-    
-    # 输出 JSON 报告（方便自动化脚本解析）
-    print("\n" + "=" * 60)
-    print("更新报告 JSON:")
-    print(json.dumps(report, indent=2, default=str))
+
+    # 补充特定日期数据
+    if args.fill_missing:
+        logger.info(f"🔄 补充模式: 填充 {args.fill_missing} 的缺失数据")
+        # 计算从该日期到今天的天数
+        target = datetime.strptime(args.fill_missing, "%Y-%m-%d")
+        today = datetime.now()
+        days_diff = (today - target).days
+
+        if args.multithread:
+            updater.update_daily_data_multithread(lookback_days=days_diff, max_workers=args.workers)
+        else:
+            updater.update_daily_data_singlethread(lookback_days=days_diff)
+        updater.bs_logout()
+        return
+
+    # 正常每日更新
+    if args.multithread:
+        logger.info(f"🚀 使用多线程模式 ({args.workers} 线程)")
+        updater.update_daily_data_multithread(lookback_days=10, max_workers=args.workers)
+        updater.bs_logout()
+    else:
+        report = updater.run_daily_update()
+
+        # 输出 JSON 报告（方便自动化脚本解析）
+        print("\n" + "=" * 60)
+        print("更新报告 JSON:")
+        print(json.dumps(report, indent=2, default=str))
 
 
 if __name__ == "__main__":
