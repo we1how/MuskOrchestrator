@@ -3,8 +3,8 @@
 > **维护原则**：每次增加、修改、删除文件/文件夹时，必须同步更新本清单
 > **自动更新**：定时任务执行后自动更新
 > **手动更新**：其他变更需用户确认后更新
-> **最后更新**：2026-03-27
-> **版本**：v2.9 (Daily Learning 2026-03-27)
+> **最后更新**：2026-04-12
+> **版本**：v3.2 (Daily Learning 2026-04-12 + Weekend Review W15)
 
 ---
 
@@ -49,11 +49,11 @@
 
 | 路径 | 描述 | 修改时间 |
 |------|------|----------|
-| `memory/agents/engineer/LEARNING.md` | 产品工程师学习记录（每日更新） | 2026-03-27 |
-| `memory/agents/analyst/LEARNING.md` | 量化分析师学习记录（每日更新） | 2026-03-27 |
+| `memory/agents/engineer/LEARNING.md` | 产品工程师学习记录（每日更新） | 2026-04-08 |
+| `memory/agents/analyst/LEARNING.md` | 量化分析师学习记录（每日更新） | 2026-04-08 |
 | `memory/agents/planner/LEARNING.md` | 规划专家学习记录（每日更新） | 2026-03-25 |
-| `memory/agents/mentor/LEARNING.md` | 成长导师学习记录（每日更新） | 2026-03-27 |
-| `memory/agents/creator/LEARNING.md` | 内容创作者学习记录（每日更新） | 2026-03-27 |
+| `memory/agents/mentor/LEARNING.md` | 成长导师学习记录（每日更新） | 2026-04-08 |
+| `memory/agents/creator/LEARNING.md` | 内容创作者学习记录（每日更新） | 2026-04-08 |
 | `memory/agents/reviewer/LEARNING.md` | 审查员学习记录（每日更新） | 2026-03-25 |
 | `memory/agents/planner/DAILY_FEED.md` | 规划专家每日信息流（聚合） | 2026-03-16 |
 | `memory/agents/engineer/DAILY_FEED.md` | 产品工程师每日信息流（聚合） | 2026-03-16 |
@@ -177,6 +177,27 @@
 | `skills/coding/mastra-observational-memory.md` | Mastra观测记忆系统技能 | 2026-03-27 |
 | `skills/planning/hype-cycle-investment-framework.md` | 炒作周期投资框架技能 | 2026-03-27 |
 | `skills/growth/solo-founder-competitive-strategy.md` | 单人创始人竞争策略技能 | 2026-03-27 |
+| `skills/analysis/robust-dynamic-hedge.md` | 鲁棒动态对冲策略技能（arXiv:2604.02126） | 2026-04-05 |
+| `skills/coding/daytona-sandbox-integration.md` | Daytona AI沙箱集成技能 | 2026-04-05 |
+| `skills/growth/project-first-mindset.md` | 项目先行思维技能（Paul Graham） | 2026-04-05 |
+| `skills/communication/building-in-public-launch-strategy.md` | Building in Public发布策略技能 | 2026-04-05 |
+| `skills/agentic-portfolio/self-driving-portfolio.md` | Self-Driving Portfolio机构级多Agent资产管理技能 | 2026-04-08 |
+| `skills/coding/hermes-adaptive-agent-framework.md` | Hermes Agent自适应学习Agent框架技能 | 2026-04-08 |
+| `skills/planning/slack-management-framework.md` | 松弛度管理框架技能（Farnam Street） | 2026-04-08 |
+| `skills/growth/zero-code-presale-validation.md` | 零代码预售验证技能（Indie Hackers） | 2026-04-08 |
+| `memory/reports/weekly/2026-04-12-weekend-review.md` | W15周末总结报告（4 Agent学习+知识融合） | 2026-04-12 |
+
+---
+
+## 📋 变更日志（近期）
+
+| 日期 | 类型 | 文件路径 | 操作 | 触发源 |
+|------|------|----------|------|--------|
+| 2026-04-12 | 学习记录 | memory/agents/engineer/LEARNING.md | 追加 | Daily-Learning |
+| 2026-04-12 | 学习记录 | memory/agents/analyst/LEARNING.md | 追加 | Daily-Learning |
+| 2026-04-12 | 学习记录 | memory/agents/creator/LEARNING.md | 追加 | Daily-Learning |
+| 2026-04-12 | 学习记录 | memory/agents/mentor/LEARNING.md | 追加 | Daily-Learning |
+| 2026-04-12 | 报告 | memory/reports/weekly/2026-04-12-weekend-review.md | 新增 | Weekend-Review |
 
 ---
 
@@ -236,7 +257,7 @@
 | 脚本工具 | 10 |
 | 信息源模块 | 6 |
 | 知识文档 | 40+ |
-| 已学习技能 | 54 (4个新增于2026-03-27：回测实现风险 + Mastra观测记忆 + 炒作周期投资 + 单人创始人竞争策略) |
+| 已学习技能 | 60 (4个新增于2026-04-08：Self-Driving Portfolio + Hermes Agent + 松弛度管理框架 + 零代码预售验证) |
 
 ---
 
@@ -290,6 +311,14 @@
 | 2026-03-27 | **Daily Learning** | Mastra观测记忆系统 - 4-10倍成本削减（LongMemEval SOTA） | engineer/LEARNING.md更新 + 技能文件创建 |
 | 2026-03-27 | **Daily Learning** | AI Hype Index炒作周期投资框架 + 冷冻大脑复苏突破 | mentor/LEARNING.md更新 + 技能文件创建 |
 | 2026-03-27 | **Daily Learning** | ReviseFlow单人创始人低价竞争策略（技术护城河+速度优势） | creator/LEARNING.md更新 + 技能文件创建 |
+| 2026-04-05 | **Daily Learning (Weekend)** | 鲁棒动态对冲 - HAR-RV+Box不确定性优化（arXiv:2604.02126） | analyst/LEARNING.md更新 + 技能文件创建 |
+| 2026-04-05 | **Daily Learning (Weekend)** | Daytona AI沙箱 - 90ms冷启动+Stateful持久化（GitHub Trending） | engineer/LEARNING.md更新 + 技能文件创建 |
+| 2026-04-05 | **Daily Learning (Weekend)** | 项目先行思维 - Paul Graham"如何创办Google" | mentor/LEARNING.md更新 + 技能文件创建 |
+| 2026-04-05 | **Daily Learning (Weekend)** | Building in Public - PostClaw $300 MRR 7天案例（Indie Hackers） | creator/LEARNING.md更新 + 技能文件创建 |
+| 2026-04-08 | **Daily Learning** | Self-Driving Portfolio - BlackRock前CIO的50+Agent资产管理架构 | analyst/LEARNING.md更新 + 技能文件创建 |
+| 2026-04-08 | **Daily Learning** | Hermes Agent - NousResearch自适应学习Agent框架 | engineer/LEARNING.md更新 + 技能文件创建 |
+| 2026-04-08 | **Daily Learning** | 松弛度管理 - Efficiency is the Enemy（Farnam Street） | mentor/LEARNING.md更新 + 技能文件创建 |
+| 2026-04-08 | **Daily Learning** | 零代码预售验证 - Vismore $8,400案例（Indie Hackers） | creator/LEARNING.md更新 + 技能文件创建 |
 
 ---
 
