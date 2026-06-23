@@ -1,0 +1,6 @@
+# brain 每日成长简报引擎依赖（GitHub Actions 云端 + 本地通用）
+openai>=1.40
+feedparser>=6.0
+PyYAML>=6.0
+# 本地从桌面 xlsx 读 key 时需要；云端用 GitHub Secrets，可不装
+openpyxl>=3.1
