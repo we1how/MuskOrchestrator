@@ -34,7 +34,7 @@ RAW = BRAIN / "wiki" / "raw"
 def _recent_lines(path: Path, days: int = 7) -> list[str]:
     if not path.exists():
         return []
-    cutoff = date.today() - timedelta(days=days)
+    cutoff = state.cst_today() - timedelta(days=days)
     out = []
     for line in path.read_text(encoding="utf-8", errors="ignore").splitlines():
         for tok in line.split():
@@ -109,7 +109,7 @@ def build():
     g = _gather()
     review = _review(g)
     draft = _content_draft(g)
-    today = date.today().isoformat()
+    today = state.cst_today_str()
     text = (
         f"MuskOrchestrator · 周日复盘 — {today}\n{'='*60}\n"
         f"本月唯一主线：{g['goals'].get('本月唯一主线','—')}\n{'='*60}\n\n"
@@ -140,9 +140,9 @@ def main():
         print(text)
         return
     try:
-        email_send.send(f"[第二大脑] 周日复盘 + 内容草稿 · {date.today().isoformat()}", text, htmlbody)
+        email_send.send(f"[第二大脑] 周日复盘 + 内容草稿 · {state.cst_today_str()}", text, htmlbody)
         with LOG.open("a", encoding="utf-8") as f:
-            f.write(f"- {date.today().isoformat()} · 周日复盘已发送 · 引擎 {active_provider()}\n")
+            f.write(f"- {state.cst_today_str()} · 周日复盘已发送 · 引擎 {active_provider()}\n")
         print("✓ 周日复盘已发送")
     except Exception as e:  # noqa: BLE001
         print(f"发送失败：{type(e).__name__}: {e}\n\n{text}")

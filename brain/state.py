@@ -9,12 +9,24 @@ from __future__ import annotations
 
 import json
 import random
-from datetime import date
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 BRAIN = Path(__file__).resolve().parent
 WIKI = BRAIN / "wiki"
 STATE_FILE = BRAIN / "output" / ".send_state.json"
+
+# 老板在 CST(GMT+8)。云端 runner 是 UTC，统一用北京时间算"今天"，
+# 否则早 7 点(=前一天 23:00 UTC)发的邮件日期会差一天，去重也会跨 UTC 日错乱。
+_CST = timezone(timedelta(hours=8))
+
+
+def cst_today() -> date:
+    return datetime.now(_CST).date()
+
+
+def cst_today_str() -> str:
+    return cst_today().isoformat()
 
 
 def load_goals() -> dict:
@@ -38,7 +50,7 @@ def resurface_note(seed: str | None = None) -> dict | None:
     notes = _all_notes()
     if not notes:
         return None
-    rng = random.Random(seed or date.today().isoformat())
+    rng = random.Random(seed or cst_today_str())
     note = rng.choice(notes)
     text = note.read_text(encoding="utf-8", errors="ignore").strip()
     lines = [l.strip() for l in text.splitlines() if l.strip()]
@@ -56,14 +68,14 @@ def already_sent_today() -> bool:
     if not STATE_FILE.exists():
         return False
     try:
-        return json.loads(STATE_FILE.read_text()).get("last_sent") == date.today().isoformat()
+        return json.loads(STATE_FILE.read_text()).get("last_sent") == cst_today_str()
     except Exception:  # noqa: BLE001
         return False
 
 
 def mark_sent_today() -> None:
     STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
-    STATE_FILE.write_text(json.dumps({"last_sent": date.today().isoformat()}))
+    STATE_FILE.write_text(json.dumps({"last_sent": cst_today_str()}))
 
 
 if __name__ == "__main__":
