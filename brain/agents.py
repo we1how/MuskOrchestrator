@@ -6,6 +6,7 @@ brain/agents.py — 4 个偏执教练，各从当天原料里逼出 1 条可执�
 """
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
 
@@ -57,13 +58,29 @@ COACHES: dict[str, dict] = {
 }
 
 INSTRUCTION = (
-    "下面是今天从高质量信息源抓到的素材。挑其中信噪比最高的 1 条深挖，"
+    "下面是今天从高质量信息源抓到的素材（每条有编号）。挑其中信噪比最高的 1 条深挖，"
     "严格用这个格式输出（每行一句，不要多余解释）：\n"
+    "来源序号：<你引用的那条素材的编号，只填数字>\n"
     "发现：<一句话，最高价值的那个点>\n"
     "为什么重要：<一句话，第一性原理的理由>\n"
     "今天就做：<一个具体、可在 30 分钟内开始的动作>\n\n"
     "素材：\n{brief}"
 )
+
+_NUM = re.compile(r"来源序号[:：]\s*(\d+)")
+
+
+def _parse(text: str, items: list[dict]) -> dict:
+    """抽出『来源序号』对应的原文链接，并把这行从正文去掉。"""
+    link, src_name = "", ""
+    m = _NUM.search(text)
+    if m:
+        idx = int(m.group(1)) - 1
+        if 0 <= idx < len(items):
+            link = items[idx].get("link", "")
+            src_name = items[idx].get("source", "")
+    text = _NUM.sub("", text).strip()
+    return {"text": text, "link": link, "source_name": src_name}
 
 
 def run_coach(agent: str) -> dict:
@@ -72,12 +89,15 @@ def run_coach(agent: str) -> dict:
     brief = sources.as_brief(items)
     used = sorted({it["source"] for it in items})
     try:
-        text = chat(cfg["system"], INSTRUCTION.format(brief=brief),
-                    temperature=0.8, max_tokens=500)
+        raw = chat(cfg["system"], INSTRUCTION.format(brief=brief),
+                   temperature=0.8, max_tokens=500)
+        parsed = _parse(raw, items)
     except Exception as e:  # noqa: BLE001
-        text = f"（{cfg['name']} 今日合成失败：{type(e).__name__}）"
+        parsed = {"text": f"（{cfg['name']} 今日合成失败：{type(e).__name__}）",
+                  "link": "", "source_name": ""}
     return {"agent": agent, "emoji": cfg["emoji"], "name": cfg["name"],
-            "text": text.strip(), "sources": used}
+            "text": parsed["text"], "link": parsed["link"],
+            "source_name": parsed["source_name"], "sources": used}
 
 
 def run_all() -> list[dict]:

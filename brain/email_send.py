@@ -9,6 +9,7 @@ from __future__ import annotations
 import os
 import smtplib
 import sys
+from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
 
@@ -21,7 +22,7 @@ def configured() -> bool:
     return bool(os.environ.get("SMTP_USER") and os.environ.get("SMTP_PASSWORD"))
 
 
-def send(subject: str, body: str) -> None:
+def send(subject: str, text_body: str, html_body: str | None = None) -> None:
     llm._load_env()
     host = os.environ.get("SMTP_HOST", "smtp.gmail.com")
     port = int(os.environ.get("SMTP_PORT", "587"))
@@ -29,7 +30,12 @@ def send(subject: str, body: str) -> None:
     password = os.environ["SMTP_PASSWORD"]
     recipients = [e.strip() for e in os.environ.get("NOTIFY_EMAIL", user).split(",")]
 
-    msg = MIMEText(body, "plain", "utf-8")
+    if html_body:
+        msg = MIMEMultipart("alternative")
+        msg.attach(MIMEText(text_body, "plain", "utf-8"))
+        msg.attach(MIMEText(html_body, "html", "utf-8"))  # 后者优先显示
+    else:
+        msg = MIMEText(text_body, "plain", "utf-8")
     msg["Subject"] = subject
     msg["From"] = user
     msg["To"] = ", ".join(recipients)
