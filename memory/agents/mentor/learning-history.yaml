@@ -2,7 +2,7 @@
 # 用于去重检查，确保每日学习新内容
 
 agent: mentor
-last_updated: "2026-03-18T08:00:00Z"
+last_updated: "2026-03-25T08:00:00Z"
 version: "1.0"
 
 ---
@@ -82,6 +82,46 @@ sources:
         status: "completed"
         notes: "与三层思维宫殿第一层高度关联的核心方法论"
 
+      - url: "https://fs.blog/second-order-thinking/"
+        title: "Second-Order Thinking"
+        date: "2026-03-19"
+        concepts: ["二阶思维", "然后呢", "医源性伤害", "后果分析", "Howard Marks"]
+        fingerprint: "second|order|thinking|consequences|then|what|iatrogenics|marks"
+        status: "completed"
+        notes: "与三层思维宫殿第二层高度关联的核心方法论"
+
+      - url: "https://fs.blog/inversion/"
+        title: "Inversion"
+        date: "2026-03-20"
+        concepts: ["逆向思维", "inversion", "避免愚蠢", "Charlie Munger", "Jacobi"]
+        fingerprint: "invert|avoid|stupidity|munger|jacobi|backward|failure|prevent"
+        status: "completed"
+        notes: "与三层思维宫殿第三层高度关联的核心方法论——避免失败比追求成功更可靠"
+
+      - url: "https://fs.blog/probabilistic-thinking/"
+        title: "The Value of Probabilistic Thinking"
+        date: "2026-03-21"
+        concepts: ["概率思维", "Probabilistic Thinking", "贝叶斯思维", "Bayesian", "肥尾曲线", "Fat-Tailed", "元概率", "Metaprobability"]
+        fingerprint: "probabilistic|thinking|bayesian|fat|tailed|curves|asymmetries|metaprobability|base|rates"
+        status: "completed"
+        notes: "量化投资的核心基础思维模型，与三层思维宫殿均可结合使用"
+
+      - url: "internal://three-layer-mind-palace/integration"
+        title: "三层思维宫殿系统化梳理与思维模型整合"
+        date: "2026-03-23"
+        concepts: ["三层思维宫殿", "思维模型整合", "First Principles", "Second-Order Thinking", "Inversion", "OODA Loop", "认知操作系统"]
+        fingerprint: "three|layer|mind|palace|integration|first|principles|second|order|inversion|ooda|decision|framework"
+        status: "completed"
+        notes: "将Farnam Street思维模型与三层思维宫殿整合，构建完整的认知操作系统"
+
+      - url: "https://fs.blog/why-write/"
+        title: "The Surprising Reason Writing Remains Essential in an AI-Driven World"
+        date: "2026-03-25"
+        concepts: ["写作即思考", "AI时代写作", "认知澄清", "深度流利", "压缩能力", "读者导向", "费曼技巧"]
+        fingerprint: "writing|thinking|ai|clarity|compression|reader|feynman|essential|process"
+        status: "completed"
+        notes: "AI时代写作价值不在于输出而在于思考过程；清晰思考将更稀缺更有价值"
+
     # 已学习但可能值得重复学习的概念（间隔重复）
     repeat_eligible:
       - concept: "冲浪模型"
@@ -98,7 +138,14 @@ sources:
     name: "LessWrong"
     base_url: "https://lesswrong.com"
     description: "理性思维、AI安全、认知科学"
-    learned_articles: []
+    learned_articles:
+      - url: "https://www.lesswrong.com/posts/Y8c4kh6fjkWu7Auxp/monthly-roundup-40-march-2026"
+        title: "Monthly Roundup #40: March 2026"
+        date: "2026-03-26"
+        concepts: ["直接行动", "You Can Just Do Things", "行动哲学", "低成本实验"]
+        fingerprint: "action|bias|experiment|information|just|do|things|zvi|lesswrong"
+        status: "completed"
+        notes: "Zvi对Nate Silver的反驳：你不是在邀请泰森打你——很多事情可以直接做"
 
   atomic_habits:
     name: "《原子习惯》"
@@ -142,6 +189,33 @@ learned_concepts:
     "第一性原理": "2026-03-18"
     "苏格拉底提问": "2026-03-18"
     "五个为什么": "2026-03-18"
+    "二阶思维": "2026-03-19"
+    "后果分析": "2026-03-19"
+    "医源性伤害": "2026-03-19"
+    "逆向思维": "2026-03-20"
+    "避免愚蠢": "2026-03-20"
+    "inversion": "2026-03-20"
+    "概率思维": "2026-03-21"
+    "Probabilistic Thinking": "2026-03-21"
+    "贝叶斯思维": "2026-03-21"
+    "Bayesian": "2026-03-21"
+    "肥尾曲线": "2026-03-21"
+    "Fat-Tailed": "2026-03-21"
+    "元概率": "2026-03-21"
+    "Metaprobability": "2026-03-21"
+    "三层思维宫殿": "2026-03-23"
+    "思维模型整合": "2026-03-23"
+    "认知操作系统": "2026-03-23"
+    "写作即思考": "2026-03-25"
+    "AI时代写作": "2026-03-25"
+    "认知澄清": "2026-03-25"
+    "深度流利": "2026-03-25"
+    "压缩能力": "2026-03-25"
+    "读者导向": "2026-03-25"
+    "直接行动": "2026-03-26"
+    "You Can Just Do Things": "2026-03-26"
+    "行动哲学": "2026-03-26"
+    "低成本实验": "2026-03-26"
 
   # 已过期，可以重新学习或深化
   expired:
@@ -172,13 +246,13 @@ backup_sources:
 
 ## 统计数据
 
-total_learned: 10
-unique_sources: 3
+total_learned: 16
+unique_sources: 5  # Farnam Street, Atomic Habits, Local Knowledge, LessWrong, MIT Tech Review
 repeated_attempts: 1  # 2026-03-17 重复学习 Ride the Wave
-duplicate_rate: "11%"  # 1/9
+duplicate_rate: "6.3%"  # 1/16
 
-last_learning_date: "2026-03-18"
-consecutive_days: 11
+last_learning_date: "2026-03-26"
+consecutive_days: 19
 
 ---
 

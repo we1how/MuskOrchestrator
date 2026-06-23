@@ -2,7 +2,7 @@
 # 量化分析、金融市场、数据科学
 
 agent: analyst
-last_updated: "2026-03-17T10:00:00Z"
+last_updated: "2026-03-27T10:00:00Z"
 version: "1.0"
 
 ---
@@ -12,11 +12,29 @@ sources:
     name: "ArXiv Quantitative Finance"
     base_url: "https://arxiv.org/list/q-fin/recent"
     learned_articles:
-      - url: "https://arxiv.org/abs/2501.12345"
-        title: "示例论文"
-        date: "2026-03-17"
-        concepts: ["量化策略", "机器学习"]
-        fingerprint: "arxiv|example|paper"
+      - url: "https://arxiv.org/abs/2603.14288"
+        title: "Beyond Prompting: An Autonomous Framework for Systematic Factor Investing via Agentic AI"
+        date: "2026-03-21"
+        concepts: ["Agentic AI", "因子投资", "自主系统", "样本外验证", "经济理论约束"]
+        fingerprint: "arxiv|2603.14288|agentic|ai|factor|investing|autonomous"
+        status: "completed"
+      - url: "https://arxiv.org/abs/2603.17692"
+        title: "Can Blindfolded LLMs Still Trade? An Anonymization-First Framework for Portfolio Optimization"
+        date: "2026-03-20"
+        concepts: ["匿名化交易", "记忆偏差消除", "多Agent GNN", "PPO强化学习"]
+        fingerprint: "arxiv|2603.17692|blindfolded|llm|trade|anonymization|gnn"
+        status: "completed"
+      - url: "https://arxiv.org/abs/2603.20965"
+        title: "Learning to Aggregate Zero-Shot LLM Agents for Corporate Disclosure Classification"
+        date: "2026-03-26"
+        concepts: ["多Agent聚合", "元分类器", "披露分类", "零样本学习", "信号融合"]
+        fingerprint: "arxiv|2603.20965|aggregate|zero|shot|llm|agent|disclosure"
+        status: "completed"
+      - url: "https://arxiv.org/abs/2603.20319"
+        title: "Implementation Risk in Portfolio Backtesting: A Previously Unquantified Source of Error"
+        date: "2026-03-27"
+        concepts: ["实现风险", "回测验证", "引擎差异", "度量学", "交易成本"]
+        fingerprint: "arxiv|2603.20319|implementation|risk|backtesting|engine|metrology"
         status: "completed"
 
   github_trending:
@@ -37,6 +55,13 @@ sources:
         fingerprint: "deep|research|agent|prediction|tool|augmented"
         stars: "新兴项目"
         status: "completed"
+      - url: "https://github.com/microsoft/qlib"
+        name: "Microsoft Qlib"
+        date: "2026-03-19"
+        concepts: ["AI量化平台", "A股数据支持", "RD-Agent", "强化学习", "自动因子挖掘"]
+        fingerprint: "microsoft|qlib|ai|quant|platform|rd-agent|auto|factor"
+        stars: "39000+"
+        status: "completed"
 
 ---
 
@@ -49,12 +74,40 @@ learned_concepts:
     "MiroThinker": "2026-03-18"
     "深度研究Agent": "2026-03-18"
     "交互式扩展": "2026-03-18"
+    "Microsoft Qlib": "2026-03-19"
+    "AI量化平台": "2026-03-19"
+    "RD-Agent": "2026-03-19"
+    "自动因子挖掘": "2026-03-19"
+    "Agentic AI因子投资": "2026-03-21"
+    "自进化AI": "2026-03-21"
+    "样本外验证": "2026-03-21"
+    "经济理论约束": "2026-03-21"
+    "闭环验证系统": "2026-03-21"
+    "MASS": "2026-03-25"
+    "多Agent模拟": "2026-03-25"
+    "规模效应": "2026-03-25"
+    "逆向优化": "2026-03-25"
+    "端到端组合构建": "2026-03-25"
+    "多Agent聚合": "2026-03-26"
+    "元分类器": "2026-03-26"
+    "零样本学习": "2026-03-26"
+    "实现风险": "2026-03-27"
+    "回测验证": "2026-03-27"
+    "引擎差异": "2026-03-27"
+    "度量学": "2026-03-27"
 
   expired: []
 
 ---
 
-total_learned: 2
+      - url: "https://arxiv.org/abs/2505.10278"
+        title: "MASS: Multi-Agent Simulation Scaling for Portfolio Construction"
+        date: "2026-03-25"
+        concepts: ["多Agent模拟", "规模效应", "逆向优化", "端到端组合构建", "A股验证"]
+        fingerprint: "arxiv|2505.10278|mass|multi|agent|simulation|scaling|portfolio"
+        status: "completed"
+
+total_learned: 8
 unique_sources: 2
 repeated_attempts: 0
-last_learning_date: "2026-03-18"
+last_learning_date: "2026-03-27"

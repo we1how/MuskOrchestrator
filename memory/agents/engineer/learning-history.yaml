@@ -2,7 +2,7 @@
 # 技术实现、编程、系统设计
 
 agent: engineer
-last_updated: "2026-03-17T10:00:00Z"
+last_updated: "2026-03-27T10:00:00Z"
 version: "1.0"
 
 ---
@@ -24,6 +24,54 @@ sources:
         concepts: ["知识图谱", "Graph RAG", "MCP Tools", "零服务器架构", "Tree-sitter"]
         fingerprint: "knowledge|graph|rag|mcp|client-side|wasm"
         status: "completed"
+      - url: "https://github.com/shareAI-lab/learn-claude-code"
+        name: "learn-claude-code"
+        date: "2026-03-19"
+        concepts: ["Agent Harness", "从零构建Agent", "Worktree隔离", "技能按需加载", "12阶段架构"]
+        fingerprint: "agent|harness|worktree|skill|tutorial|claude-code"
+        status: "completed"
+      - url: "https://github.com/microsoft/qlib"
+        name: "Microsoft Qlib"
+        date: "2026-03-20"
+        concepts: ["AI量化平台", "三层架构", "RD-Agent", "自动因子挖掘", "A股数据支持"]
+        fingerprint: "quant|qlib|microsoft|ai|factor|rd-agent"
+        status: "completed"
+      - url: "https://github.com/langchain-ai/open-swe"
+        name: "Open SWE"
+        date: "2026-03-20"
+        concepts: ["异步编码Agent", "子Agent架构", "中间件模式", "精选工具哲学", "多平台触发"]
+        fingerprint: "agent|async|swe|langchain|subagent|middleware"
+        status: "completed"
+      - url: "https://github.com/anomalyco/opencode"
+        name: "OpenCode"
+        date: "2026-03-21"
+        concepts: ["多模型AI编码Agent", "LSP自动加载", "隐私优先架构", "多会话并行", "Zen模型筛选"]
+        fingerprint: "agent|coding|multi-model|lsp|privacy|opencode"
+        status: "completed"
+      - url: "https://arxiv.org/abs/2603.14288"
+        name: "Agentic AI Factor Investing"
+        date: "2026-03-23"
+        concepts: ["Agentic AI因子投资", "闭环验证框架", "经济理论约束", "自进化因子库", "样本外验证"]
+        fingerprint: "agentic|factor|investing|validation|out-of-sample|self-evolving"
+        status: "completed"
+      - url: "https://github.com/browser-use/browser-use"
+        name: "Browser Use"
+        date: "2026-03-25"
+        concepts: ["AI浏览器自动化", "结构化输出", "Session持久化", "Workspace存储", "多LLM支持"]
+        fingerprint: "browser|automation|agent|ai|structured-output|session|playwright"
+        status: "completed"
+      - url: "https://github.com/VoltAgent/voltagent"
+        name: "VoltAgent"
+        date: "2026-03-26"
+        concepts: ["TypeScript Agent框架", "端到端工程平台", "VoltOps可观测性", "声明式工作流", "Supervisor多Agent编排"]
+        fingerprint: "voltagent|typescript|agent|platform|observability|workflow|supervisor"
+        status: "completed"
+      - url: "https://github.com/mastra-ai/mastra"
+        name: "Mastra Observational Memory"
+        date: "2026-03-27"
+        concepts: ["观测记忆系统", "双Agent压缩", "Prompt缓存优化", "4-10x成本削减", "LongMemEval SOTA"]
+        fingerprint: "mastra|observational-memory|compression|cost-reduction|typescript|agent-memory"
+        status: "completed"
 
   hackernews:
     name: "Hacker News"
@@ -42,12 +90,40 @@ learned_concepts:
     "KnowledgeGraph": "2026-03-18"
     "GraphRAG": "2026-03-18"
     "MCPTools": "2026-03-18"
+    "learn-claude-code": "2026-03-19"
+    "AgentHarness": "2026-03-19"
+    "WorktreeIsolation": "2026-03-19"
+    "MicrosoftQlib": "2026-03-20"
+    "RD-Agent": "2026-03-20"
+    "OpenSWE": "2026-03-20"
+    "AsyncAgent": "2026-03-20"
+    "SubagentMiddleware": "2026-03-20"
+    "OpenCode": "2026-03-21"
+    "MultiModelAgent": "2026-03-21"
+    "LSPIntegration": "2026-03-21"
+    "PrivacyFirstAgent": "2026-03-21"
+    "AgenticFactorInvesting": "2026-03-23"
+    "ClosedLoopValidation": "2026-03-23"
+    "EconomicRationale": "2026-03-23"
+    "SelfEvolvingFactors": "2026-03-23"
+    "BrowserUse": "2026-03-25"
+    "AIBrowserAutomation": "2026-03-25"
+    "StructuredOutput": "2026-03-25"
+    "SessionPersistence": "2026-03-25"
+    "VoltAgent": "2026-03-26"
+    "TypeScriptAgentPlatform": "2026-03-26"
+    "VoltOps": "2026-03-26"
+    "DeclarativeWorkflow": "2026-03-26"
+    "Mastra": "2026-03-27"
+    "ObservationalMemory": "2026-03-27"
+    "DualAgentCompression": "2026-03-27"
+    "PromptCaching": "2026-03-27"
 
   expired: []
 
 ---
 
-total_learned: 2
-unique_sources: 2
+total_learned: 10
+unique_sources: 10
 repeated_attempts: 0
-last_learning_date: "2026-03-18"
+last_learning_date: "2026-03-27"

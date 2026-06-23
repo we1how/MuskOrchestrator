@@ -1,0 +1,93 @@
+# Planner Agent 学习历史记录
+# 复杂任务规划、架构设计、风险评估
+
+agent: planner
+last_updated: "2026-03-25T08:00:00Z"
+version: "1.0"
+
+---
+
+sources:
+  web_research:
+    name: "Web Research"
+    base_url: "https://techment.com"
+    learned_projects:
+      - url: "https://www.techment.com/blogs/agentic-ai-orchestration-scalable-ai-2026/"
+        name: "Agentic AI Orchestration 7 Pillars"
+        date: "2026-03-25"
+        concepts: ["AI Agent编排", "7大战略支柱", "协调模式", "记忆层架构", "可观测性", "成本优化"]
+        fingerprint: "agentic|orchestration|multi-agent|coordination|memory|observability"
+        status: "completed"
+
+      - url: "https://is4.ai/blog/our-blog-1/top-12-multi-agent-ai-frameworks-2026-335"
+        name: "Top 12 Multi-Agent Frameworks 2026"
+        date: "2026-03-25"
+        concepts: ["LangGraph", "CrewAI", "AutoGen", "Google ADK", "框架对比", "生产就绪度"]
+        fingerprint: "langgraph|crewai|autogen|adk|framework|comparison"
+        status: "completed"
+
+  farnam_street:
+    name: "Farnam Street"
+    base_url: "https://fs.blog"
+    learned_articles:
+      - url: "https://fs.blog/ooda-loop/"
+        name: "OODA Loop"
+        date: "2026-03-14"
+        concepts: ["快速决策", "OODA循环", "观察-判断-决策-行动"]
+        fingerprint: "ooda|decision|speed|boyd"
+        status: "completed"
+
+      - url: "https://fs.blog/chestertons-fence/"
+        name: "Chesterton's Fence"
+        date: "2026-03-14"
+        concepts: ["谨慎改变", "理解现状", "Pause-Inquire-Evaluate-Decide"]
+        fingerprint: "chesterton|fence|change|understand"
+        status: "completed"
+
+      - url: "https://fs.blog/winners-edge/"
+        name: "Calculated Confidence"
+        date: "2026-03-14"
+        concepts: ["赢家的自信", "风险不对称性", "安全边际"]
+        fingerprint: "confidence|risk|asymmetry|margin"
+        status: "completed"
+
+  ecc_skill:
+    name: "ECC Skills"
+    base_url: "internal"
+    learned_projects:
+      - url: "skills/everything-claude-code/.agents/skills/strategic-compact/SKILL.md"
+        name: "Strategic Compact"
+        date: "2026-03-16"
+        concepts: ["战略压缩", "上下文管理", "阶段门控", "信息分层"]
+        fingerprint: "compact|context|stage-gate|compression"
+        status: "completed"
+
+---
+
+concept_window_days: 30
+
+learned_concepts:
+  active:
+    "AgenticOrchestration": "2026-03-25"
+    "SevenPillars": "2026-03-25"
+    "HierarchicalCoordination": "2026-03-25"
+    "CollaborativeCoordination": "2026-03-25"
+    "DynamicSwarm": "2026-03-25"
+    "MemoryLayerArchitecture": "2026-03-25"
+    "InferenceTimeScaling": "2026-03-25"
+    "MCProtocol": "2026-03-25"
+    "AgentObservability": "2026-03-25"
+    "CostOptimization": "2026-03-25"
+    "OODA": "2026-03-14"
+    "ChestertonsFence": "2026-03-14"
+    "CalculatedConfidence": "2026-03-14"
+    "StrategicCompact": "2026-03-16"
+
+  expired: []
+
+---
+
+total_learned: 5
+unique_sources: 4
+repeated_attempts: 0
+last_learning_date: "2026-03-25"

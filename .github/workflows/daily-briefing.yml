@@ -1,0 +1,61 @@
+name: daily-briefing
+
+# 每天 07:00 北京时间（= UTC 23:00 前一天）发一封"每日成长简报"。
+# 全程无人值守，跑在 GitHub 云端，不依赖 Mac 是否醒着（对标 stock_platform 的云端范式）。
+#
+# 低活跃仓库 GitHub cron 会被静默跳过 → 本 workflow 每次跑完都 commit wiki/log 回仓，
+# 天然保持仓库活跃，让 cron 可靠触发。
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 23 * * *"   # 07:00 CST
+
+permissions:
+  contents: write          # 需要 commit wiki/log + 简报存档回仓
+
+concurrency:
+  group: daily-briefing
+  cancel-in-progress: false
+
+jobs:
+  briefing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      LLM_CHAIN: ${{ secrets.LLM_CHAIN }}
+      KIMI_API_KEY: ${{ secrets.KIMI_API_KEY }}
+      MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
+      DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+      QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
+      DOUBAO_API_KEY: ${{ secrets.DOUBAO_API_KEY }}
+      SMTP_HOST: ${{ secrets.SMTP_HOST }}
+      SMTP_PORT: ${{ secrets.SMTP_PORT }}
+      SMTP_USER: ${{ secrets.SMTP_USER }}
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: 安装依赖
+        run: pip install -r requirements.txt
+
+      - name: 发每日成长简报
+        run: python brain/daily_briefing.py --force
+
+      - name: commit 简报存档 + wiki/log（保持仓库活跃 → cron 可靠）
+        run: |
+          git config user.name  "briefing-bot"
+          git config user.email "briefing-bot@users.noreply.github.com"
+          git add brain/wiki/log.md brain/output/ 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "无变化，跳过提交。"
+          else
+            git commit -m "chore(brain): 每日简报 $(date -u +%Y-%m-%d) [skip ci]"
+            git pull --rebase --autostash origin main || true
+            git push || echo "push 失败（不阻断）"
+          fi

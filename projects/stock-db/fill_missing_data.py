@@ -34,22 +34,27 @@ class DataFiller:
         self._init_data_sources()
 
     def _init_data_sources(self):
-        self.ak = None
+        self.ak = None  # 不再使用akshare（连接不稳定）
         self.bs = None
+        self.bs_logged_in = False
 
-        try:
-            import akshare as ak
-            self.ak = ak
-            logger.info("✅ akshare 已加载")
-        except ImportError:
-            logger.warning("⚠️ akshare 未安装")
-
+        # 只使用baostock
         try:
             import baostock as bs
             self.bs = bs
-            logger.info("✅ baostock 已加载")
+            lg = self.bs.login()
+            if lg.error_code == '0':
+                self.bs_logged_in = True
+                logger.info("✅ baostock 已登录")
+            else:
+                logger.error(f"❌ baostock 登录失败: {lg.error_msg}")
         except ImportError:
-            logger.warning("⚠️ baostock 未安装")
+            logger.error("❌ baostock 未安装，请运行: pip install baostock")
+        except Exception as e:
+            logger.error(f"❌ baostock 登录异常: {e}")
+
+        if not self.bs_logged_in:
+            sys.exit(1)
 
     def check_missing_dates(self, days_back: int = 10) -> List[str]:
         """检查缺失数据的日期"""
@@ -125,9 +130,9 @@ class DataFiller:
             return []
 
     def fetch_and_save_stock(self, code: str, start_date: str, end_date: str) -> int:
-        """获取单只股票的历史数据并保存"""
+        """获取单只股票的历史数据并保存（复用baostock连接）"""
         try:
-            # 使用 baostock
+            # 转换代码格式
             if code.startswith(('6', '688', '689')):
                 bs_code = f"sh.{code}"
             elif code.startswith(('8', '4')):
@@ -135,9 +140,13 @@ class DataFiller:
             else:
                 bs_code = f"sz.{code}"
 
-            lg = self.bs.login()
-            if lg.error_code != '0':
-                return 0
+            # 确保已登录
+            if not self.bs_logged_in:
+                lg = self.bs.login()
+                if lg.error_code != '0':
+                    logger.warning(f"baostock 登录失败: {lg.error_msg}")
+                    return 0
+                self.bs_logged_in = True
 
             start = f"{start_date[:4]}-{start_date[4:6]}-{start_date[6:]}"
             end = f"{end_date[:4]}-{end_date[4:6]}-{end_date[6:]}"
@@ -154,8 +163,6 @@ class DataFiller:
             data_list = []
             while (rs.error_code == '0') & rs.next():
                 data_list.append(rs.get_row_data())
-
-            self.bs.logout()
 
             if not data_list:
                 return 0
@@ -250,6 +257,15 @@ class DataFiller:
         logger.info(f"   新增记录: {total_records} 条")
         logger.info("=" * 60)
 
+        # 完成后登出
+        if self.bs and self.bs_logged_in:
+            try:
+                self.bs.logout()
+                self.bs_logged_in = False
+                logger.info("✅ baostock 已登出")
+            except:
+                pass
+
         return {
             'success': success_count,
             'failed': len(failed_codes),
@@ -260,13 +276,13 @@ class DataFiller:
 if __name__ == "__main__":
     filler = DataFiller()
 
-    # 只补充缺失的最近5个交易日（从2月27日到3月4日）
-    # 排除周末：2/24周一有数据，2/25-2/26缺失严重，2/27周五，3/1-3/2周末，3/3-3/4周一二
-    start_date = "20250227"
+    # 补充最近5个交易日（从3月21日到今天）
+    # 这段时间数据缺失严重
+    start_date = "20250321"
     end_date = datetime.now().strftime("%Y%m%d")
 
-    logger.info(f"优化策略: 只补充 {start_date} ~ {end_date} (5个交易日)")
-    logger.info(f"预计时间: ~1小时 (5399只股票 x 0.1秒)")
+    logger.info(f"策略: 补充 {start_date} ~ {end_date} 的缺失数据")
+    logger.info(f"预计时间: ~10分钟 (5400只股票 x 0.05秒)")
 
     result = filler.fill_missing_data(start_date, end_date)
 

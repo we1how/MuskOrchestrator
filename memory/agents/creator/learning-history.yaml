@@ -2,7 +2,7 @@
 # 内容创作、营销、增长策略
 
 agent: creator
-last_updated: "2026-03-17T10:00:00Z"
+last_updated: "2026-03-27T10:00:00Z"
 version: "1.0"
 
 ---
@@ -17,6 +17,18 @@ sources:
     name: "Hacker News - Show HN"
     base_url: "https://news.ycombinator.com/show"
     learned_projects:
+      - url: "https://github.com/mozilla-ai/cq"
+        name: "Cq - Stack Overflow for Agents"
+        date: "2026-03-26"
+        concepts: ["Agent Commons", "知识共享", "多Agent验证", "集体记忆", "MCP Protocol"]
+        fingerprint: "agent|commons|knowledge|sharing|mozilla|mcp|stackoverflow|collaboration"
+        status: "completed"
+      - url: "https://github.com/oguzbilgic/agent-kernel"
+        name: "Agent Kernel"
+        date: "2026-03-25"
+        concepts: ["AI Agent状态管理", "无框架化", "Markdown记忆", "多Agent架构", "Stateful Agents"]
+        fingerprint: "agent|kernel|stateful|memory|markdown|git|multi-agent|claude"
+        status: "completed"
       - url: "https://github.com/simpler-conversation/godogen"
         name: "Godogen"
         date: "2026-03-17"
@@ -28,11 +40,35 @@ sources:
     name: "Indie Hackers"
     base_url: "https://www.indiehackers.com"
     learned_stories:
+      - url: "https://www.indiehackers.com/post/i-went-from-32-signups-week-to-0-one-headline-change-d349a55367"
+        name: "PostClaw - 标题修改导致注册归零案例"
+        date: "2026-03-21"
+        concepts: ["用户语言", "文案优化", "技术产品营销", "A/B测试", "转化优化"]
+        fingerprint: "headline|copywriting|conversion|user-language|technical-marketing|ab-test"
+        status: "completed"
+      - url: "https://www.indiehackers.com/post/36k-in-7-days-why-distribution-beats-product-early-on-ad8d0eeab2"
+        name: "Visby - 分销优先7天$36K策略"
+        date: "2026-03-20"
+        concepts: ["分销优先", "AppSumo", "GEO优化", "LTD策略", "AI可见性"]
+        fingerprint: "distribution|appsumo|ltd|geo|aeo|visibility|ai|traction"
+        status: "completed"
+      - url: "https://www.indiehackers.com/post/what-2025-taught-me-about-growing-a-bootstrapped-saas-to-110k-mrr-wp-umbrella-8cd8c4bc1d"
+        name: "WP Umbrella - 社区深耕增长策略"
+        date: "2026-03-19"
+        concepts: ["社区深耕", "零广告增长", "产品差异化", "反增长黑客", "B2B SaaS"]
+        fingerprint: "community|growth|saas|wordpress|bootstrapped|no-ads|differentiation"
+        status: "completed"
       - url: "https://www.indiehackers.com/post/from-1k-to-12k-visits-all-it-took-was-one-move-32a309b4f3"
         name: "Textideo - 视频优先内容策略"
         date: "2026-03-18"
         concepts: ["视频优先", "AI视频营销", "内容策略", "流量增长"]
         fingerprint: "video|ai|content|marketing|traffic|growth|kling"
+        status: "completed"
+      - url: "https://www.indiehackers.com/post/my-saas-competes-with-10m-funded-tools-i-charge-25-mo-and-im-fine-with-that-ffb44177a8"
+        name: "ReviseFlow - 单人创始人竞争策略"
+        date: "2026-03-27"
+        concepts: ["单人创始人", "低价竞争", "技术护城河", "速度优势", "定价心理学"]
+        fingerprint: "solo-founder|competitive-strategy|pricing|technical-moat|speed|bootstrap|vc-competitor"
         status: "completed"
 
   reddit:
@@ -46,16 +82,48 @@ concept_window_days: 30
 
 learned_concepts:
   active:
-    "Godogen": "2026-03-17"
-    "AI游戏生成": "2026-03-17"
-    "视频优先内容策略": "2026-03-18"
-    "AI视频营销": "2026-03-18"
+    "Cq Agent Commons": "2026-03-26"
+    "Agent知识共享": "2026-03-26"
+    "多Agent验证机制": "2026-03-26"
+    "Agent集体记忆": "2026-03-26"
+    "MCP Protocol": "2026-03-26"
+    "Agent Kernel": "2026-03-25"
+    "AI Agent状态管理": "2026-03-25"
+    "无框架化Agent": "2026-03-25"
+    "Markdown记忆系统": "2026-03-25"
+    "多Agent架构": "2026-03-25"
+    "用户语言文案系统化": "2026-03-22"
+    "三层信息架构": "2026-03-22"
+    "技术文案审查清单": "2026-03-22"
+    "用户语言文案": "2026-03-21"
+    "技术产品营销": "2026-03-21"
+    "标题优化": "2026-03-21"
+    "Visby分销策略": "2026-03-20"
+    "分销优先模型": "2026-03-20"
+    "GEO优化": "2026-03-20"
+    "AppSumo发布": "2026-03-20"
+    "WP Umbrella": "2026-03-19"
+    "社区深耕增长": "2026-03-19"
+    "零广告增长": "2026-03-19"
+    "反增长黑客": "2026-03-19"
+    "ReviseFlow": "2026-03-27"
+    "单人创始人竞争策略": "2026-03-27"
+    "技术护城河": "2026-03-27"
+    "速度优势": "2026-03-27"
+    "定价心理学": "2026-03-27"
 
-  expired: []
+  expired:
+    - "视频优先内容策略"
+    - "AI视频营销"
+    - "Godogen"
+    - "AI游戏生成"
+    - "用户语言文案系统化"
+    - "三层信息架构"
+    - "技术文案审查清单"
 
 ---
 
-total_learned: 2
+total_learned: 9
 unique_sources: 3
 repeated_attempts: 0
-last_learning_date: "2026-03-18"
+last_learning_date: "2026-03-27"

@@ -90,7 +90,7 @@ class FastFiller:
 
     def run(self):
         # 只补充最近5个交易日（3/3-3/4是周末后的交易日）
-        target_dates = ['2026-03-04', '2026-03-03', '2026-03-02', '2026-02-27', '2026-02-26']
+        target_dates = ['2026-03-31', '2026-03-30']
         logger.info(f"快速补充 {len(self.stock_codes)} 只股票，日期: {target_dates}")
 
         # 使用多线程，控制并发数
