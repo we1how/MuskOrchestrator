@@ -43,7 +43,7 @@ C_LINE = "#ececec"
 def _append_log(subject: str) -> None:
     LOG.parent.mkdir(parents=True, exist_ok=True)
     with LOG.open("a", encoding="utf-8") as f:
-        f.write(f"- {date.today().isoformat()} · 已发送『{subject}』 · 引擎 {active_provider()}\n")
+        f.write(f"- {state.cst_today_str()} · 已发送『{subject}』 · 引擎 {active_provider()}\n")
 
 
 # ── 内容合成（LLM） ─────────────────────────────────────────────
@@ -268,7 +268,7 @@ def build(poll_inbox: bool = True) -> dict:
     note = state.resurface_note()
     gblock = _goals_block(goals)
     return {
-        "today": date.today().isoformat(),
+        "today": state.cst_today_str(),
         "goals": goals,
         "goals_block": gblock,
         "captured": captured,
