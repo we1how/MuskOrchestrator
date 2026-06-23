@@ -80,6 +80,68 @@ def _save_raw(kind: str, subject: str, body: str) -> Path:
     return p
 
 
+GOALS = BRAIN / "goals.yaml"
+
+
+def update_goals_from_text(body: str) -> list[str]:
+    """用 LLM 把一条自然语言进度，映射到 goals.yaml 的目标并更新『进度』字段。
+    保留注释/结构（按行定位替换，不走 yaml dump）。返回已更新目标的描述列表。"""
+    import json
+
+    import yaml
+    from llm import chat
+
+    if not GOALS.exists():
+        return []
+    raw = GOALS.read_text(encoding="utf-8")
+    try:
+        items = (yaml.safe_load(raw) or {}).get("目标", [])
+    except Exception:  # noqa: BLE001
+        return []
+    if not items:
+        return []
+    catalog = "\n".join(
+        f"- id={g.get('id')} 名称={g.get('名称')} 当前进度={g.get('进度')}" for g in items)
+    prompt = (
+        f"老板发来一条进度更新：\n『{body}』\n\n现有目标：\n{catalog}\n\n"
+        "判断这条更新明确涉及哪些目标，输出 JSON 数组，每项形如 "
+        '{"id":"wealth","进度":"4万"}。\n'
+        "关键规则：进度值**直接用老板原话里的表述**（如『4万』『11本』『124斤』『已上线』），"
+        "**绝不自行换算成阿拉伯数字、绝不编造或推断数字**——宁可原样照抄。\n"
+        "只输出能明确对应的目标；无法对应就输出 []。只输出 JSON，不要解释。"
+    )
+    try:
+        out = chat("你只输出 JSON。", prompt, temperature=0, max_tokens=300)
+        m = re.search(r"\[.*\]", out, re.S)
+        updates = json.loads(m.group(0)) if m else []
+    except Exception:  # noqa: BLE001
+        return []
+
+    upd_map = {str(u.get("id")): str(u.get("进度", "")).strip()
+               for u in updates if u.get("id") and str(u.get("进度", "")).strip()}
+    if not upd_map:
+        return []
+
+    lines = raw.splitlines()
+    cur = None
+    changed: list[str] = []
+    for i, line in enumerate(lines):
+        mid = re.match(r"(\s*)-\s*id:\s*(\S+)", line)
+        if mid:
+            cur = mid.group(2)
+            continue
+        if cur in upd_map and re.match(r"\s*进度\s*:", line):
+            indent = line[: len(line) - len(line.lstrip())]
+            val = upd_map[cur]
+            yval = val if re.fullmatch(r"-?\d+(\.\d+)?", val) else '"' + val.replace('"', "") + '"'
+            lines[i] = f"{indent}进度: {yval}"
+            changed.append(f"{cur}={val}")
+            cur = None  # 每个目标只改第一处进度
+    if changed:
+        GOALS.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return changed
+
+
 def _log_progress(subject: str, body: str) -> None:
     PROGRESS.parent.mkdir(parents=True, exist_ok=True)
     header = "# 进度日志\n\n> 你通过邮件 [进度] 标签捕获的进展（自动追加）。\n\n" \
@@ -119,14 +181,17 @@ def poll(limit: int = 30) -> list[dict]:
                 continue  # 没标签的不动（也不标已读，留着你自己看）
             kind = TAGS[m.group(1).lower()]
             body = _body_text(msg)
+            goal_changes: list[str] = []
             if kind == "progress":
                 _log_progress(subject, body)
                 dest = "progress-log.md"
+                goal_changes = update_goals_from_text(body)  # 同步更新 goals.yaml 进度
             else:
                 p = _save_raw(kind, subject, body)
                 dest = str(p.relative_to(BRAIN))
             M.store(num, "+FLAGS", "\\Seen")  # 处理过的标已读
-            processed.append({"kind": kind, "subject": subject, "dest": dest})
+            processed.append({"kind": kind, "subject": subject, "dest": dest,
+                              "goal_changes": goal_changes})
         M.logout()
     except Exception as e:  # noqa: BLE001
         print(f"[inbox] IMAP 失败（不阻断）：{type(e).__name__}: {e}", file=sys.stderr)
@@ -139,3 +204,5 @@ if __name__ == "__main__":
         print("收件箱无带标签的新邮件。")
     for g in got:
         print(f"✓ [{g['kind']}] {g['subject']} → {g['dest']}")
+        if g.get("goal_changes"):
+            print(f"   ✅ 已更新目标进度：{'、'.join(g['goal_changes'])}")
