@@ -114,6 +114,8 @@ def render_text(data: dict) -> str:
         parts.append("📥 已收到你的输入：")
         for c in data["captured"]:
             parts.append(f"  · [{c['kind']}] {c['subject']} → {c['dest']}")
+            if c.get("goal_changes"):
+                parts.append(f"     ✅ 已更新目标进度：{'、'.join(c['goal_changes'])}")
         parts.append("")
     parts += ["① 作战简报", "-" * 60,
               f"目标进度：\n{data['goals_block']}\n", data["ceo"], ""]
@@ -210,7 +212,11 @@ def render_html(data: dict) -> str:
 
     captured = ""
     if data["captured"]:
-        items = "".join(f'<li>[{_esc(c["kind"])}] {_esc(c["subject"])}</li>' for c in data["captured"])
+        items = "".join(
+            f'<li>[{_esc(c["kind"])}] {_esc(c["subject"])}'
+            + (f' <b>→ 已更新进度：{_esc("、".join(c["goal_changes"]))}</b>' if c.get("goal_changes") else "")
+            + "</li>"
+            for c in data["captured"])
         captured = (f'<div style="background:#eef7ee;border-radius:10px;padding:10px 14px;'
                     f'margin:10px 0;font-size:13px;color:#2d6a2d;">📥 已收到你的输入：<ul style="margin:6px 0;">{items}</ul></div>')
 
