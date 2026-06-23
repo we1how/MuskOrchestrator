@@ -1,14 +1,23 @@
 name: daily-briefing
 
-# 每天 07:00 北京时间（= UTC 23:00 前一天）发一封"每日成长简报"。
-# 全程无人值守，跑在 GitHub 云端，不依赖 Mac 是否醒着（对标 stock_platform 的云端范式）。
+# 每天早上 07:1x 北京时间发一封"每日成长简报"，跑在 GitHub 云端，不依赖 Mac。
 #
-# 低活跃仓库 GitHub cron 会被静默跳过 → 本 workflow 每次跑完都 commit wiki/log 回仓，
-# 天然保持仓库活跃，让 cron 可靠触发。
+# 可靠性设计（GitHub cron 在整点 :00 拥堵、低活跃仓库还会被静默跳过）：
+#   1) 避开整点，并在同一个 UTC 日内排 3 次（07:17/07:32/07:47 CST = 23:17/23:32/23:47 UTC）
+#   2) 不加 --force，靠 brain/output/.send_state.json 当日去重 → 多次触发也只发 1 封
+#   3) 每次跑完 commit 回仓，保持仓库活跃，让 cron 长期可靠
+# 注意：3 个时刻都落在同一 UTC 日（23:xx），去重才不会跨日失效。
 on:
   workflow_dispatch:
+    inputs:
+      force:
+        description: "强制发送（忽略当日去重）"
+        type: boolean
+        default: true
   schedule:
-    - cron: "0 23 * * *"   # 07:00 CST
+    - cron: "17 23 * * *"   # 07:17 CST
+    - cron: "32 23 * * *"   # 07:32 CST
+    - cron: "47 23 * * *"   # 07:47 CST
 
 permissions:
   contents: write          # 需要 commit wiki/log + 简报存档回仓
@@ -45,7 +54,8 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: 发每日成长简报
-        run: python brain/daily_briefing.py --force
+        # 定时触发：靠当日去重（多个 cron 时刻只发 1 封）；手动触发：默认 --force 强发
+        run: python brain/daily_briefing.py ${{ (github.event_name == 'workflow_dispatch' && inputs.force) && '--force' || '' }}
 
       - name: commit 简报存档 + wiki/log（保持仓库活跃 → cron 可靠）
         run: |

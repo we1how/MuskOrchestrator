@@ -76,13 +76,30 @@ def _knowledge_q(note: dict) -> str:
 
 # ── 纯文本版 ─────────────────────────────────────────────────
 
+def _progress_label(p) -> str:
+    """进度可以是数字(0-100)、自由文本('10本'/'126斤')、或 null。一律安全转成展示字符串。"""
+    if p is None or p == "":
+        return "—"
+    if isinstance(p, bool):
+        return str(p)
+    if isinstance(p, (int, float)):
+        return f"{p:g}"
+    return str(p)
+
+
+def _progress_pct(p):
+    """仅当进度是 0-100 的纯数字时返回百分比，否则 None（不画进度条）。"""
+    if isinstance(p, (int, float)) and not isinstance(p, bool) and 0 <= p <= 100:
+        return int(p)
+    return None
+
+
 def _goals_block(goals: dict) -> str:
     rows = []
     for g in goals.get("目标", []):
-        p = g.get("进度")
-        bar = "—" if p is None else f"{int(p)}%"
+        label = _progress_label(g.get("进度"))
         note = f"  · {g['备注']}" if g.get("备注") else ""
-        rows.append(f"  [{bar:>4}] {g['名称']}{note}")
+        rows.append(f"  ▸ {g['名称']}：{label}{note}")
     return "\n".join(rows) if rows else "  （goals.yaml 无目标）"
 
 
@@ -167,16 +184,16 @@ def _coach_card(r: dict) -> str:
 
 def _bar_row(g: dict) -> str:
     p = g.get("进度")
-    pct = 0 if p is None else max(0, min(100, int(p)))
-    label = "—" if p is None else f"{pct}%"
+    label = _progress_label(p)
+    pct = _progress_pct(p)
     note = f' <span style="color:{C_MUTE};font-size:12px;">{_esc(g.get("备注",""))}</span>' if g.get("备注") else ""
-    return (
-        f'<div style="margin:8px 0;">'
-        f'<div style="font-size:13px;color:{C_INK};margin-bottom:3px;">{_esc(g["名称"])}'
-        f' <b style="color:{C_RED};">{label}</b>{note}</div>'
-        f'<div style="background:{C_BG};border-radius:6px;height:6px;overflow:hidden;">'
-        f'<div style="background:{C_RED};height:6px;width:{pct}%;"></div></div></div>'
-    )
+    head = (f'<div style="font-size:13px;color:{C_INK};margin-bottom:3px;">{_esc(g["名称"])}'
+            f' <b style="color:{C_RED};">{_esc(label)}</b>{note}</div>')
+    bar = ""
+    if pct is not None:  # 只有纯 0-100 数字才画进度条，自由文本只显示状态
+        bar = (f'<div style="background:{C_BG};border-radius:6px;height:6px;overflow:hidden;">'
+               f'<div style="background:{C_RED};height:6px;width:{pct}%;"></div></div>')
+    return f'<div style="margin:8px 0;">{head}{bar}</div>'
 
 
 def _section_title(t: str) -> str:
