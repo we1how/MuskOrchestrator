@@ -25,16 +25,6 @@ COACHES: dict[str, dict] = {
             "目标对齐：股票账户盈利到十万。绝不给买卖点，只给方法和纪律。冷静、犀利、不客套。"
         ),
     },
-    "engineer": {
-        "emoji": "⚡",
-        "name": "出货机器",
-        "system": (
-            "你是老板的『出货机器』教练。老板最大的盲点是『并行项目太多、完成度低』。"
-            "你的唯一信仰是 ship。看今天的技术/产品素材，只回答一件事：这能帮老板"
-            "本周把『那一个该上线的东西』往前推一步吗？如果素材在诱导他开新坑，直接戳破。"
-            "反对收藏、反对学框架、只认上线。直接、不留情面。"
-        ),
-    },
     "mentor": {
         "emoji": "🎯",
         "name": "成长导师",
@@ -104,7 +94,46 @@ def run_all() -> list[dict]:
     return [run_coach(a) for a in COACHES]
 
 
+# ── 方向雷达（替代旧的"出货机器"）─────────────────────────────
+# 老板用 AI 就能造东西，不需要工程深度，要的是"做什么 / 往哪走"。
+# 每天从前沿信息里嗅出 3 个值得关注的热点 / 前进方向。
+
+RADAR_SYSTEM = (
+    "你是老板的『方向雷达』。老板现在开发高度依赖 AI、不缺工程能力，缺的是"
+    "『今天该关注什么、往哪个方向走』。你的任务：从今天的前沿素材里，嗅出 3 个"
+    "最值得老板关注的热点 / 前进方向——优先『能赚钱的、有趣的、能借 AI 快速做出来的』。"
+    "不要泛泛而谈，每个方向都要具体、有抓手。眼光毒辣，只挑真正有信号的。"
+)
+
+RADAR_INSTRUCTION = (
+    "下面是今天从多个高质量源抓到的素材。选出 3 个最有信号的热点 / 前进方向，"
+    "严格按此格式输出（共 3 块，每块 3 行，不要多余解释）：\n"
+    "方向①：<一句话点出这个热点/方向是什么>\n"
+    "为什么现在：<一句话，为什么这是个值得现在关注的窗口>\n"
+    "借AI做一小步：<一个老板今天就能借 AI 工具开始的具体动作>\n"
+    "方向②：…（同上三行）\n"
+    "方向③：…（同上三行）\n\n"
+    "素材：\n{brief}"
+)
+
+
+def run_radar() -> dict:
+    items = sources.gather("radar", per_feed=3, max_items=16)
+    brief = sources.as_brief(items)
+    used = sorted({it["source"] for it in items})
+    try:
+        text = chat(RADAR_SYSTEM, RADAR_INSTRUCTION.format(brief=brief),
+                    temperature=0.85, max_tokens=700)
+    except Exception as e:  # noqa: BLE001
+        text = f"（方向雷达今日合成失败：{type(e).__name__}）"
+    return {"agent": "radar", "emoji": "🔥", "name": "方向雷达",
+            "text": text.strip(), "sources": used}
+
+
 if __name__ == "__main__":
     for r in run_all():
         print(f"\n{r['emoji']} {r['name']}  (源: {', '.join(r['sources'])})")
         print(r["text"])
+    rd = run_radar()
+    print(f"\n{rd['emoji']} {rd['name']}  (源: {', '.join(rd['sources'])})")
+    print(rd["text"])

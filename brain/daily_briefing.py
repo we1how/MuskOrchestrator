@@ -119,13 +119,18 @@ def render_text(data: dict) -> str:
         parts.append("")
     parts += ["① 作战简报", "-" * 60,
               f"目标进度：\n{data['goals_block']}\n", data["ceo"], ""]
-    parts += ["② 四教练洞察", "-" * 60]
+    rd = data.get("radar")
+    if rd:
+        src = "、".join(rd["sources"]) if rd["sources"] else "无源"
+        parts += ["② 方向雷达 · 今日热点/前进方向", "-" * 60,
+                  f"〔源：{src}〕", rd["text"], ""]
+    parts += ["③ 三教练洞察", "-" * 60]
     for r in data["coaches"]:
         src = "、".join(r["sources"]) if r["sources"] else "无源"
         parts.append(f"\n{r['emoji']} {r['name']}〔源：{src}〕\n{r['text']}")
         if r["link"]:
             parts.append(f"   阅读原文：{r['link']}")
-    parts += ["", "③ 知识激活", "-" * 60]
+    parts += ["", "④ 知识激活", "-" * 60]
     n = data["note"]
     if n:
         parts.append(f"📂 重新激活：{n['title']}")
@@ -184,6 +189,30 @@ def _coach_card(r: dict) -> str:
     )
 
 
+def _radar_card(rd: dict) -> str:
+    chips = "".join(
+        f'<span style="display:inline-block;background:{C_BG};color:{C_MUTE};'
+        f'font-size:11px;padding:2px 8px;border-radius:10px;margin:0 4px 4px 0;">{_esc(s)}</span>'
+        for s in rd["sources"])
+    rows = ""
+    for line in rd["text"].splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        if line.startswith("方向"):
+            rows += (f'<div style="margin:12px 0 2px;font-weight:700;color:{C_INK};">🔥 {_esc(line)}</div>')
+        elif line.startswith("为什么现在"):
+            rows += f'<div style="margin:2px 0;color:{C_MUTE};font-size:13px;">{_esc(line)}</div>'
+        elif line.startswith("借AI") or line.startswith("一小步"):
+            rows += f'<div style="margin:2px 0 6px;color:{C_RED};font-weight:600;">{_esc(line)}</div>'
+        else:
+            rows += f'<div style="margin:2px 0;color:{C_INK};">{_esc(line)}</div>'
+    return (
+        f'<div style="background:{C_CARD};border:1px solid {C_LINE};border-radius:12px;padding:16px 18px;">'
+        f'<div style="margin-bottom:6px;">{chips}</div>{rows}</div>'
+    )
+
+
 def _bar_row(g: dict) -> str:
     p = g.get("进度")
     label = _progress_label(p)
@@ -209,6 +238,7 @@ def render_html(data: dict) -> str:
                        for l in data["ceo"].splitlines() if l.strip())
     bars = "".join(_bar_row(x) for x in g.get("目标", []))
     cards = "".join(_coach_card(r) for r in data["coaches"])
+    radar_html = _radar_card(data["radar"]) if data.get("radar") else ""
 
     captured = ""
     if data["captured"]:
@@ -249,9 +279,11 @@ def render_html(data: dict) -> str:
     <div style="border-top:1px solid {C_LINE};margin:12px 0;"></div>
     {ceo_html}
   </div>
-  {_section_title('② 四教练洞察')}
+  {_section_title('② 方向雷达 · 今日热点 / 前进方向')}
+  {radar_html}
+  {_section_title('③ 三教练洞察')}
   {cards}
-  {_section_title('③ 知识激活')}
+  {_section_title('④ 知识激活')}
   {know}
   <div style="background:{C_INK};color:#ddd;border-radius:12px;padding:16px 18px;margin-top:22px;font-size:13px;">
     <b style="color:#fff;">把进度 / 书 / 想法喂回第二大脑</b><br>
@@ -270,6 +302,7 @@ def render_html(data: dict) -> str:
 def build(poll_inbox: bool = True) -> dict:
     goals = state.load_goals()
     captured = inbox.poll() if poll_inbox else []
+    radar = agents.run_radar()
     coaches = agents.run_all()
     note = state.resurface_note()
     gblock = _goals_block(goals)
@@ -279,6 +312,7 @@ def build(poll_inbox: bool = True) -> dict:
         "goals_block": gblock,
         "captured": captured,
         "ceo": _ceo_briefing(goals, gblock),
+        "radar": radar,
         "coaches": coaches,
         "note": note,
         "kq": _knowledge_q(note) if note else "",
