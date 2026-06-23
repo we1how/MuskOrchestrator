@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import email
 import imaplib
+import json
 import os
 import re
 import sys
@@ -36,7 +37,8 @@ TAGS = {
     "知识": "note", "note": "note",
     "想法": "idea", "idea": "idea",
 }
-_TAG_RE = re.compile(r"\[\s*(" + "|".join(map(re.escape, TAGS)) + r")\s*\]", re.I)
+# 同时匹配半角 [] 与全角 ［］（手机中文输入法常打出全角括号）
+_TAG_RE = re.compile(r"[\[［]\s*(" + "|".join(map(re.escape, TAGS)) + r")\s*[\]］]", re.I)
 
 
 def _decode(s) -> str:
@@ -52,16 +54,37 @@ def _decode(s) -> str:
     return out
 
 
+# 回复/转发时客户端塞进来的引用块、签名的起始标记 —— 从第一处截断，只留你自己写的正文
+_QUOTE_MARKERS = (
+    "------------------ 原始邮件", "原始邮件", "-----Original Message-----",
+    "发自我的iPhone", "发自我的", "发自", "在 20", "On 20", "> ",
+)
+
+
+def _strip_quote(text: str) -> str:
+    lines = text.splitlines()
+    kept = []
+    for line in lines:
+        s = line.strip()
+        if s.startswith(">") or any(mk in s for mk in _QUOTE_MARKERS):
+            break  # 命中引用/签名标记，后面全是原邮件，停
+        kept.append(line)
+    return "\n".join(kept).strip()
+
+
 def _body_text(msg) -> str:
+    body = ""
     if msg.is_multipart():
         for part in msg.walk():
             if part.get_content_type() == "text/plain":
                 payload = part.get_payload(decode=True) or b""
                 charset = part.get_content_charset() or "utf-8"
-                return payload.decode(charset, "ignore").strip()
-        return ""
-    payload = msg.get_payload(decode=True) or b""
-    return payload.decode(msg.get_content_charset() or "utf-8", "ignore").strip()
+                body = payload.decode(charset, "ignore")
+                break
+    else:
+        payload = msg.get_payload(decode=True) or b""
+        body = payload.decode(msg.get_content_charset() or "utf-8", "ignore")
+    return _strip_quote(body)
 
 
 def _slug(s: str) -> str:
@@ -153,8 +176,25 @@ def _log_progress(subject: str, body: str) -> None:
         f.write(entry)
 
 
-def poll(limit: int = 30) -> list[dict]:
-    """收未读、按标签路由、标记已读。返回处理摘要列表。"""
+PROC_STATE = BRAIN / "output" / ".inbox_uids.json"
+
+
+def _load_processed() -> set[str]:
+    if PROC_STATE.exists():
+        try:
+            return set(json.loads(PROC_STATE.read_text()))
+        except Exception:  # noqa: BLE001
+            return set()
+    return set()
+
+
+def _save_processed(uids: set[str]) -> None:
+    PROC_STATE.parent.mkdir(parents=True, exist_ok=True)
+    PROC_STATE.write_text(json.dumps(sorted(uids)[-500:]))  # 只留近 500 个，防无限增长
+
+
+def poll(limit: int = 40) -> list[dict]:
+    """按 UID 处理带标签邮件，与已读/未读无关；用持久化 UID 集去重，避免重复入库。"""
     llm._load_env()
     user = os.environ.get("SMTP_USER")
     pw = os.environ.get("SMTP_PASSWORD")
@@ -163,36 +203,41 @@ def poll(limit: int = 30) -> list[dict]:
     host = os.environ.get("IMAP_HOST", "imap.qq.com")
     port = int(os.environ.get("IMAP_PORT", "993"))
 
+    done = _load_processed()
     processed: list[dict] = []
     try:
         M = imaplib.IMAP4_SSL(host, port)
         M.login(user, pw)
         M.select("INBOX")
-        typ, data = M.search(None, "UNSEEN")
-        ids = data[0].split()[-limit:]
-        for num in ids:
-            typ, msgdata = M.fetch(num, "(RFC822)")
+        typ, data = M.uid("SEARCH", None, "ALL")  # 不限已读/未读，靠 UID 去重
+        uids = data[0].split()[-limit:]
+        for uid in uids:
+            uid_s = uid.decode() if isinstance(uid, bytes) else str(uid)
+            if uid_s in done:
+                continue
+            typ, msgdata = M.uid("FETCH", uid, "(RFC822)")
             if typ != "OK" or not msgdata or not msgdata[0]:
                 continue
             msg = email.message_from_bytes(msgdata[0][1])
             subject = _decode(msg.get("Subject"))
             m = _TAG_RE.search(subject or "")
             if not m:
-                continue  # 没标签的不动（也不标已读，留着你自己看）
+                continue  # 没标签的不碰，也不计入已处理（将来补标签还能收）
             kind = TAGS[m.group(1).lower()]
             body = _body_text(msg)
             goal_changes: list[str] = []
             if kind == "progress":
                 _log_progress(subject, body)
                 dest = "progress-log.md"
-                goal_changes = update_goals_from_text(body)  # 同步更新 goals.yaml 进度
+                goal_changes = update_goals_from_text(body)
             else:
                 p = _save_raw(kind, subject, body)
                 dest = str(p.relative_to(BRAIN))
-            M.store(num, "+FLAGS", "\\Seen")  # 处理过的标已读
+            done.add(uid_s)
             processed.append({"kind": kind, "subject": subject, "dest": dest,
                               "goal_changes": goal_changes})
         M.logout()
+        _save_processed(done)
     except Exception as e:  # noqa: BLE001
         print(f"[inbox] IMAP 失败（不阻断）：{type(e).__name__}: {e}", file=sys.stderr)
     return processed

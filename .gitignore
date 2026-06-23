@@ -18,8 +18,8 @@ __pycache__/
 *.pyc
 *.pyo
 
-# Brain transient state
-brain/output/.send_state.json
+# Brain 去重状态需入仓：云端多个 cron 时刻靠它共享"今天已发/已收"，否则会重复发信
+# （.send_state.json / .inbox_uids.json 都要 track）
 
 # Secrets — NEVER commit
 .env

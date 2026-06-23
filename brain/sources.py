@@ -24,12 +24,15 @@ FEEDS: dict[str, dict[str, str]] = {
         "Klement on Investing": "https://klementoninvesting.substack.com/feed",
         "Arxiv q-fin": "https://rss.arxiv.org/rss/q-fin.PM",
     },
-    "engineer": {
+    # 方向雷达：机会/热点富集的源（赚钱的、有趣的、能借 AI 快速做的）
+    "radar": {
         "Hacker News Front": "https://hnrss.org/frontpage?points=150",
-        "Simon Willison": "https://simonwillison.net/atom/everything/",
+        "Hacker News Show": "https://hnrss.org/show",
+        "Product Hunt": "https://www.producthunt.com/feed",
+        "Indie Hackers": "https://www.indiehackers.com/feed.xml",
+        "Trends.vc": "https://trends.vc/feed/",
         "Latent Space": "https://www.latent.space/feed",
-        "GitHub Trending (py)": "https://rsshub.app/github/trending/daily/python/en",
-        "Pragmatic Engineer": "https://blog.pragmaticengineer.com/rss/",
+        "Simon Willison": "https://simonwillison.net/atom/everything/",
     },
     "mentor": {
         "Farnam Street": "https://fs.blog/feed/",
