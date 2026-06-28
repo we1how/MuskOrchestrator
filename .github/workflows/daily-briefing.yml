@@ -42,6 +42,7 @@ jobs:
       SMTP_USER: ${{ secrets.SMTP_USER }}
       SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
       NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
+      IMAP_HOST: ${{ secrets.IMAP_HOST }}
     steps:
       - uses: actions/checkout@v4
 

@@ -1,7 +1,7 @@
 """
 brain/inbox.py — 反向输入通道（邮件捕获）
 ==========================================
-让第二大脑变成双向：你给自己的 QQ 邮箱发一封邮件，主题带标签，系统下次跑时自动收进来。
+让第二大脑变成双向：你给自己的邮箱发一封邮件，主题带标签，系统下次跑时自动收进来。
 
 支持的主题标签（出现在主题任意位置即可，中英文皆可）：
   [进度] / [progress]  → 追加到 brain/wiki/progress-log.md（更新目标进度、今天做了什么）
@@ -9,7 +9,7 @@ brain/inbox.py — 反向输入通道（邮件捕获）
   [知识] / [note]      → 存进 brain/wiki/raw/
   [想法] / [idea]      → 存进 brain/wiki/raw/
 
-用同一套 QQ 授权码走 IMAP（imap.qq.com:993 SSL）。读完标记已读，不重复处理。
+走 IMAP（默认 imap.gmail.com:993 SSL，IMAP_HOST 可覆盖）。按 UID 去重，不重复处理。
 环境变量：SMTP_USER / SMTP_PASSWORD（与发信复用）。
 """
 from __future__ import annotations
@@ -200,7 +200,7 @@ def poll(limit: int = 40) -> list[dict]:
     pw = os.environ.get("SMTP_PASSWORD")
     if not (user and pw):
         return []
-    host = os.environ.get("IMAP_HOST", "imap.qq.com")
+    host = os.environ.get("IMAP_HOST", "imap.gmail.com")
     port = int(os.environ.get("IMAP_PORT", "993"))
 
     done = _load_processed()
