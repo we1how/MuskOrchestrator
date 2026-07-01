@@ -9,11 +9,37 @@ brain/sources.py — 升级版取料层（高信噪比 RSS 源池）
 from __future__ import annotations
 
 import html
+import json
 import re
 import socket
+import sys
 from concurrent.futures import ThreadPoolExecutor
+from datetime import timedelta
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import state  # noqa: E402  复用 CST 日期，跨日去重要和发信日期口径一致
 
 socket.setdefaulttimeout(15)
+
+# 跨日去重：避免低更新频率的源（周更博客、死链 RSS）天天把同一篇顶在最前面被反复选中。
+# 记住每个 agent 近 N 天用过的标题，gather() 优先挑没见过的，全见过才退回旧池保底。
+SEEN_FILE = Path(__file__).resolve().parent / "output" / ".seen_titles.json"
+SEEN_WINDOW_DAYS = 21
+
+
+def _load_seen() -> dict:
+    if SEEN_FILE.exists():
+        try:
+            return json.loads(SEEN_FILE.read_text())
+        except Exception:  # noqa: BLE001
+            return {}
+    return {}
+
+
+def _save_seen(data: dict) -> None:
+    SEEN_FILE.parent.mkdir(parents=True, exist_ok=True)
+    SEEN_FILE.write_text(json.dumps(data, ensure_ascii=False))
 
 # 每个 agent 的高信噪比源池（name -> rss url）
 FEEDS: dict[str, dict[str, str]] = {
@@ -37,7 +63,7 @@ FEEDS: dict[str, dict[str, str]] = {
     "mentor": {
         "Farnam Street": "https://fs.blog/feed/",
         "Collab Fund (Housel)": "https://collabfund.com/blog/feed/",
-        "Paul Graham Essays": "http://www.aaronsw.com/2002/feeds/pgessays.rss",
+        "Paul Graham Essays": "http://www.paulgraham.com/rss.html",
         "Ness Labs": "https://nesslabs.com/feed",
         "Marginal Revolution": "https://marginalrevolution.com/feed",
     },
@@ -80,8 +106,8 @@ def _fetch_feed(name: str, url: str, per_feed: int) -> list[dict]:
         return []
 
 
-def gather(agent: str, per_feed: int = 3, max_items: int = 12) -> list[dict]:
-    """并发抓该 agent 的所有源，合并、去重、截断。"""
+def gather(agent: str, per_feed: int = 5, max_items: int = 16) -> list[dict]:
+    """并发抓该 agent 的所有源，合并、站内去重、跨日去重、截断。"""
     feeds = FEEDS.get(agent, {})
     out: list[dict] = []
     with ThreadPoolExecutor(max_workers=min(8, len(feeds) or 1)) as ex:
@@ -95,7 +121,21 @@ def gather(agent: str, per_feed: int = 3, max_items: int = 12) -> list[dict]:
             continue
         seen.add(k)
         dedup.append(it)
-    return dedup[:max_items]
+
+    seen_store = _load_seen()
+    agent_seen = seen_store.get(agent, {})
+    cutoff = (state.cst_today() - timedelta(days=SEEN_WINDOW_DAYS)).isoformat()
+    agent_seen = {k: v for k, v in agent_seen.items() if v >= cutoff}
+    fresh = [it for it in dedup if it["title"].lower()[:60] not in agent_seen]
+    pool = fresh if fresh else dedup  # 全部都见过时才退回旧池，保证不空手而归
+
+    result = pool[:max_items]
+    today = state.cst_today_str()
+    for it in result:
+        agent_seen[it["title"].lower()[:60]] = today
+    seen_store[agent] = agent_seen
+    _save_seen(seen_store)
+    return result
 
 
 def as_brief(items: list[dict]) -> str:
