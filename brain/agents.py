@@ -6,13 +6,53 @@ brain/agents.py — 4 个偏执教练，各从当天原料里逼出 1 条可执�
 """
 from __future__ import annotations
 
+import json
 import re
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import sources  # noqa: E402
+import state  # noqa: E402
 from llm import chat  # noqa: E402
+
+# 教练记忆：记住每个 agent 最近几天讲过的角度，提示词里逼它换新角度，
+# 否则即使素材不同，独立无记忆的每日生成也容易反复落在相似的发现/建议上。
+HISTORY_FILE = Path(__file__).resolve().parent / "output" / ".recent_topics.json"
+HISTORY_KEEP = 7
+
+
+def _load_history() -> dict:
+    if HISTORY_FILE.exists():
+        try:
+            return json.loads(HISTORY_FILE.read_text())
+        except Exception:  # noqa: BLE001
+            return {}
+    return {}
+
+
+def _save_history(data: dict) -> None:
+    HISTORY_FILE.parent.mkdir(parents=True, exist_ok=True)
+    HISTORY_FILE.write_text(json.dumps(data, ensure_ascii=False))
+
+
+def _recent_summaries(agent: str, history: dict, n: int = 5) -> str:
+    entries = history.get(agent, [])[-n:]
+    if not entries:
+        return "（无历史记录，今天随意选）"
+    return "\n".join(f"- {e['date']}：{e['text']}" for e in entries)
+
+
+def _append_history(agent: str, summary: str) -> None:
+    """存进历史前先去尖括号——否则万一模型某次吐出了占位符原文，
+    会被当作『最近讲过的例子』喂回下一次提示词，反而带坏后续输出（few-shot 放大 bug）。"""
+    history = _load_history()
+    entries = history.get(agent, [])
+    clean = _strip_brackets(summary.replace("\n", " "))[:150]
+    entries.append({"date": state.cst_today_str(), "text": clean})
+    history[agent] = entries[-HISTORY_KEEP:]
+    _save_history(history)
+
 
 COACHES: dict[str, dict] = {
     "analyst": {
@@ -48,28 +88,38 @@ COACHES: dict[str, dict] = {
 }
 
 INSTRUCTION = (
-    "下面是今天从高质量信息源抓到的素材（每条有编号）。挑其中信噪比最高的 1 条深挖，"
+    "你最近几天已经讲过这些（今天必须换一个新角度/新发现，不要重复或换皮重讲）：\n"
+    "{recent}\n\n"
+    "下面是今天从高质量信息源抓到的素材（每条有编号）。挑其中信噪比最高的、且和近期不重复的 1 条深挖，"
     "严格用这个格式输出（每行一句，不要多余解释）：\n"
     "来源序号：<你引用的那条素材的编号，只填数字>\n"
     "发现：<一句话，最高价值的那个点>\n"
     "为什么重要：<一句话，第一性原理的理由>\n"
-    "今天就做：<一个具体、可在 30 分钟内开始的动作>\n\n"
+    "今天就做：<一个具体、可在 30 分钟内开始的动作>\n"
+    "（尖括号只是占位说明，输出时换成实际内容，不要把 < > 也写进去）\n\n"
     "素材：\n{brief}"
 )
 
 _NUM = re.compile(r"来源序号[:：]\s*(\d+)")
+_NUM_FALLBACK = re.compile(r"^\s*<(\d+)>\s*$", re.M)  # 模型偶尔把占位符原样吐出来，如 "<5>"
+_BRACKETS = re.compile(r"[<>]")  # 防御性兜底：清掉任何残留的占位符尖括号
+
+
+def _strip_brackets(text: str) -> str:
+    return _BRACKETS.sub("", text).strip()
 
 
 def _parse(text: str, items: list[dict]) -> dict:
     """抽出『来源序号』对应的原文链接，并把这行从正文去掉。"""
     link, src_name = "", ""
-    m = _NUM.search(text)
+    m = _NUM.search(text) or _NUM_FALLBACK.search(text)
     if m:
         idx = int(m.group(1)) - 1
         if 0 <= idx < len(items):
             link = items[idx].get("link", "")
             src_name = items[idx].get("source", "")
-    text = _NUM.sub("", text).strip()
+    text = _NUM_FALLBACK.sub("", _NUM.sub("", text))
+    text = _strip_brackets(text)
     return {"text": text, "link": link, "source_name": src_name}
 
 
@@ -78,10 +128,13 @@ def run_coach(agent: str) -> dict:
     items = sources.gather(agent)
     brief = sources.as_brief(items)
     used = sorted({it["source"] for it in items})
+    history = _load_history()
+    recent = _recent_summaries(agent, history)
     try:
-        raw = chat(cfg["system"], INSTRUCTION.format(brief=brief),
+        raw = chat(cfg["system"], INSTRUCTION.format(recent=recent, brief=brief),
                    temperature=0.8, max_tokens=500)
         parsed = _parse(raw, items)
+        _append_history(agent, parsed["text"])
     except Exception as e:  # noqa: BLE001
         parsed = {"text": f"（{cfg['name']} 今日合成失败：{type(e).__name__}）",
                   "link": "", "source_name": ""}
@@ -106,24 +159,30 @@ RADAR_SYSTEM = (
 )
 
 RADAR_INSTRUCTION = (
-    "下面是今天从多个高质量源抓到的素材。选出 3 个最有信号的热点 / 前进方向，"
+    "你最近几天已经讲过这些方向（今天 3 个必须是新的，不要重复或换皮重讲）：\n"
+    "{recent}\n\n"
+    "下面是今天从多个高质量源抓到的素材。选出 3 个最有信号、且和近期不重复的热点 / 前进方向，"
     "严格按此格式输出（共 3 块，每块 3 行，不要多余解释）：\n"
     "方向①：<一句话点出这个热点/方向是什么>\n"
     "为什么现在：<一句话，为什么这是个值得现在关注的窗口>\n"
     "借AI做一小步：<一个老板今天就能借 AI 工具开始的具体动作>\n"
     "方向②：…（同上三行）\n"
-    "方向③：…（同上三行）\n\n"
+    "方向③：…（同上三行）\n"
+    "（尖括号只是占位说明，输出时换成实际内容，不要把 < > 也写进去）\n\n"
     "素材：\n{brief}"
 )
 
 
 def run_radar() -> dict:
-    items = sources.gather("radar", per_feed=3, max_items=16)
+    items = sources.gather("radar", per_feed=5, max_items=20)
     brief = sources.as_brief(items)
     used = sorted({it["source"] for it in items})
+    history = _load_history()
+    recent = _recent_summaries("radar", history)
     try:
-        text = chat(RADAR_SYSTEM, RADAR_INSTRUCTION.format(brief=brief),
-                    temperature=0.85, max_tokens=700)
+        text = _strip_brackets(chat(RADAR_SYSTEM, RADAR_INSTRUCTION.format(recent=recent, brief=brief),
+                                     temperature=0.85, max_tokens=700))
+        _append_history("radar", text)
     except Exception as e:  # noqa: BLE001
         text = f"（方向雷达今日合成失败：{type(e).__name__}）"
     return {"agent": "radar", "emoji": "🔥", "name": "方向雷达",
