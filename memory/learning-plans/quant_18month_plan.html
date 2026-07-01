@@ -1,0 +1,400 @@
+
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  .container { padding: 1rem 0; }
+  .header { margin-bottom: 1.5rem; }
+  .section-title { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.75rem; }
+  .assessment-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 1rem; }
+  .status-row { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .status-row:last-child { border-bottom: none; }
+  .badge { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 99px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+  .badge-skip { background: var(--color-background-success); color: var(--color-text-success); }
+  .badge-fast { background: var(--color-background-warning); color: var(--color-text-warning); }
+  .badge-deep { background: var(--color-background-danger); color: var(--color-text-danger); }
+  .badge-new { background: var(--color-background-info); color: var(--color-text-info); }
+  .label { font-size: 13px; font-weight: 500; color: var(--color-text-primary); }
+  .desc { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
+
+  .timeline { display: flex; flex-direction: column; gap: 10px; }
+  .level-card { border-radius: var(--border-radius-lg); border: 0.5px solid var(--color-border-tertiary); overflow: hidden; }
+  .level-header { display: flex; align-items: center; gap: 12px; padding: 12px 16px; cursor: pointer; user-select: none; }
+  .level-header:hover { background: var(--color-background-secondary); }
+  .level-dot { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; flex-shrink: 0; }
+  .level-info { flex: 1; }
+  .level-name { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+  .level-meta { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
+  .level-weeks { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); flex-shrink: 0; }
+  .chevron { font-size: 10px; color: var(--color-text-tertiary); transition: transform 0.2s; }
+  .chevron.open { transform: rotate(90deg); }
+  .level-body { padding: 0 16px 14px; border-top: 0.5px solid var(--color-border-tertiary); display: none; }
+  .level-body.open { display: block; }
+
+  .week-row { display: flex; gap: 8px; align-items: flex-start; padding: 6px 0; border-bottom: 0.5px solid var(--color-border-tertiary); font-size: 13px; }
+  .week-row:last-child { border-bottom: none; }
+  .week-num { color: var(--color-text-tertiary); font-size: 12px; min-width: 52px; padding-top: 1px; }
+  .week-content { flex: 1; }
+  .week-title { font-weight: 500; color: var(--color-text-primary); }
+  .week-task { color: var(--color-text-secondary); font-size: 12px; margin-top: 2px; }
+  .feynman-tag { display: inline-block; font-size: 10px; background: var(--color-background-info); color: var(--color-text-info); border-radius: 4px; padding: 1px 5px; margin-left: 6px; }
+
+  .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+  .tool-card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 8px 12px; }
+  .tool-name { font-size: 13px; font-weight: 500; font-family: var(--font-mono); color: var(--color-text-primary); }
+  .tool-desc { font-size: 11px; color: var(--color-text-secondary); margin-top: 3px; }
+
+  .tab-bar { display: flex; gap: 4px; background: var(--color-background-secondary); padding: 4px; border-radius: var(--border-radius-md); margin-bottom: 1rem; }
+  .tab { flex: 1; padding: 6px; font-size: 13px; font-weight: 500; border: none; background: transparent; color: var(--color-text-secondary); border-radius: 6px; cursor: pointer; }
+  .tab.active { background: var(--color-background-primary); color: var(--color-text-primary); border: 0.5px solid var(--color-border-tertiary); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .feynman-box { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px 14px; margin-top: 8px; font-size: 12px; color: var(--color-text-secondary); border-left: 3px solid var(--color-border-info); }
+  .feynman-box strong { color: var(--color-text-primary); font-size: 13px; display: block; margin-bottom: 4px; }
+
+  .action-btn { display: inline-block; padding: 6px 14px; font-size: 12px; font-weight: 500; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); background: transparent; color: var(--color-text-primary); cursor: pointer; margin-top: 8px; }
+  .action-btn:hover { background: var(--color-background-secondary); }
+</style>
+
+<div class="container">
+  <div class="tab-bar">
+    <button class="tab active" onclick="switchTab('assess')">现状评估</button>
+    <button class="tab" onclick="switchTab('plan')">18个月计划</button>
+    <button class="tab" onclick="switchTab('tools')">工具链</button>
+  </div>
+
+  <!-- 现状评估 -->
+  <div id="tab-assess" class="tab-content active">
+    <p class="section-title">你的起点分析</p>
+    <div class="assessment-card">
+      <div class="status-row">
+        <span class="badge badge-skip">可跳过</span>
+        <div>
+          <div class="label">贝叶斯基础 & 条件概率</div>
+          <div class="desc">你已有这个基础，可以直接从 Level 1 的编程实战开始，跳过纯理论阅读。</div>
+        </div>
+      </div>
+      <div class="status-row">
+        <span class="badge badge-fast">快速过</span>
+        <div>
+          <div class="label">期望值 & 方差</div>
+          <div class="desc">这是 Level 1 核心，大概率你有直觉但缺乏精确定义。用一周确认理解即可。</div>
+        </div>
+      </div>
+      <div class="status-row">
+        <span class="badge badge-deep">需加强</span>
+        <div>
+          <div class="label">线性代数（矩阵、特征值）</div>
+          <div class="desc">数学薄弱的最大痛点。Level 3 的内容对你来说最硬，需要额外 2 周缓冲。</div>
+        </div>
+      </div>
+      <div class="status-row">
+        <span class="badge badge-deep">需加强</span>
+        <div>
+          <div class="label">MLE（最大似然估计）</div>
+          <div class="desc">Level 2 的核心之一。需要微积分感觉，请对着代码学，别对着公式学。</div>
+        </div>
+      </div>
+      <div class="status-row">
+        <span class="badge badge-new">全新内容</span>
+        <div>
+          <div class="label">随机微积分 & Black-Scholes</div>
+          <div class="desc">Level 5 是整条路最难的关口，给自己充足时间，不要急。</div>
+        </div>
+      </div>
+    </div>
+    <div class="feynman-box">
+      <strong>💡 费曼学习法的使用方式</strong>
+      每学完一个概念，不看笔记，用自己的话向一个"完全不懂数学的朋友"解释一遍。说不清楚的地方就是你真正没懂的地方，立刻回去补。比做 100 道题更有效。
+    </div>
+    <button class="action-btn" onclick="sendPrompt('用费曼学习法帮我理解贝叶斯定理，假设我要向一个不懂数学的朋友解释它')">↗ 让 Claude 帮我做一次费曼练习</button>
+  </div>
+
+  <!-- 18个月计划 -->
+  <div id="tab-plan" class="tab-content">
+    <p class="section-title">五个关卡 · 18个月 · 每天 2 小时</p>
+    <div class="timeline">
+
+      <!-- Level 1 -->
+      <div class="level-card">
+        <div class="level-header" onclick="toggleLevel('l1')">
+          <div class="level-dot" style="background:var(--color-background-info);color:var(--color-text-info);">L1</div>
+          <div class="level-info">
+            <div class="level-name">概率论 — 不确定性的语言</div>
+            <div class="level-meta">第 1–5 周 · 你有贝叶斯基础，可轻松入门</div>
+          </div>
+          <div class="level-weeks">5 周</div>
+          <div class="chevron" id="chevron-l1">▶</div>
+        </div>
+        <div class="level-body" id="body-l1">
+          <div class="week-row">
+            <div class="week-num">第 1 周</div>
+            <div class="week-content">
+              <div class="week-title">条件概率快速确认 <span class="feynman-tag">费曼</span></div>
+              <div class="week-task">读 Blitzstein Ch1-2。重点：用白话解释"为什么60%和75%差别巨大"——这就是条件概率的价值。</div>
+            </div>
+          </div>
+          <div class="week-row">
+            <div class="week-num">第 2 周</div>
+            <div class="week-content">
+              <div class="week-title">期望值 & 方差 —— 你的两个好朋友</div>
+              <div class="week-task">读 Ch3-4。费曼练习：把"期望值是你的信念，方差是你的风险"这句话用具体例子画图讲清楚。</div>
+            </div>
+          </div>
+          <div class="week-row">
+            <div class="week-num">第 3 周</div>
+            <div class="week-content">
+              <div class="week-title">大数定律编程实战</div>
+              <div class="week-task">用代码模拟 10000 次掷硬币，亲眼看到收敛过程。代码在文件里已经给出。</div>
+            </div>
+          </div>
+          <div class="week-row">
+            <div class="week-num">第 4–5 周</div>
+            <div class="week-content">
+              <div class="week-title">贝叶斯更新器 <span class="feynman-tag">费曼</span></div>
+              <div class="week-task">读 Ch5-6，实现一个贝叶斯更新函数（先验 → 后验）。费曼：向朋友解释"为什么交易者更新越快越赚钱"。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Level 2 -->
+      <div class="level-card">
+        <div class="level-header" onclick="toggleLevel('l2')">
+          <div class="level-dot" style="background:var(--color-background-warning);color:var(--color-text-warning);">L2</div>
+          <div class="level-info">
+            <div class="level-name">统计学 — 数据的语言</div>
+            <div class="level-meta">第 6–11 周 · MLE 是难点，需要费曼</div>
+          </div>
+          <div class="level-weeks">6 周</div>
+          <div class="chevron" id="chevron-l2">▶</div>
+        </div>
+        <div class="level-body" id="body-l2">
+          <div class="week-row">
+            <div class="week-num">第 6 周</div>
+            <div class="week-content">
+              <div class="week-title">假设检验 —— BS 探测器 <span class="feynman-tag">费曼</span></div>
+              <div class="week-task">读 Wasserman Ch1-3。费曼练习："我回测出 15% 年化收益，这是真的吗？"用 p 值逻辑解答。</div>
+            </div>
+          </div>
+          <div class="week-row">
+            <div class="week-num">第 7 周</div>
+            <div class="week-content">
+              <div class="week-title">多重比较问题</div>
+              <div class="week-task">Bonferroni 矫正。实现排列检验（shuffle 日期 10000 次比较真实结果）。</div>
+            </div>
+          </div>
+          <div class="week-row">
+            <div class="week-num">第 8–9 周</div>
+            <div class="week-content">
+              <div class="week-title">线性回归 & Alpha 分解</div>
+              <div class="week-task">读 Ch5-7。用 statsmodels 跑 Fama-French 三因子回归。费曼：解释"什么是真正的 alpha，什么只是市场敞口"。</div>
+            </div>
+          </div>
+          <div class="week-row">
+            <div class="week-num">第 10–11 周</div>
+            <div class="week-content">
+              <div class="week-title">MLE 最大似然估计 <span class="feynman-tag">重点费曼</span></div>
+              <div class="week-task">读 Ch9。用代码对真实股票收益拟合 t 分布（文件里有代码）。费曼：解释"为什么收益不是正态分布——肥尾意味着什么"。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Level 3 -->
+      <div class="level-card">
+        <div class="level-header" onclick="toggleLevel('l3')">
+          <div class="level-dot" style="background:var(--color-background-danger);color:var(--color-text-danger);">L3</div>
+          <div class="level-info">
+            <div class="level-name">线性代数 — 机器的齿轮</div>
+            <div class="level-meta">第 12–18 周 · 最难攻克的数学关卡，加缓冲</div>
+          </div>
+          <div class="level-weeks">7 周</div>
+          <div class="chevron" id="chevron-l3">▶</div>
+        </div>
+        <div class="level-body" id="body-l3">
+          <div class="week-row">
+            <div class="week-num">第 12–13 周</div>
+            <div class="week-content">
+              <div class="week-title">矩阵直觉 <span class="feynman-tag">费曼</span></div>
+              <div class="week-task">看 MIT 18.06 第 1-6 讲（Gil Strang）。费曼：不用公式，解释"为什么 500 支股票的协方差矩阵是 500×500 的，它里面装了什么"。</div>
+            </div>
+          </div>
+          <div class="week-row">
+            <div class="week-num">第 14–15 周</div>
+            <div class="week-content">
+              <div class="week-title">特征值与特征向量</div>
+              <div class="week-task">MIT 18.06 第 14-20 讲。费曼：解释"500支股票，为什么前 5 个特征向量就能解释 70% 的波动——剩下 495 个去哪了"。</div>
+            </div>
+          </div>
+          <div class="week-row">
+            <div class="week-num">第 16 周</div>
+            <div class="week-content">
+              <div class="week-title">PCA 编程实战</div>
+              <div class="week-task">对标普 500 历史收益做 PCA 分解，画出特征值谱，找出前 3 个主成分代表什么。</div>
+            </div>
+          </div>
+          <div class="week-row">
+            <div class="week-num">第 17–18 周</div>
+            <div class="week-content">
+              <div class="week-title">Markowitz 投资组合优化 <span class="feynman-tag">费曼</span></div>
+              <div class="week-task">用 cvxpy 实现均值方差优化。费曼："为什么不能无限加仓高收益资产——协方差矩阵告诉了我们什么"。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Level 4 -->
+      <div class="level-card">
+        <div class="level-header" onclick="toggleLevel('l4')">
+          <div class="level-dot" style="background:var(--color-background-success);color:var(--color-text-success);">L4</div>
+          <div class="level-info">
+            <div class="level-name">微积分 & 优化 — 变化的语言</div>
+            <div class="level-meta">第 19–23 周 · 聚焦凸优化，不要死磕纯数学</div>
+          </div>
+          <div class="level-weeks">5 周</div>
+          <div class="chevron" id="chevron-l4">▶</div>
+        </div>
+        <div class="level-body" id="body-l4">
+          <div class="week-row">
+            <div class="week-num">第 19–20 周</div>
+            <div class="week-content">
+              <div class="week-title">导数直觉 & Taylor 展开 <span class="feynman-tag">费曼</span></div>
+              <div class="week-task">Boyd & Vandenberghe Ch1-2。费曼："Delta 对冲是一阶近似，Gamma 对冲是二阶修正——用电梯的例子解释"。</div>
+            </div>
+          </div>
+          <div class="week-row">
+            <div class="week-num">第 21 周</div>
+            <div class="week-content">
+              <div class="week-title">梯度下降 from scratch</div>
+              <div class="week-task">自己实现梯度下降，最小化 Rosenbrock 函数（这是优化算法的经典测试题）。</div>
+            </div>
+          </div>
+          <div class="week-row">
+            <div class="week-num">第 22–23 周</div>
+            <div class="week-content">
+              <div class="week-title">cvxpy 投资组合优化进阶</div>
+              <div class="week-task">加入交易成本约束，解一个更真实的投资组合优化问题。费曼："什么叫凸问题——为什么凸就好"。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Level 5 -->
+      <div class="level-card">
+        <div class="level-header" onclick="toggleLevel('l5')">
+          <div class="level-dot" style="background:#7F77DD;color:#fff;">L5</div>
+          <div class="level-info">
+            <div class="level-name">随机微积分 — 成为真正的 Quant</div>
+            <div class="level-meta">第 24–36 周 · 最硬的关卡，慢即是快</div>
+          </div>
+          <div class="level-weeks">13 周</div>
+          <div class="chevron" id="chevron-l5">▶</div>
+        </div>
+        <div class="level-body" id="body-l5">
+          <div class="week-row">
+            <div class="week-num">第 24–26 周</div>
+            <div class="week-content">
+              <div class="week-title">布朗运动直觉 <span class="feynman-tag">费曼</span></div>
+              <div class="week-task">读 Shreve Vol I。费曼："布朗运动的路径为什么处处连续但处处不可微——用醉汉走路的例子讲"。</div>
+            </div>
+          </div>
+          <div class="week-row">
+            <div class="week-num">第 27–29 周</div>
+            <div class="week-content">
+              <div class="week-title">Itô 引理 —— 为什么有额外一项</div>
+              <div class="week-task">这是整个路程最重要的一步。费曼："普通微积分为什么丢掉了二阶项，随机微积分为什么不能"。用 dW² = dt 这件事解释。</div>
+            </div>
+          </div>
+          <div class="week-row">
+            <div class="week-num">第 30–32 周</div>
+            <div class="week-content">
+              <div class="week-title">手推 Black-Scholes <span class="feynman-tag">重点费曼</span></div>
+              <div class="week-task">拿纸笔，按文件里的四步从头推一遍 BS 方程。费曼："为什么股票的预期收益率 μ 在最终公式里消失了——这意味着什么"。</div>
+            </div>
+          </div>
+          <div class="week-row">
+            <div class="week-num">第 33–36 周</div>
+            <div class="week-content">
+              <div class="week-title">Black-Scholes 编程 & 蒙特卡洛验证</div>
+              <div class="week-task">实现 BS 解析公式 + 蒙特卡洛模拟，验证两者收敛。计算所有 Greeks。恭喜：你现在是 Quant。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="feynman-box" style="margin-top:12px">
+      <strong>📅 总时间轴</strong>
+      月 1–2：Level 1（概率）· 月 3–4：Level 2（统计）· 月 5–7：Level 3（线代，最难）· 月 8–9：Level 4（优化）· 月 10–18：Level 5（随机微积分 + 实战 + 求职准备）
+    </div>
+  </div>
+
+  <!-- 工具链 -->
+  <div id="tab-tools" class="tab-content">
+    <p class="section-title">Python 工具链确认</p>
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-name">numpy</div>
+        <div class="tool-desc">矩阵运算、随机数、数值计算的基础</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">scipy</div>
+        <div class="tool-desc">统计分布、MLE 拟合、优化算法</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">statsmodels</div>
+        <div class="tool-desc">OLS 回归、Fama-French 三因子、Newey-West</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">cvxpy</div>
+        <div class="tool-desc">凸优化、Markowitz 组合，Level 3-4 核心</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">pandas</div>
+        <div class="tool-desc">时间序列数据处理、金融数据清洗</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">yfinance</div>
+        <div class="tool-desc">免费下载真实股票数据（用于所有实战）</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">matplotlib</div>
+        <div class="tool-desc">可视化：大数定律图、特征值谱</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">QuantLib</div>
+        <div class="tool-desc">Level 5 之后用：衍生品工业级定价库</div>
+      </div>
+    </div>
+
+    <p class="section-title" style="margin-top:1.25rem">第一天安装命令</p>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px;font-family:var(--font-mono);font-size:12px;color:var(--color-text-primary);line-height:1.8">
+      pip install numpy scipy statsmodels cvxpy pandas yfinance matplotlib
+    </div>
+
+    <div class="feynman-box" style="margin-top:12px">
+      <strong>🔧 工具使用原则</strong>
+      先用工具跑通代码，再回去理解背后的数学。看到代码报错是正常的，报错是最好的老师。每段代码都要能改一个参数，看结果怎么变——这就是主动学习。
+    </div>
+    <button class="action-btn" onclick="sendPrompt('帮我写一个 Python 环境验证脚本，测试所有量化工具链是否安装成功')">↗ 生成环境验证脚本</button>
+  </div>
+</div>
+
+<script>
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach((t, i) => {
+    const tabs = ['assess','plan','tools'];
+    t.classList.toggle('active', tabs[i] === name);
+  });
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+function toggleLevel(id) {
+  const body = document.getElementById('body-' + id);
+  const chevron = document.getElementById('chevron-' + id);
+  const open = body.classList.toggle('open');
+  chevron.classList.toggle('open', open);
+}
+</script>
